@@ -1,4 +1,10 @@
 {
+  "1.0.2": {
+    "en": "Fixes the app settings page, which kept loading.",
+    "sv": "Rättar appens inställningssida, som laddade utan att bli klar.",
+    "de": "Behebt die App-Einstellungsseite, die nicht fertig lud.",
+    "nl": "Herstelt de instellingenpagina van de app, die bleef laden."
+  },
   "1.0.1": {
     "en": "New name: Live view for AXIS Camera Station Pro. Homey's standard icons.",
     "sv": "Nytt namn: Livebild för AXIS Camera Station Pro. Homeys standardikoner.",
