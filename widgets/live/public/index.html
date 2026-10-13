@@ -61,6 +61,13 @@
       // Homey can only relay a few live streams at once: the first tiles play live, the
       // rest show pictures. Tapping a tile enlarges it and plays it live.
       const MAX_LIVE_TILES = 4;
+      // When WebRTC can't connect (e.g. mobile data), video comes over Homey's normal
+      // remote connection instead: Camera Station's MP4 stream, asked for every 0.4 s and
+      // played by the browser's own video player. Pictures are the last resort.
+      const HTTP_POLL_MS = 400;
+      const HTTP_MAX_ERRORS = 5;
+      const HTTP_STUCK_MS = 8000;
+      const MediaSourceClass = window.ManagedMediaSource || window.MediaSource || null;
       let zoomedTile = null;
       const mayGoLive = (tile) => (zoomedTile ? tile === zoomedTile : tile.index < MAX_LIVE_TILES);
 
@@ -99,6 +106,117 @@
         if (retryLive) tile.liveRetry = setTimeout(() => connect(tile), tile.liveRetries++ ? LIVE_RETRY_MS : LIVE_RETRY_FIRST_MS);
       }
 
+      const fromBase64 = (b64) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+
+      // Live video over HTTP. Resolves true when it started.
+      async function startHttp(tile) {
+        if (!MediaSourceClass || document.hidden) return false;
+        let first;
+        try {
+          first = await Homey.api('POST', '/mp4', { source, sourceId: tile.sourceId, after: null, quality });
+        } catch (e) {
+          return false;
+        }
+        const type = `video/mp4; codecs="${first.codec}"`;
+        if (!first.codec || !MediaSourceClass.isTypeSupported(type) || document.hidden) return false;
+        const ms = new MediaSourceClass();
+        const video = tile.video;
+        const http = {
+          ms, url: URL.createObjectURL(ms), seq: first.seq, queue: [], errors: 0, stopped: false,
+        };
+        tile.http = http;
+        video.disableRemotePlayback = true; // required by ManagedMediaSource (iPhone)
+        video.srcObject = null;
+        video.src = http.url;
+        await new Promise((resolve) => ms.addEventListener('sourceopen', resolve, { once: true }));
+        if (http.stopped) return true;
+        const sb = ms.addSourceBuffer(type);
+        sb.mode = 'segments';
+        const pump = () => {
+          if (http.stopped || sb.updating || !http.queue.length) return;
+          try { sb.appendBuffer(http.queue.shift()); } catch (e) { /* quota or closed: skip */ }
+        };
+        sb.addEventListener('updateend', () => {
+          const b = sb.buffered;
+          if (b.length) {
+            const end = b.end(b.length - 1);
+            // Stay close to live, and drop what was played long ago.
+            if (end - video.currentTime > 2.5) video.currentTime = Math.max(b.start(b.length - 1), end - 0.3);
+            if (video.currentTime - b.start(0) > 20 && !sb.updating) {
+              try { sb.remove(b.start(0), video.currentTime - 10); return; } catch (e) { /* ignore */ }
+            }
+          }
+          pump();
+        });
+        http.queue.push(fromBase64(first.init));
+        if (first.data) http.queue.push(fromBase64(first.data));
+        pump();
+        video.play().catch(() => {});
+        tile.badge.hidden = false;
+        tile.badge.textContent = Homey.__('widget.httpBadge');
+        tile.el.classList.add('live');
+        const loop = async () => {
+          if (http.stopped) return;
+          try {
+            const r = await Homey.api('POST', '/mp4', { source, sourceId: tile.sourceId, after: http.seq, quality });
+            if (r.restart && r.init) http.queue.push(fromBase64(r.init));
+            if (r.data) http.queue.push(fromBase64(r.data));
+            http.seq = r.seq;
+            http.errors = 0;
+            pump();
+          } catch (e) {
+            if (++http.errors >= HTTP_MAX_ERRORS) {
+              stopHttp(tile);
+              startPictures(tile);
+              return;
+            }
+          }
+          http.timer = setTimeout(loop, HTTP_POLL_MS);
+        };
+        http.timer = setTimeout(loop, HTTP_POLL_MS);
+        // Safety net: if this browser can't actually play it (no progress for 8 s), use
+        // pictures instead of showing a still or black tile.
+        let lastTime = -1;
+        let stuckSince = Date.now();
+        http.watchdog = setInterval(() => {
+          if (http.stopped) return;
+          if (video.currentTime !== lastTime && video.readyState >= 2) {
+            lastTime = video.currentTime;
+            stuckSince = Date.now();
+          } else if (Date.now() - stuckSince > HTTP_STUCK_MS) {
+            stopHttp(tile);
+            startPictures(tile);
+          }
+        }, 2000);
+        return true;
+      }
+
+      function stopHttp(tile) {
+        const http = tile.http;
+        if (!http) return;
+        http.stopped = true;
+        clearTimeout(http.timer);
+        clearInterval(http.watchdog);
+        try { if (http.ms.readyState === 'open') http.ms.endOfStream(); } catch (e) { /* ignore */ }
+        URL.revokeObjectURL(http.url);
+        if (!tile.video.srcObject) {
+          tile.video.removeAttribute('src');
+          tile.video.load();
+        }
+        tile.http = null;
+      }
+
+      // WebRTC didn't come up: HTTP video if the browser can play it, else pictures. Live
+      // WebRTC is tried again later either way.
+      async function startFallback(tile) {
+        if (!tile.http && !tile.pictureTimer) {
+          const ok = await startHttp(tile);
+          if (!ok) { startPictures(tile); return; }
+        }
+        clearTimeout(tile.liveRetry);
+        tile.liveRetry = setTimeout(() => connect(tile), tile.liveRetries++ ? LIVE_RETRY_MS : LIVE_RETRY_FIRST_MS);
+      }
+
       function stopPictures(tile) {
         clearInterval(tile.pictureTimer);
         clearTimeout(tile.liveRetry);
@@ -111,13 +229,13 @@
         disconnect(tile, true);
         if (document.hidden) return;
         if (!mayGoLive(tile)) { startPictures(tile, false); return; }
-        if (!tile.pictureTimer) tile.el.classList.remove('live');
+        if (!tile.pictureTimer && !tile.http) tile.el.classList.remove('live');
         tile.status.textContent = Homey.__('widget.connecting');
-        // Fall back to pictures if live video hasn't started in time.
+        // Fall back (HTTP video, then pictures) if live video hasn't started in time.
         tile.liveTimer = setTimeout(() => {
           if (!tile.video.srcObject || tile.video.readyState < 2) {
             disconnect(tile, true);
-            startPictures(tile);
+            startFallback(tile);
           }
         }, LIVE_TIMEOUT_MS);
         // STUN lets the phone offer its public address too, so live video can also connect
@@ -130,13 +248,16 @@
           tile.video.play().catch(() => {});
         };
         tile.video.onplaying = () => {
+          // Only WebRTC sets srcObject; HTTP video plays through src and keeps its badge.
+          if (!tile.video.srcObject) return;
           clearTimeout(tile.liveTimer);
           tile.liveRetries = 0;
+          stopHttp(tile);
           stopPictures(tile);
           tile.el.classList.add('live');
         };
         pc.onconnectionstatechange = () => {
-          if (tile.pc !== pc || tile.pictureTimer) return;
+          if (tile.pc !== pc || tile.pictureTimer || tile.http) return;
           if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') scheduleRetry(tile);
         };
         try {
@@ -149,11 +270,11 @@
           if (tile.pc !== pc) return;
           await pc.setRemoteDescription({ type: 'answer', sdp: answerSdp });
         } catch (err) {
-          if (tile.pictureTimer) return;
-          // Homey is already relaying as many streams as it can: show pictures instead.
+          if (tile.pictureTimer || tile.http) return;
+          // Homey is already relaying as many streams as it can: fall back instead.
           if (err && /too many live streams/i.test(err.message || String(err))) {
             disconnect(tile, true);
-            startPictures(tile);
+            startFallback(tile);
             return;
           }
           tile.status.textContent = Homey.__('widget.failed');
@@ -161,14 +282,15 @@
         }
       }
 
-      // keepPictures: leave the picture fallback running (used while trying live again).
-      function disconnect(tile, keepPictures) {
+      // keepFallback: leave HTTP video or pictures running (used while trying live again).
+      function disconnect(tile, keepFallback) {
         clearTimeout(tile.retry);
         clearTimeout(tile.liveTimer);
         if (tile.pc) { try { tile.pc.close(); } catch (e) { /* ignore */ } }
         tile.pc = null;
-        tile.video.srcObject = null;
-        if (!keepPictures) {
+        if (tile.video.srcObject) tile.video.srcObject = null;
+        if (!keepFallback) {
+          stopHttp(tile);
           stopPictures(tile);
           tile.el.classList.remove('live');
         }
@@ -190,7 +312,7 @@
       }
 
       function disconnectAll() {
-        tiles.forEach(disconnect);
+        tiles.forEach((tile) => disconnect(tile));
       }
 
       // Only stream while the dashboard is visible: hidden widgets cost Homey nothing.

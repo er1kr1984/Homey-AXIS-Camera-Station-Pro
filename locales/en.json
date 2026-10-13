@@ -29,7 +29,8 @@
     "tapHint": "Tap a camera to enlarge it",
     "connecting": "Connecting…",
     "failed": "No video. Tap to retry.",
-    "pictureBadge": "PICTURE"
+    "pictureBadge": "PICTURE",
+    "httpBadge": "VIA HOMEY"
   },
   "server": {
     "RecordingFailure": "Recording failed",

@@ -8,11 +8,13 @@ const LiveRelay = require('./lib/live-relay');
 const ServerRegistry = require('./lib/servers');
 const events = require('./lib/events');
 const { classify } = require('./lib/errors');
+const { Mp4LiveSource } = require('./lib/mp4-live');
 
 const STATUS_POLL_MS = 60 * 1000;
 const MAX_SNAPSHOT_IMAGES = 30;
 const LOG_LINES = 300;
 const LOG_PERSIST_MS = 60 * 1000;
+const MAX_HTTP_SOURCES = 6; // live MP4 streams for the widget away from home
 
 class CameraStationLiveApp extends Homey.App {
 
@@ -43,6 +45,7 @@ class CameraStationLiveApp extends Homey.App {
     });
     await this.servers.migrateLegacy();
     this.snapshotImages = [];
+    this.mp4Sources = new Map(); // "sourceId|quality" -> Mp4LiveSource
     this.lastRejectedLog = 0;
     this._registerFlowCards();
     this._registerWidget();
@@ -201,6 +204,34 @@ class CameraStationLiveApp extends Homey.App {
     if (!camera) throw new Error(this.homey.__('widget.missing'));
     const jpeg = await this.getAcs(this.serverIdFor(camera.sourceId)).getSnapshot(camera.sourceId, 640, 360);
     return { jpeg: jpeg.toString('base64') };
+  }
+
+  // Live video over HTTP for a widget tile that can't connect with WebRTC. The widget asks
+  // every half second for what is new since `after`; one Camera Station MP4 stream per
+  // camera is shared by all such tiles.
+  async widgetMp4({ source, sourceId, after, quality }) {
+    const camera = this._findCamera(source, sourceId);
+    if (!camera) throw new Error(this.homey.__('widget.missing'));
+    const q = quality === 'medium' ? 'medium' : 'low';
+    const key = `${camera.sourceId}|${q}`;
+    let mp4 = this.mp4Sources.get(key);
+    if (!mp4 || mp4.closed) {
+      if ([...this.mp4Sources.values()].filter((m) => !m.closed).length >= MAX_HTTP_SOURCES) throw new Error('Too many live streams');
+      this.diag(`[${camera.name}] widget video over HTTP (${q})`);
+      mp4 = new Mp4LiveSource({
+        acs: this.getAcs(this.serverIdFor(camera.sourceId)),
+        cameraId: camera.sourceId,
+        quality: q,
+        log: (...args) => this.diag(`[${camera.name}]`, ...args),
+        onClose: (m) => { if (this.mp4Sources.get(key) === m) this.mp4Sources.delete(key); },
+      });
+      this.mp4Sources.set(key, mp4);
+    }
+    try {
+      return await mp4.read(after === undefined ? null : after);
+    } catch (err) {
+      throw new Error(this.friendly(err));
+    }
   }
 
   _cameraName(sourceId) {
@@ -409,6 +440,7 @@ class CameraStationLiveApp extends Homey.App {
     // A clean stop is not a crash.
     this.homey.settings.unset('diag_running_logs');
     if (this.relay) this.relay.closeAll();
+    for (const mp4 of this.mp4Sources.values()) mp4.close('app stopping');
   }
 
 }

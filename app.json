@@ -1207,6 +1207,10 @@
         "snapshot": {
           "method": "POST",
           "path": "/snapshot"
+        },
+        "mp4": {
+          "method": "POST",
+          "path": "/mp4"
         }
       },
       "id": "live"

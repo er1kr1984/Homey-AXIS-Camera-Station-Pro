@@ -9,6 +9,11 @@ module.exports = {
   async snapshot({ homey, body }) {
     return homey.app.widgetSnapshot(body || {});
   },
+  // body: { source, sourceId, after, quality } -> { codec, init?, seq, data, restart }
+  // (live video over HTTP when WebRTC can't connect)
+  async mp4({ homey, body }) {
+    return homey.app.widgetMp4(body || {});
+  },
   // body: { source, sourceId, sdp, quality } -> { answerSdp }
   async offer({ homey, body }) {
     return homey.app.widgetOffer(body || {});
