@@ -1,4 +1,4 @@
-# Camera Station Live (Homey app)
+# Live view for AXIS Camera Station Pro (Homey app)
 
 Live video, events and control for AXIS Camera Station Pro in Homey. Video uses Camera
 Station's own WebRTC service: no camera RTSP, no transcoding.

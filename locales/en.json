@@ -1,7 +1,7 @@
 {
   "pair": {
     "loginFailed": "Camera Station did not accept that username and password. Use the same login as the Camera Station web client, for example: axis",
-    "noServer": "Could not find a Camera Station Pro server on your network. Check that the Camera Station computer is on and on the same network as Homey. If it is on another network, add it by address in the app settings (More > Apps > Camera Station Live > Configure app)."
+    "noServer": "Could not find a Camera Station Pro server on your network. Check that the Camera Station computer is on and on the same network as Homey. If it is on another network, add it by address in the app settings (More > Apps > Live view for AXIS Camera Station Pro > Configure app)."
   },
   "device": {
     "liveTitle": "Live"
@@ -42,7 +42,7 @@
     "none": "No problems"
   },
   "settings": {
-    "title": "Camera Station Live",
+    "title": "Live view for AXIS Camera Station Pro",
     "subtitle": "Your AXIS Camera Station Pro servers, events and diagnostics.",
     "serversTitle": "Servers",
     "noServers": "No server yet. Add a camera device, or add a server below.",

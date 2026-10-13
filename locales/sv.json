@@ -1,7 +1,7 @@
 {
   "pair": {
     "loginFailed": "Camera Station godkände inte användarnamnet och lösenordet. Använd samma inloggning som i Camera Stations webbklient, till exempel: axis",
-    "noServer": "Hittade ingen Camera Station Pro-server i ditt nätverk. Kontrollera att Camera Station-datorn är på och i samma nätverk som Homey. Om den finns i ett annat nätverk, lägg till den med adress i appens inställningar (Mer > Appar > Camera Station Live > Konfigurera app)."
+    "noServer": "Hittade ingen Camera Station Pro-server i ditt nätverk. Kontrollera att Camera Station-datorn är på och i samma nätverk som Homey. Om den finns i ett annat nätverk, lägg till den med adress i appens inställningar (Mer > Appar > Livebild för AXIS Camera Station Pro > Konfigurera app)."
   },
   "device": {
     "liveTitle": "Live"
@@ -42,7 +42,7 @@
     "none": "Inga problem"
   },
   "settings": {
-    "title": "Camera Station Live",
+    "title": "Livebild för AXIS Camera Station Pro",
     "subtitle": "Dina AXIS Camera Station Pro-servrar, händelser och diagnostik.",
     "serversTitle": "Servrar",
     "noServers": "Ingen server än. Lägg till en kamera som enhet, eller lägg till en server nedan.",

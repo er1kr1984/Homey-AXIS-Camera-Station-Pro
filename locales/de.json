@@ -1,7 +1,7 @@
 {
   "pair": {
     "loginFailed": "Camera Station hat Benutzername und Passwort nicht akzeptiert. Verwenden Sie dieselbe Anmeldung wie im Camera Station-Webclient, zum Beispiel: axis",
-    "noServer": "Kein Camera Station Pro-Server im Netzwerk gefunden. Prüfen Sie, ob der Camera Station-Computer eingeschaltet und im selben Netzwerk wie Homey ist. Ist er in einem anderen Netzwerk, fügen Sie ihn in den App-Einstellungen per Adresse hinzu (Mehr > Apps > Camera Station Live > App konfigurieren)."
+    "noServer": "Kein Camera Station Pro-Server im Netzwerk gefunden. Prüfen Sie, ob der Camera Station-Computer eingeschaltet und im selben Netzwerk wie Homey ist. Ist er in einem anderen Netzwerk, fügen Sie ihn in den App-Einstellungen per Adresse hinzu (Mehr > Apps > Livebild für AXIS Camera Station Pro > App konfigurieren)."
   },
   "device": {
     "liveTitle": "Live"
@@ -42,7 +42,7 @@
     "none": "Keine Probleme"
   },
   "settings": {
-    "title": "Camera Station Live",
+    "title": "Livebild für AXIS Camera Station Pro",
     "subtitle": "Ihre AXIS Camera Station Pro-Server, Ereignisse und Diagnose.",
     "serversTitle": "Server",
     "noServers": "Noch kein Server. Fügen Sie eine Kamera als Gerät hinzu oder unten einen Server.",

@@ -1,6 +1,6 @@
 {
   "id": "com.erikrichardson.acswebrtc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=12.7.0",
   "runtime": "nodejs",
   "sdk": 3,
@@ -9,10 +9,10 @@
   ],
   "brandColor": "#1f3a5f",
   "name": {
-    "en": "Camera Station Live",
-    "sv": "Camera Station Live",
-    "de": "Camera Station Live",
-    "nl": "Camera Station Live"
+    "en": "Live view for AXIS Camera Station Pro",
+    "sv": "Livebild för AXIS Camera Station Pro",
+    "de": "Livebild für AXIS Camera Station Pro",
+    "nl": "Livebeeld voor AXIS Camera Station Pro"
   },
   "description": {
     "en": "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server.",

@@ -1,4 +1,10 @@
 {
+  "1.0.1": {
+    "en": "New name: Live view for AXIS Camera Station Pro.",
+    "sv": "Nytt namn: Livebild för AXIS Camera Station Pro.",
+    "de": "Neuer Name: Livebild für AXIS Camera Station Pro.",
+    "nl": "Nieuwe naam: Livebeeld voor AXIS Camera Station Pro."
+  },
   "1.0.0": {
     "en": "First release: live video from AXIS Camera Station Pro over WebRTC, views, dashboard widget, events, recording, bookmarks, PTZ, triggers and server health.",
     "sv": "Första versionen: livevideo från AXIS Camera Station Pro via WebRTC, vyer, widget för instrumentpanelen, händelser, inspelning, bokmärken, PTZ, utlösare och serverhälsa.",

@@ -52,7 +52,7 @@ class CameraStationLiveApp extends Homey.App {
     this._registerWidget();
     this.statusTimer = this.homey.setInterval(() => this.pollStatus(), STATUS_POLL_MS);
     this.homey.setTimeout(() => this.pollStatus(), 10000);
-    this.diag(`Camera Station Live started (${this.servers.ids().length} server(s))`);
+    this.diag(`Live view for AXIS Camera Station Pro started (${this.servers.ids().length} server(s))`);
     if (tuningFailures.length) this.diagError('Running without some speed-ups:', tuningFailures.join('; '));
   }
 

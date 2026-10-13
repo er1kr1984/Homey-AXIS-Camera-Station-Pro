@@ -2,7 +2,7 @@
 # Applied by scripts/apply-translations.py to locales/ and the *.compose.json files.
 # Camera Station's own menu names stay in English (Axis' translated labels are not verified).
 T = {
-"Camera Station Live": ("Camera Station Live", "Camera Station Live", "Camera Station Live"),
+"Live view for AXIS Camera Station Pro": ("Livebild för AXIS Camera Station Pro", "Livebild für AXIS Camera Station Pro", "Livebeeld voor AXIS Camera Station Pro"),
 "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server.": (
  "Livevideo från AXIS Camera Station Pro via WebRTC, direkt från din inspelningsserver.",
  "Live-Video von AXIS Camera Station Pro über WebRTC, direkt von Ihrem Aufnahmeserver.",
@@ -158,10 +158,10 @@ T = {
  "Camera Station godkände inte användarnamnet och lösenordet. Använd samma inloggning som i Camera Stations webbklient, till exempel: axis",
  "Camera Station hat Benutzername und Passwort nicht akzeptiert. Verwenden Sie dieselbe Anmeldung wie im Camera Station-Webclient, zum Beispiel: axis",
  "Camera Station heeft de gebruikersnaam en het wachtwoord niet geaccepteerd. Gebruik dezelfde login als in de Camera Station-webclient, bijvoorbeeld: axis"),
-"Could not find a Camera Station Pro server on your network. Check that the Camera Station computer is on and on the same network as Homey. If it is on another network, add it by address in the app settings (More > Apps > Camera Station Live > Configure app).": (
- "Hittade ingen Camera Station Pro-server i ditt nätverk. Kontrollera att Camera Station-datorn är på och i samma nätverk som Homey. Om den finns i ett annat nätverk, lägg till den med adress i appens inställningar (Mer > Appar > Camera Station Live > Konfigurera app).",
- "Kein Camera Station Pro-Server im Netzwerk gefunden. Prüfen Sie, ob der Camera Station-Computer eingeschaltet und im selben Netzwerk wie Homey ist. Ist er in einem anderen Netzwerk, fügen Sie ihn in den App-Einstellungen per Adresse hinzu (Mehr > Apps > Camera Station Live > App konfigurieren).",
- "Geen Camera Station Pro-server gevonden in je netwerk. Controleer of de Camera Station-computer aan staat en in hetzelfde netwerk zit als Homey. Zit hij in een ander netwerk, voeg hem dan toe met zijn adres in de app-instellingen (Meer > Apps > Camera Station Live > App configureren)."),
+"Could not find a Camera Station Pro server on your network. Check that the Camera Station computer is on and on the same network as Homey. If it is on another network, add it by address in the app settings (More > Apps > Live view for AXIS Camera Station Pro > Configure app).": (
+ "Hittade ingen Camera Station Pro-server i ditt nätverk. Kontrollera att Camera Station-datorn är på och i samma nätverk som Homey. Om den finns i ett annat nätverk, lägg till den med adress i appens inställningar (Mer > Appar > Livebild för AXIS Camera Station Pro > Konfigurera app).",
+ "Kein Camera Station Pro-Server im Netzwerk gefunden. Prüfen Sie, ob der Camera Station-Computer eingeschaltet und im selben Netzwerk wie Homey ist. Ist er in einem anderen Netzwerk, fügen Sie ihn in den App-Einstellungen per Adresse hinzu (Mehr > Apps > Livebild für AXIS Camera Station Pro > App konfigurieren).",
+ "Geen Camera Station Pro-server gevonden in je netwerk. Controleer of de Camera Station-computer aan staat en in hetzelfde netwerk zit als Homey. Zit hij in een ander netwerk, voeg hem dan toe met zijn adres in de app-instellingen (Meer > Apps > Livebeeld voor AXIS Camera Station Pro > App configureren)."),
 "Live": ("Live", "Live", "Live"),
 "Not connected to Camera Station yet. Open the camera in Homey, tap the cog (⚙) in the top right, then tap Repair and log in.": (
  "Inte ansluten till Camera Station än. Öppna kameran i Homey, tryck på kugghjulet (⚙) uppe till höger, tryck sedan på Reparera och logga in.",
