@@ -1,14 +1,12 @@
 'use strict';
 
 const Homey = require('homey');
-const LiveRelay = require('../../lib/live-relay');
-
 const MAX_VIEWERS = 4;
 
 class CameraDevice extends Homey.Device {
 
   async onInit() {
-    this.relays = new Map();
+    this.viewers = new Map();
 
     this.image = await this.homey.images.createImage();
     this.image.setStream(async (stream) => {
@@ -20,8 +18,8 @@ class CameraDevice extends Homey.Device {
     const video = await this.homey.videos.createVideoWebRTC({ dataChannel: false });
     video.registerOfferListener(async (offerSdp) => this._onOffer(offerSdp));
     video.registerKeepAliveListener(async (streamId) => {
-      const relay = this.relays.get(streamId);
-      if (relay) relay.keepAlive();
+      const viewer = this.viewers.get(streamId);
+      if (viewer) viewer.keepAlive();
     });
     await this.setCameraVideo('live', this.homey.__('device.liveTitle'), video);
 
@@ -29,30 +27,29 @@ class CameraDevice extends Homey.Device {
   }
 
   async _onOffer(offerSdp) {
-    // Drop the oldest viewer rather than piling up streams on the server.
-    if (this.relays.size >= MAX_VIEWERS) this.relays.values().next().value.close();
-
-    this.homey.app.diag(`[${this.getName()}] Viewer offer received (${offerSdp.length} bytes)`);
-    const relay = new LiveRelay({
-      acs: this.homey.app.getAcs(),
-      camera: {
-        name: this.getName(),
-        sourceId: this.getData().id,
-        orgId: this.getStore().orgId,
-        targetId: this.getStore().targetId,
-      },
-      streamProfile: this.getSetting('stream_profile') || 'high',
-      log: (...args) => this.homey.app.diag(`[${this.getName()}]`, ...args),
-      onClose: (r) => this.relays.delete(r.id),
-    });
-    this.relays.set(relay.id, relay);
+    const tag = `[${this.getName()}]`;
+    this.homey.app.diag(`${tag} Viewer offer received (${this.viewers.size} already watching)`);
+    // Drop the oldest viewer rather than piling up sessions.
+    if (this.viewers.size >= MAX_VIEWERS) this.viewers.values().next().value.close();
     try {
-      const answerSdp = await relay.answer(offerSdp);
-      this.setAvailable().catch(() => {});
-      return { answerSdp, streamId: relay.id };
+      const { viewer, answerSdp } = await this.homey.app.getRelay().openViewer({
+        camera: {
+          name: this.getName(),
+          sourceId: this.getData().id,
+          orgId: this.getStore().orgId,
+          targetId: this.getStore().targetId,
+        },
+        streamProfile: this.getSetting('stream_profile') || 'medium',
+        viewerOfferSdp: offerSdp,
+        onClose: (v) => {
+          this.viewers.delete(v.id);
+          this.homey.app.diag(`${tag} viewer closed (${this.viewers.size} left)`);
+        },
+      });
+      this.viewers.set(viewer.id, viewer);
+      return { answerSdp, streamId: viewer.id };
     } catch (err) {
-      relay.close();
-      this.homey.app.diagError(`[${this.getName()}] Could not start live video:`, err.message);
+      this.homey.app.diagError(`${tag} Could not start live video:`, err.message);
       throw new Error(this.homey.__('errors.liveFailed'));
     }
   }
@@ -68,6 +65,8 @@ class CameraDevice extends Homey.Device {
 
   async onSettings({ changedKeys }) {
     if (changedKeys.includes('snapshot_interval')) this._scheduleSnapshots();
+    // New quality applies to the next viewer; close current streams so it takes effect.
+    if (changedKeys.includes('stream_profile')) this._closeAll();
   }
 
   async onDeleted() {
@@ -80,7 +79,8 @@ class CameraDevice extends Homey.Device {
 
   _closeAll() {
     if (this.snapshotTimer) this.homey.clearInterval(this.snapshotTimer);
-    for (const relay of [...this.relays.values()]) relay.close();
+    for (const viewer of [...this.viewers.values()]) viewer.close();
+    if (this.homey.app.relay) this.homey.app.relay.closeCamera(this.getData().id);
   }
 
 }

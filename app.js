@@ -2,14 +2,16 @@
 
 const Homey = require('homey');
 const AcsClient = require('./lib/acs-client');
+const LiveRelay = require('./lib/live-relay');
 
 class CameraStationLiveApp extends Homey.App {
 
   async onInit() {
     this.recentLogs = [];
     this.acs = null;
+    this.relay = null;
     this.homey.settings.on('set', (key) => {
-      if (key.startsWith('acs_')) this.acs = null;
+      if (key.startsWith('acs_')) this.resetConnection();
     });
     this.diag('Camera Station Live started');
   }
@@ -45,6 +47,18 @@ class CameraStationLiveApp extends Homey.App {
     return this.acs;
   }
 
+  // One relay for all cameras: shares a single ACS stream per camera between viewers.
+  getRelay() {
+    if (!this.relay) this.relay = new LiveRelay({ acs: this.getAcs(), log: (...args) => this.diag(...args) });
+    return this.relay;
+  }
+
+  resetConnection() {
+    if (this.relay) this.relay.closeAll();
+    this.relay = null;
+    this.acs = null;
+  }
+
   // Checks a login before saving it. Throws with a readable message on failure.
   async saveLogin({ host, username, password }) {
     const acs = new AcsClient({ host: host.trim(), username: username.trim(), password, log: (...a) => this.diag(...a) });
@@ -52,6 +66,7 @@ class CameraStationLiveApp extends Homey.App {
     this.homey.settings.set('acs_host', host.trim());
     this.homey.settings.set('acs_username', username.trim());
     this.homey.settings.set('acs_password', password);
+    this.resetConnection();
     this.acs = acs;
     return acs;
   }
