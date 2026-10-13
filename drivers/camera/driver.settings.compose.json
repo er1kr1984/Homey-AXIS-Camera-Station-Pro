@@ -3,35 +3,53 @@
     "id": "stream_profile",
     "type": "dropdown",
     "label": {
-      "en": "Video quality"
+      "en": "Video quality",
+      "sv": "Videokvalitet",
+      "de": "Videoqualität",
+      "nl": "Videokwaliteit"
     },
     "hint": {
-      "en": "Which of the camera's quality levels in Camera Station to stream. Low is the default and is gentle on Homey. Automatic starts higher and lowers the quality if Homey gets busy. High can be very heavy (some cameras send 4K) and Homey may still lower it to stay responsive."
+      "en": "Which of the camera's quality levels in Camera Station to stream. Low is the default and is gentle on Homey. Automatic starts higher and lowers the quality if Homey gets busy. High can be very heavy (some cameras send 4K) and Homey may still lower it to stay responsive.",
+      "sv": "Vilken av kamerans kvalitetsnivåer i Camera Station som strömmas. Låg är standard och skonsam mot Homey. Automatisk börjar högre och sänker kvaliteten om Homey blir upptagen. Hög kan vara mycket tung (vissa kameror skickar 4K) och Homey kan ändå sänka den för att förbli snabb.",
+      "de": "Welche Qualitätsstufe der Kamera in Camera Station übertragen wird. Niedrig ist Standard und schont Homey. Automatisch beginnt höher und senkt die Qualität, wenn Homey ausgelastet ist. Hoch kann sehr schwer sein (manche Kameras senden 4K), und Homey kann sie trotzdem senken, um reaktionsschnell zu bleiben.",
+      "nl": "Welk kwaliteitsniveau van de camera in Camera Station wordt gestreamd. Laag is de standaard en ontziet Homey. Automatisch begint hoger en verlaagt de kwaliteit als Homey het druk krijgt. Hoog kan erg zwaar zijn (sommige camera's sturen 4K) en Homey kan het toch verlagen om snel te blijven."
     },
     "value": "low",
     "values": [
       {
         "id": "auto",
         "label": {
-          "en": "Automatic"
+          "en": "Automatic",
+          "sv": "Automatisk",
+          "de": "Automatisch",
+          "nl": "Automatisch"
         }
       },
       {
         "id": "high",
         "label": {
-          "en": "High"
+          "en": "High",
+          "sv": "Hög",
+          "de": "Hoch",
+          "nl": "Hoog"
         }
       },
       {
         "id": "medium",
         "label": {
-          "en": "Medium"
+          "en": "Medium",
+          "sv": "Mellan",
+          "de": "Mittel",
+          "nl": "Gemiddeld"
         }
       },
       {
         "id": "low",
         "label": {
-          "en": "Low (recommended)"
+          "en": "Low (recommended)",
+          "sv": "Låg (rekommenderas)",
+          "de": "Niedrig (empfohlen)",
+          "nl": "Laag (aanbevolen)"
         }
       }
     ]
@@ -40,10 +58,16 @@
     "id": "snapshot_interval",
     "type": "number",
     "label": {
-      "en": "Snapshot refresh (minutes)"
+      "en": "Snapshot refresh (minutes)",
+      "sv": "Bilduppdatering (minuter)",
+      "de": "Bildaktualisierung (Minuten)",
+      "nl": "Afbeelding vernieuwen (minuten)"
     },
     "hint": {
-      "en": "How often the still picture on the device tile is updated. Example: 5. Use 0 to only update when you open the camera."
+      "en": "How often the still picture on the device tile is updated. Example: 5. Use 0 to only update when you open the camera.",
+      "sv": "Hur ofta stillbilden på enhetens ruta uppdateras. Exempel: 5. Använd 0 för att bara uppdatera när du öppnar kameran.",
+      "de": "Wie oft das Standbild auf der Gerätekachel aktualisiert wird. Beispiel: 5. 0 bedeutet: nur beim Öffnen der Kamera aktualisieren.",
+      "nl": "Hoe vaak de stilstaande afbeelding op de apparaattegel wordt vernieuwd. Voorbeeld: 5. Gebruik 0 om alleen te vernieuwen als je de camera opent."
     },
     "value": 5,
     "min": 0,
@@ -53,24 +77,36 @@
     "id": "motion_reset",
     "type": "number",
     "label": {
-      "en": "Motion alarm duration (seconds)"
+      "en": "Motion alarm duration (seconds)",
+      "sv": "Rörelselarmets längd (sekunder)",
+      "de": "Dauer des Bewegungsalarms (Sekunden)",
+      "nl": "Duur van het bewegingsalarm (seconden)"
     },
     "value": 30,
     "min": 5,
     "max": 3600,
     "hint": {
-      "en": "How long the motion alarm stays on after Camera Station reports motion. Example: 30."
+      "en": "How long the motion alarm stays on after Camera Station reports motion. Example: 30.",
+      "sv": "Hur länge rörelselarmet är på efter att Camera Station rapporterat rörelse. Exempel: 30.",
+      "de": "Wie lange der Bewegungsalarm an bleibt, nachdem Camera Station Bewegung gemeldet hat. Beispiel: 30.",
+      "nl": "Hoe lang het bewegingsalarm aan blijft nadat Camera Station beweging meldt. Voorbeeld: 30."
     }
   },
   {
     "id": "event_address",
     "type": "label",
     "label": {
-      "en": "Address for Camera Station events"
+      "en": "Address for Camera Station events",
+      "sv": "Adress för händelser från Camera Station",
+      "de": "Adresse für Camera Station-Ereignisse",
+      "nl": "Adres voor Camera Station-gebeurtenissen"
     },
     "value": "",
     "hint": {
-      "en": "Paste this address into a \"Send HTTP notification\" action in Camera Station (Configuration > Recording and events > Action rules). Use method GET. Motion and other events for this camera then reach Homey. Keep the address private: it contains a secret key."
+      "en": "Paste this address into a \"Send HTTP notification\" action in Camera Station (Configuration > Recording and events > Action rules). Use method GET. Motion and other events for this camera then reach Homey. Keep the address private: it contains a secret key.",
+      "sv": "Klistra in den här adressen i en åtgärd \"Send HTTP notification\" i Camera Station (Configuration > Recording and events > Action rules). Använd metoden GET. Då når rörelse och andra händelser för den här kameran Homey. Håll adressen hemlig: den innehåller en hemlig nyckel.",
+      "de": "Fügen Sie diese Adresse in eine Aktion \"Send HTTP notification\" in Camera Station ein (Configuration > Recording and events > Action rules). Methode GET verwenden. Dann erreichen Bewegung und andere Ereignisse dieser Kamera Homey. Halten Sie die Adresse geheim: Sie enthält einen geheimen Schlüssel.",
+      "nl": "Plak dit adres in een actie \"Send HTTP notification\" in Camera Station (Configuration > Recording and events > Action rules). Gebruik methode GET. Beweging en andere gebeurtenissen van deze camera bereiken dan Homey. Houd het adres geheim: het bevat een geheime sleutel."
     }
   }
 ]

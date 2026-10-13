@@ -3,10 +3,16 @@
     "id": "snapshot_interval",
     "type": "number",
     "label": {
-      "en": "Picture refresh (minutes)"
+      "en": "Picture refresh (minutes)",
+      "sv": "Bilduppdatering (minuter)",
+      "de": "Bildaktualisierung (Minuten)",
+      "nl": "Afbeelding vernieuwen (minuten)"
     },
     "hint": {
-      "en": "How often the view's picture is updated, in minutes. Example: 5. While live video is playing the picture is not updated, to keep Homey responsive. Use 0 to only update when you open the view."
+      "en": "How often the view's picture is updated, in minutes. Example: 5. While live video is playing the picture is not updated, to keep Homey responsive. Use 0 to only update when you open the view.",
+      "sv": "Hur ofta vyns bild uppdateras, i minuter. Exempel: 5. Medan livevideo spelas uppdateras inte bilden, så att Homey förblir snabb. Använd 0 för att bara uppdatera när du öppnar vyn.",
+      "de": "Wie oft das Bild der Ansicht aktualisiert wird, in Minuten. Beispiel: 5. Während Live-Video läuft, wird das Bild nicht aktualisiert, damit Homey reaktionsschnell bleibt. 0 bedeutet: nur beim Öffnen der Ansicht aktualisieren.",
+      "nl": "Hoe vaak de afbeelding van de weergave wordt vernieuwd, in minuten. Voorbeeld: 5. Terwijl live video speelt wordt de afbeelding niet vernieuwd, zodat Homey snel blijft. Gebruik 0 om alleen te vernieuwen als je de weergave opent."
     },
     "value": 5,
     "min": 0,

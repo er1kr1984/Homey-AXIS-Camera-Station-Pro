@@ -3,50 +3,80 @@
     {
       "id": "server_problem",
       "title": {
-        "en": "Camera Station reported a problem"
+        "en": "Camera Station reported a problem",
+        "sv": "Camera Station rapporterade ett problem",
+        "de": "Camera Station hat ein Problem gemeldet",
+        "nl": "Camera Station heeft een probleem gemeld"
       },
       "hint": {
-        "en": "Disk errors and warnings, and recordings that failed. Repeats of the same problem are held back (see the device settings)."
+        "en": "Disk errors and warnings, and recordings that failed. Repeats of the same problem are held back (see the device settings).",
+        "sv": "Diskfel och diskvarningar samt misslyckade inspelningar. Upprepningar av samma problem hålls tillbaka (se enhetens inställningar).",
+        "de": "Festplattenfehler und -warnungen sowie fehlgeschlagene Aufnahmen. Wiederholungen desselben Problems werden zurückgehalten (siehe Geräteeinstellungen).",
+        "nl": "Schijffouten en -waarschuwingen, en mislukte opnames. Herhalingen van hetzelfde probleem worden tegengehouden (zie de apparaatinstellingen)."
       },
       "tokens": [
         {
           "name": "problem",
           "type": "string",
           "title": {
-            "en": "Problem"
+            "en": "Problem",
+            "sv": "Problem",
+            "de": "Problem",
+            "nl": "Probleem"
           },
           "example": {
-            "en": "Recording failed"
+            "en": "Recording failed",
+            "sv": "Inspelningen misslyckades",
+            "de": "Aufnahme fehlgeschlagen",
+            "nl": "Opname mislukt"
           }
         },
         {
           "name": "description",
           "type": "string",
           "title": {
-            "en": "Description"
+            "en": "Description",
+            "sv": "Beskrivning",
+            "de": "Beschreibung",
+            "nl": "Beschrijving"
           },
           "example": {
-            "en": "Recording failed: AXIS P3267-LVE"
+            "en": "Recording failed: AXIS P3267-LVE",
+            "sv": "Inspelningen misslyckades: AXIS P3267-LVE",
+            "de": "Aufnahme fehlgeschlagen: AXIS P3267-LVE",
+            "nl": "Opname mislukt: AXIS P3267-LVE"
           }
         },
         {
           "name": "camera",
           "type": "string",
           "title": {
-            "en": "Camera"
+            "en": "Camera",
+            "sv": "Kamera",
+            "de": "Kamera",
+            "nl": "Camera"
           },
           "example": {
-            "en": "AXIS P3267-LVE"
+            "en": "AXIS P3267-LVE",
+            "sv": "AXIS P3267-LVE",
+            "de": "AXIS P3267-LVE",
+            "nl": "AXIS P3267-LVE"
           }
         },
         {
           "name": "time",
           "type": "string",
           "title": {
-            "en": "Time"
+            "en": "Time",
+            "sv": "Tid",
+            "de": "Zeit",
+            "nl": "Tijd"
           },
           "example": {
-            "en": "2026-10-13 12:00"
+            "en": "2026-10-13 12:00",
+            "sv": "2026-10-13 12:00",
+            "de": "2026-10-13 12:00",
+            "nl": "2026-10-13 12:00"
           }
         }
       ]
@@ -54,37 +84,58 @@
     {
       "id": "recording_failed",
       "title": {
-        "en": "Recording failed on a camera"
+        "en": "Recording failed on a camera",
+        "sv": "Inspelningen misslyckades på en kamera",
+        "de": "Aufnahme an einer Kamera fehlgeschlagen",
+        "nl": "Opname op een camera mislukt"
       },
       "tokens": [
         {
           "name": "camera",
           "type": "string",
           "title": {
-            "en": "Camera"
+            "en": "Camera",
+            "sv": "Kamera",
+            "de": "Kamera",
+            "nl": "Camera"
           },
           "example": {
-            "en": "AXIS P3267-LVE"
+            "en": "AXIS P3267-LVE",
+            "sv": "AXIS P3267-LVE",
+            "de": "AXIS P3267-LVE",
+            "nl": "AXIS P3267-LVE"
           }
         },
         {
           "name": "time",
           "type": "string",
           "title": {
-            "en": "Time"
+            "en": "Time",
+            "sv": "Tid",
+            "de": "Zeit",
+            "nl": "Tijd"
           },
           "example": {
-            "en": "2026-10-13 12:00"
+            "en": "2026-10-13 12:00",
+            "sv": "2026-10-13 12:00",
+            "de": "2026-10-13 12:00",
+            "nl": "2026-10-13 12:00"
           }
         },
         {
           "name": "reason",
           "type": "string",
           "title": {
-            "en": "Reason"
+            "en": "Reason",
+            "sv": "Orsak",
+            "de": "Grund",
+            "nl": "Reden"
           },
           "example": {
-            "en": "Camera not reachable"
+            "en": "Camera not reachable",
+            "sv": "Kameran går inte att nå",
+            "de": "Kamera nicht erreichbar",
+            "nl": "Camera niet bereikbaar"
           }
         }
       ]
@@ -92,37 +143,58 @@
     {
       "id": "disk_problem",
       "title": {
-        "en": "Camera Station has a disk problem"
+        "en": "Camera Station has a disk problem",
+        "sv": "Camera Station har ett diskproblem",
+        "de": "Camera Station hat ein Festplattenproblem",
+        "nl": "Camera Station heeft een schijfprobleem"
       },
       "tokens": [
         {
           "name": "problem",
           "type": "string",
           "title": {
-            "en": "Problem"
+            "en": "Problem",
+            "sv": "Problem",
+            "de": "Problem",
+            "nl": "Probleem"
           },
           "example": {
-            "en": "Disk full"
+            "en": "Disk full",
+            "sv": "Disken är full",
+            "de": "Festplatte voll",
+            "nl": "Schijf vol"
           }
         },
         {
           "name": "path",
           "type": "string",
           "title": {
-            "en": "Disk or folder"
+            "en": "Disk or folder",
+            "sv": "Disk eller mapp",
+            "de": "Festplatte oder Ordner",
+            "nl": "Schijf of map"
           },
           "example": {
-            "en": "D:\\\\"
+            "en": "D:\\\\",
+            "sv": "D:\\\\",
+            "de": "D:\\\\",
+            "nl": "D:\\\\"
           }
         },
         {
           "name": "time",
           "type": "string",
           "title": {
-            "en": "Time"
+            "en": "Time",
+            "sv": "Tid",
+            "de": "Zeit",
+            "nl": "Tijd"
           },
           "example": {
-            "en": "2026-10-13 12:00"
+            "en": "2026-10-13 12:00",
+            "sv": "2026-10-13 12:00",
+            "de": "2026-10-13 12:00",
+            "nl": "2026-10-13 12:00"
           }
         }
       ]
@@ -130,37 +202,58 @@
     {
       "id": "camera_status_changed",
       "title": {
-        "en": "A camera went offline or came back"
+        "en": "A camera went offline or came back",
+        "sv": "En kamera gick offline eller kom tillbaka",
+        "de": "Eine Kamera ist offline gegangen oder wieder da",
+        "nl": "Een camera ging offline of kwam terug"
       },
       "hint": {
-        "en": "For every camera in Camera Station, also those not added to Homey."
+        "en": "For every camera in Camera Station, also those not added to Homey.",
+        "sv": "För varje kamera i Camera Station, även de som inte är tillagda i Homey.",
+        "de": "Für jede Kamera in Camera Station, auch für die, die nicht zu Homey hinzugefügt sind.",
+        "nl": "Voor elke camera in Camera Station, ook die niet aan Homey zijn toegevoegd."
       },
       "tokens": [
         {
           "name": "camera",
           "type": "string",
           "title": {
-            "en": "Camera"
+            "en": "Camera",
+            "sv": "Kamera",
+            "de": "Kamera",
+            "nl": "Camera"
           },
           "example": {
-            "en": "AXIS P3267-LVE"
+            "en": "AXIS P3267-LVE",
+            "sv": "AXIS P3267-LVE",
+            "de": "AXIS P3267-LVE",
+            "nl": "AXIS P3267-LVE"
           }
         },
         {
           "name": "time",
           "type": "string",
           "title": {
-            "en": "Time"
+            "en": "Time",
+            "sv": "Tid",
+            "de": "Zeit",
+            "nl": "Tijd"
           },
           "example": {
-            "en": "2026-10-13 12:00"
+            "en": "2026-10-13 12:00",
+            "sv": "2026-10-13 12:00",
+            "de": "2026-10-13 12:00",
+            "nl": "2026-10-13 12:00"
           }
         },
         {
           "name": "online",
           "type": "boolean",
           "title": {
-            "en": "Online"
+            "en": "Online",
+            "sv": "Online",
+            "de": "Online",
+            "nl": "Online"
           }
         }
       ]
@@ -170,10 +263,16 @@
     {
       "id": "has_problem",
       "title": {
-        "en": "Camera Station !{{has|has no}} active problems"
+        "en": "Camera Station !{{has|has no}} active problems",
+        "sv": "Camera Station !{{har|har inga}} aktiva problem",
+        "de": "Camera Station !{{hat|hat keine}} aktiven Probleme",
+        "nl": "Camera Station !{{heeft|heeft geen}} actieve problemen"
       },
       "hint": {
-        "en": "A disk or recording problem alarm is on."
+        "en": "A disk or recording problem alarm is on.",
+        "sv": "Ett larm för disk- eller inspelningsproblem är på.",
+        "de": "Ein Festplatten- oder Aufnahmeproblem-Alarm ist an.",
+        "nl": "Een alarm voor een schijf- of opnameprobleem staat aan."
       }
     }
   ]

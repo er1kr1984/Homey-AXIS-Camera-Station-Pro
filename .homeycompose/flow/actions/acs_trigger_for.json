@@ -1,41 +1,65 @@
 {
   "title": {
-    "en": "Activate a Camera Station trigger for a while"
+    "en": "Activate a Camera Station trigger for a while",
+    "sv": "Aktivera en Camera Station-utlösare en stund",
+    "de": "Einen Camera Station-Auslöser für eine Weile aktivieren",
+    "nl": "Een Camera Station-trigger een tijdje activeren"
   },
   "titleFormatted": {
-    "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds on [[server]]"
+    "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds on [[server]]",
+    "sv": "Aktivera Camera Station-utlösaren [[trigger]] i [[seconds]] sekunder på [[server]]",
+    "de": "Camera Station-Auslöser [[trigger]] für [[seconds]] Sekunden auf [[server]] aktivieren",
+    "nl": "Camera Station-trigger [[trigger]] [[seconds]] seconden op [[server]] activeren"
   },
   "args": [
     {
       "type": "text",
       "name": "trigger",
       "title": {
-        "en": "Trigger name"
+        "en": "Trigger name",
+        "sv": "Utlösarens namn",
+        "de": "Name des Auslösers",
+        "nl": "Naam van de trigger"
       },
       "placeholder": {
-        "en": "Homey arrival"
+        "en": "Homey arrival",
+        "sv": "Homey ankomst",
+        "de": "Homey Ankunft",
+        "nl": "Homey aankomst"
       }
     },
     {
       "type": "number",
       "name": "seconds",
       "title": {
-        "en": "Seconds"
+        "en": "Seconds",
+        "sv": "Sekunder",
+        "de": "Sekunden",
+        "nl": "Seconden"
       },
       "min": 0,
       "max": 86400,
       "placeholder": {
-        "en": "30"
+        "en": "30",
+        "sv": "30",
+        "de": "30",
+        "nl": "30"
       }
     },
     {
       "type": "autocomplete",
       "name": "server",
       "title": {
-        "en": "Camera Station"
+        "en": "Camera Station",
+        "sv": "Camera Station",
+        "de": "Camera Station",
+        "nl": "Camera Station"
       },
       "placeholder": {
-        "en": "Server"
+        "en": "Server",
+        "sv": "Server",
+        "de": "Server",
+        "nl": "Server"
       }
     }
   ]

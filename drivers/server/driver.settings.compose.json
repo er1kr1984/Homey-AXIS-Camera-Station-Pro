@@ -3,33 +3,48 @@
     "id": "alarm_minutes",
     "type": "number",
     "label": {
-      "en": "Keep problem alarms on for (minutes)"
+      "en": "Keep problem alarms on for (minutes)",
+      "sv": "Håll problemlarm på i (minuter)",
+      "de": "Problemalarme eingeschaltet lassen für (Minuten)",
+      "nl": "Probleemalarmen aan laten staan (minuten)"
     },
     "value": 30,
     "min": 5,
     "max": 1440,
     "hint": {
-      "en": "A disk or recording problem alarm stays on this long after Camera Station last reported the problem. Example: 30."
+      "en": "A disk or recording problem alarm stays on this long after Camera Station last reported the problem. Example: 30.",
+      "sv": "Ett larm för disk- eller inspelningsproblem är på så här länge efter att Camera Station senast rapporterade problemet. Exempel: 30.",
+      "de": "Ein Festplatten- oder Aufnahmeproblem-Alarm bleibt so lange an, nachdem Camera Station das Problem zuletzt gemeldet hat. Beispiel: 30.",
+      "nl": "Een alarm voor een schijf- of opnameprobleem blijft zo lang aan nadat Camera Station het probleem voor het laatst meldde. Voorbeeld: 30."
     }
   },
   {
     "id": "repeat_minutes",
     "type": "number",
     "label": {
-      "en": "Repeat the same problem after (minutes)"
+      "en": "Repeat the same problem after (minutes)",
+      "sv": "Upprepa samma problem efter (minuter)",
+      "de": "Dasselbe Problem erneut melden nach (Minuten)",
+      "nl": "Hetzelfde probleem opnieuw melden na (minuten)"
     },
     "value": 60,
     "min": 5,
     "max": 1440,
     "hint": {
-      "en": "Camera Station repeats some problems every few minutes (for example a camera that cannot be reached). The problem flow cards run again for the same camera only after this many minutes. Example: 60."
+      "en": "Camera Station repeats some problems every few minutes (for example a camera that cannot be reached). The problem flow cards run again for the same camera only after this many minutes. Example: 60.",
+      "sv": "Camera Station upprepar vissa problem med några minuters mellanrum (till exempel en kamera som inte går att nå). Problemkorten i flöden körs igen för samma kamera först efter så här många minuter. Exempel: 60.",
+      "de": "Camera Station wiederholt manche Probleme alle paar Minuten (zum Beispiel eine nicht erreichbare Kamera). Die Problem-Flow-Karten laufen für dieselbe Kamera erst nach so vielen Minuten erneut. Beispiel: 60.",
+      "nl": "Camera Station herhaalt sommige problemen om de paar minuten (bijvoorbeeld een camera die niet bereikbaar is). De probleemkaarten in flows lopen voor dezelfde camera pas na zoveel minuten opnieuw. Voorbeeld: 60."
     }
   },
   {
     "id": "server_name",
     "type": "label",
     "label": {
-      "en": "Server"
+      "en": "Server",
+      "sv": "Server",
+      "de": "Server",
+      "nl": "Server"
     },
     "value": ""
   },
@@ -37,7 +52,10 @@
     "id": "server_version",
     "type": "label",
     "label": {
-      "en": "Camera Station version"
+      "en": "Camera Station version",
+      "sv": "Camera Station-version",
+      "de": "Camera Station-Version",
+      "nl": "Camera Station-versie"
     },
     "value": ""
   },
@@ -45,7 +63,10 @@
     "id": "server_hardware",
     "type": "label",
     "label": {
-      "en": "Hardware"
+      "en": "Hardware",
+      "sv": "Hårdvara",
+      "de": "Hardware",
+      "nl": "Hardware"
     },
     "value": ""
   }

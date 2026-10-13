@@ -1,0 +1,8 @@
+{
+  "0.1.0": {
+    "en": "First release: live video from AXIS Camera Station Pro over WebRTC, views, dashboard widget, events, recording, bookmarks, PTZ, triggers and server health.",
+    "sv": "Första versionen: livevideo från AXIS Camera Station Pro via WebRTC, vyer, widget för instrumentpanelen, händelser, inspelning, bokmärken, PTZ, utlösare och serverhälsa.",
+    "de": "Erste Version: Live-Video von AXIS Camera Station Pro über WebRTC, Ansichten, Dashboard-Widget, Ereignisse, Aufnahme, Lesezeichen, PTZ, Auslöser und Serverzustand.",
+    "nl": "Eerste versie: live video van AXIS Camera Station Pro via WebRTC, weergaven, dashboardwidget, gebeurtenissen, opnemen, bladwijzers, PTZ, triggers en servergezondheid."
+  }
+}

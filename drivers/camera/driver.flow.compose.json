@@ -3,37 +3,58 @@
     {
       "id": "camera_event",
       "title": {
-        "en": "Camera Station sent an event"
+        "en": "Camera Station sent an event",
+        "sv": "Camera Station skickade en händelse",
+        "de": "Camera Station hat ein Ereignis gesendet",
+        "nl": "Camera Station heeft een gebeurtenis gestuurd"
       },
       "hint": {
-        "en": "Runs when a Camera Station action rule sends an event for this camera to Homey."
+        "en": "Runs when a Camera Station action rule sends an event for this camera to Homey.",
+        "sv": "Körs när en åtgärdsregel i Camera Station skickar en händelse för den här kameran till Homey.",
+        "de": "Läuft, wenn eine Camera Station-Aktionsregel ein Ereignis für diese Kamera an Homey sendet.",
+        "nl": "Wordt uitgevoerd als een Camera Station-actieregel een gebeurtenis voor deze camera naar Homey stuurt."
       },
       "tokens": [
         {
           "name": "type",
           "type": "string",
           "title": {
-            "en": "Event type"
+            "en": "Event type",
+            "sv": "Händelsetyp",
+            "de": "Ereignistyp",
+            "nl": "Soort gebeurtenis"
           },
           "example": {
-            "en": "Motion detection"
+            "en": "Motion detection",
+            "sv": "Rörelsedetektering",
+            "de": "Bewegungserkennung",
+            "nl": "Bewegingsdetectie"
           }
         },
         {
           "name": "time",
           "type": "string",
           "title": {
-            "en": "Time"
+            "en": "Time",
+            "sv": "Tid",
+            "de": "Zeit",
+            "nl": "Tijd"
           },
           "example": {
-            "en": "2026-10-13 12:00:00"
+            "en": "2026-10-13 12:00:00",
+            "sv": "2026-10-13 12:00:00",
+            "de": "2026-10-13 12:00:00",
+            "nl": "2026-10-13 12:00:00"
           }
         },
         {
           "name": "snapshot",
           "type": "image",
           "title": {
-            "en": "Snapshot"
+            "en": "Snapshot",
+            "sv": "Ögonblicksbild",
+            "de": "Schnappschuss",
+            "nl": "Momentopname"
           }
         }
       ]
@@ -43,16 +64,25 @@
     {
       "id": "is_recording",
       "title": {
-        "en": "Manual recording !{{is|is not}} on"
+        "en": "Manual recording !{{is|is not}} on",
+        "sv": "Manuell inspelning !{{är|är inte}} på",
+        "de": "Manuelle Aufnahme !{{ist|ist nicht}} an",
+        "nl": "Handmatige opname !{{staat|staat niet}} aan"
       },
       "hint": {
-        "en": "Manual recording started from Homey or Camera Station."
+        "en": "Manual recording started from Homey or Camera Station.",
+        "sv": "Manuell inspelning startad från Homey eller Camera Station.",
+        "de": "Manuelle Aufnahme, gestartet von Homey oder Camera Station.",
+        "nl": "Handmatige opname gestart vanuit Homey of Camera Station."
       }
     },
     {
       "id": "is_online",
       "title": {
-        "en": "Camera !{{is|is not}} online"
+        "en": "Camera !{{is|is not}} online",
+        "sv": "Kameran !{{är|är inte}} online",
+        "de": "Kamera !{{ist|ist nicht}} online",
+        "nl": "Camera !{{is|is niet}} online"
       }
     }
   ],
@@ -60,17 +90,26 @@
     {
       "id": "take_snapshot",
       "title": {
-        "en": "Take a snapshot"
+        "en": "Take a snapshot",
+        "sv": "Ta en ögonblicksbild",
+        "de": "Einen Schnappschuss aufnehmen",
+        "nl": "Een momentopname maken"
       },
       "hint": {
-        "en": "Gives a picture you can use in later cards, for example in a push notification."
+        "en": "Gives a picture you can use in later cards, for example in a push notification.",
+        "sv": "Ger en bild som du kan använda i senare kort, till exempel i en pushnotis.",
+        "de": "Liefert ein Bild für spätere Karten, zum Beispiel für eine Push-Benachrichtigung.",
+        "nl": "Geeft een afbeelding die je in latere kaarten kunt gebruiken, bijvoorbeeld in een pushmelding."
       },
       "tokens": [
         {
           "name": "snapshot",
           "type": "image",
           "title": {
-            "en": "Snapshot"
+            "en": "Snapshot",
+            "sv": "Ögonblicksbild",
+            "de": "Schnappschuss",
+            "nl": "Momentopname"
           }
         }
       ]
@@ -78,46 +117,73 @@
     {
       "id": "start_recording",
       "title": {
-        "en": "Start manual recording"
+        "en": "Start manual recording",
+        "sv": "Starta manuell inspelning",
+        "de": "Manuelle Aufnahme starten",
+        "nl": "Handmatige opname starten"
       }
     },
     {
       "id": "stop_recording",
       "title": {
-        "en": "Stop manual recording"
+        "en": "Stop manual recording",
+        "sv": "Stoppa manuell inspelning",
+        "de": "Manuelle Aufnahme stoppen",
+        "nl": "Handmatige opname stoppen"
       }
     },
     {
       "id": "add_bookmark",
       "title": {
-        "en": "Add bookmark"
+        "en": "Add bookmark",
+        "sv": "Lägg till bokmärke",
+        "de": "Lesezeichen hinzufügen",
+        "nl": "Bladwijzer toevoegen"
       },
       "titleFormatted": {
-        "en": "Add bookmark [[name]] with description [[description]]"
+        "en": "Add bookmark [[name]] with description [[description]]",
+        "sv": "Lägg till bokmärket [[name]] med beskrivningen [[description]]",
+        "de": "Lesezeichen [[name]] mit Beschreibung [[description]] hinzufügen",
+        "nl": "Bladwijzer [[name]] met beschrijving [[description]] toevoegen"
       },
       "hint": {
-        "en": "Marks this moment in the camera's recording timeline in Camera Station."
+        "en": "Marks this moment in the camera's recording timeline in Camera Station.",
+        "sv": "Markerar det här ögonblicket på kamerans tidslinje för inspelningar i Camera Station.",
+        "de": "Markiert diesen Moment in der Aufnahme-Zeitleiste der Kamera in Camera Station.",
+        "nl": "Markeert dit moment op de opnametijdlijn van de camera in Camera Station."
       },
       "args": [
         {
           "type": "text",
           "name": "name",
           "title": {
-            "en": "Name"
+            "en": "Name",
+            "sv": "Namn",
+            "de": "Name",
+            "nl": "Naam"
           },
           "placeholder": {
-            "en": "Front door opened"
+            "en": "Front door opened",
+            "sv": "Ytterdörren öppnades",
+            "de": "Haustür geöffnet",
+            "nl": "Voordeur geopend"
           }
         },
         {
           "type": "text",
           "name": "description",
           "title": {
-            "en": "Description"
+            "en": "Description",
+            "sv": "Beskrivning",
+            "de": "Beschreibung",
+            "nl": "Beschrijving"
           },
           "required": false,
           "placeholder": {
-            "en": "Optional"
+            "en": "Optional",
+            "sv": "Valfritt",
+            "de": "Optional",
+            "nl": "Optioneel"
           }
         }
       ]
@@ -125,23 +191,38 @@
     {
       "id": "goto_preset",
       "title": {
-        "en": "Move to PTZ preset"
+        "en": "Move to PTZ preset",
+        "sv": "Flytta till PTZ-förinställning",
+        "de": "Zu PTZ-Voreinstellung fahren",
+        "nl": "Naar PTZ-voorinstelling gaan"
       },
       "titleFormatted": {
-        "en": "Move to PTZ preset [[preset]]"
+        "en": "Move to PTZ preset [[preset]]",
+        "sv": "Flytta till PTZ-förinställningen [[preset]]",
+        "de": "Zu PTZ-Voreinstellung [[preset]] fahren",
+        "nl": "Naar PTZ-voorinstelling [[preset]] gaan"
       },
       "hint": {
-        "en": "Only for PTZ cameras. The presets are the ones set up for the camera."
+        "en": "Only for PTZ cameras. The presets are the ones set up for the camera.",
+        "sv": "Endast för PTZ-kameror. Förinställningarna är de som är inställda för kameran.",
+        "de": "Nur für PTZ-Kameras. Es sind die für die Kamera eingerichteten Voreinstellungen.",
+        "nl": "Alleen voor PTZ-camera's. Het zijn de voorinstellingen die voor de camera zijn ingesteld."
       },
       "args": [
         {
           "type": "autocomplete",
           "name": "preset",
           "title": {
-            "en": "Preset"
+            "en": "Preset",
+            "sv": "Förinställning",
+            "de": "Voreinstellung",
+            "nl": "Voorinstelling"
           },
           "placeholder": {
-            "en": "Home"
+            "en": "Home",
+            "sv": "Hem",
+            "de": "Home",
+            "nl": "Home"
           }
         }
       ]

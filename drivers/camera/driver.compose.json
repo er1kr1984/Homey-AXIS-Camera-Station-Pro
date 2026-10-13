@@ -1,6 +1,9 @@
 {
   "name": {
-    "en": "Camera"
+    "en": "Camera",
+    "sv": "Kamera",
+    "de": "Kamera",
+    "nl": "Camera"
   },
   "class": "camera",
   "capabilities": [
@@ -25,19 +28,34 @@
       "template": "login_credentials",
       "options": {
         "title": {
-          "en": "Log in to Camera Station"
+          "en": "Log in to Camera Station",
+          "sv": "Logga in på Camera Station",
+          "de": "Bei Camera Station anmelden",
+          "nl": "Inloggen bij Camera Station"
         },
         "usernameLabel": {
-          "en": "Camera Station username"
+          "en": "Camera Station username",
+          "sv": "Användarnamn i Camera Station",
+          "de": "Camera Station-Benutzername",
+          "nl": "Camera Station-gebruikersnaam"
         },
         "usernamePlaceholder": {
-          "en": "axis"
+          "en": "axis",
+          "sv": "axis",
+          "de": "axis",
+          "nl": "axis"
         },
         "passwordLabel": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         },
         "passwordPlaceholder": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         }
       },
       "navigation": {
@@ -63,19 +81,34 @@
       "template": "login_credentials",
       "options": {
         "title": {
-          "en": "Log in to Camera Station"
+          "en": "Log in to Camera Station",
+          "sv": "Logga in på Camera Station",
+          "de": "Bei Camera Station anmelden",
+          "nl": "Inloggen bij Camera Station"
         },
         "usernameLabel": {
-          "en": "Camera Station username"
+          "en": "Camera Station username",
+          "sv": "Användarnamn i Camera Station",
+          "de": "Camera Station-Benutzername",
+          "nl": "Camera Station-gebruikersnaam"
         },
         "usernamePlaceholder": {
-          "en": "axis"
+          "en": "axis",
+          "sv": "axis",
+          "de": "axis",
+          "nl": "axis"
         },
         "passwordLabel": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         },
         "passwordPlaceholder": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         }
       }
     }
@@ -83,13 +116,22 @@
   "capabilitiesOptions": {
     "alarm_generic": {
       "title": {
-        "en": "Camera offline"
+        "en": "Camera offline",
+        "sv": "Kamera offline",
+        "de": "Kamera offline",
+        "nl": "Camera offline"
       },
       "insightsTitleTrue": {
-        "en": "Camera went offline"
+        "en": "Camera went offline",
+        "sv": "Kameran gick offline",
+        "de": "Kamera ist offline gegangen",
+        "nl": "Camera ging offline"
       },
       "insightsTitleFalse": {
-        "en": "Camera came back online"
+        "en": "Camera came back online",
+        "sv": "Kameran är online igen",
+        "de": "Kamera ist wieder online",
+        "nl": "Camera is weer online"
       }
     }
   }

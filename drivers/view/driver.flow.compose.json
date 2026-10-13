@@ -3,17 +3,26 @@
     {
       "id": "take_view_snapshot",
       "title": {
-        "en": "Take a picture of the view"
+        "en": "Take a picture of the view",
+        "sv": "Ta en bild av vyn",
+        "de": "Ein Bild der Ansicht aufnehmen",
+        "nl": "Een afbeelding van de weergave maken"
       },
       "hint": {
-        "en": "All cameras in the view in one picture, like the grid in Camera Station."
+        "en": "All cameras in the view in one picture, like the grid in Camera Station.",
+        "sv": "Alla kameror i vyn i en bild, som rutnätet i Camera Station.",
+        "de": "Alle Kameras der Ansicht in einem Bild, wie das Raster in Camera Station.",
+        "nl": "Alle camera's van de weergave in één afbeelding, zoals het raster in Camera Station."
       },
       "tokens": [
         {
           "name": "snapshot",
           "type": "image",
           "title": {
-            "en": "Picture"
+            "en": "Picture",
+            "sv": "Bild",
+            "de": "Bild",
+            "nl": "Afbeelding"
           }
         }
       ]

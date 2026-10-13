@@ -7,7 +7,7 @@ Station's own WebRTC service: no camera RTSP, no transcoding.
 - **Camera**: live video (WebRTC), picture, motion alarm, camera offline alarm, manual recording button.
   Quality: Low (default), Medium, High or Automatic (lowers quality when Homey gets busy).
 - **View**: a Camera Station split view as one picture laid out like the view's grid,
-  refreshed every minute by default.
+  refreshed every 5 minutes by default (not while live video is playing).
 
 - **Camera Station server**: health from Camera Station's event log and camera list: disk problem
   alarm, recording problem alarm, number of cameras offline, last problem; server name, version
@@ -20,8 +20,9 @@ enlarge it. Each tile is its own WebRTC stream through the app's relay.
 
 Live video needs a direct connection between the phone and Homey, which normally exists only on
 the home network (apps can't use Athom's relay servers). When a tile can't go live within 8 s,
-for example on mobile data, it shows a picture refreshed every 2 s (marked PICTURE), fetched
-through Homey's normal remote connection, and tries live again every minute. Homey's own camera
+for example on mobile data, it plays Camera Station's MP4 live stream through Homey's normal
+remote connection (marked VIA HOMEY, up to 6 streams). If that doesn't play either, it shows a
+picture refreshed every 2 s (marked PICTURE). It tries WebRTC again after 10 s, then every minute. Homey's own camera
 widget (for camera devices) does play live remotely.
 
 ## Cameras with B-frames

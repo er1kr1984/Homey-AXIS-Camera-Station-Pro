@@ -1,6 +1,9 @@
 {
   "name": {
-    "en": "Camera Station live"
+    "en": "Camera Station live",
+    "sv": "Camera Station live",
+    "de": "Camera Station live",
+    "nl": "Camera Station live"
   },
   "height": "56.25%",
   "settings": [
@@ -8,36 +11,54 @@
       "id": "source",
       "type": "autocomplete",
       "title": {
-        "en": "View or camera"
+        "en": "View or camera",
+        "sv": "Vy eller kamera",
+        "de": "Ansicht oder Kamera",
+        "nl": "Weergave of camera"
       },
       "hint": {
-        "en": "Pick a Camera Station view (all its cameras live, laid out like in Camera Station) or a single camera."
+        "en": "Pick a Camera Station view (all its cameras live, laid out like in Camera Station) or a single camera.",
+        "sv": "Välj en vy från Camera Station (alla dess kameror live, placerade som i Camera Station) eller en enskild kamera.",
+        "de": "Wählen Sie eine Camera Station-Ansicht (alle Kameras live, angeordnet wie in Camera Station) oder eine einzelne Kamera.",
+        "nl": "Kies een Camera Station-weergave (alle camera's live, geplaatst zoals in Camera Station) of één camera."
       }
     },
     {
       "id": "quality",
       "type": "dropdown",
       "title": {
-        "en": "Video quality"
+        "en": "Video quality",
+        "sv": "Videokvalitet",
+        "de": "Videoqualität",
+        "nl": "Videokwaliteit"
       },
       "value": "low",
       "values": [
         {
           "id": "low",
           "title": {
-            "en": "Low (recommended)"
+            "en": "Low (recommended)",
+            "sv": "Låg (rekommenderas)",
+            "de": "Niedrig (empfohlen)",
+            "nl": "Laag (aanbevolen)"
           }
         },
         {
           "id": "medium",
           "title": {
-            "en": "Medium"
+            "en": "Medium",
+            "sv": "Mellan",
+            "de": "Mittel",
+            "nl": "Gemiddeld"
           }
         },
         {
           "id": "auto",
           "title": {
-            "en": "Automatic"
+            "en": "Automatic",
+            "sv": "Automatisk",
+            "de": "Automatisch",
+            "nl": "Automatisch"
           }
         }
       ]

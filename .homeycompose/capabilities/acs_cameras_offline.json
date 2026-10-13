@@ -1,7 +1,10 @@
 {
   "type": "number",
   "title": {
-    "en": "Cameras offline"
+    "en": "Cameras offline",
+    "sv": "Kameror offline",
+    "de": "Kameras offline",
+    "nl": "Camera's offline"
   },
   "getable": true,
   "setable": false,

@@ -10,10 +10,16 @@
   ],
   "brandColor": "#1f3a5f",
   "name": {
-    "en": "Camera Station Live"
+    "en": "Camera Station Live",
+    "sv": "Camera Station Live",
+    "de": "Camera Station Live",
+    "nl": "Camera Station Live"
   },
   "description": {
-    "en": "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server."
+    "en": "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server.",
+    "sv": "Livevideo från AXIS Camera Station Pro via WebRTC, direkt från din inspelningsserver.",
+    "de": "Live-Video von AXIS Camera Station Pro über WebRTC, direkt von Ihrem Aufnahmeserver.",
+    "nl": "Live video van AXIS Camera Station Pro via WebRTC, rechtstreeks van je opnameserver."
   },
   "category": [
     "security"
@@ -90,50 +96,80 @@
     "triggers": [
       {
         "title": {
-          "en": "Camera Station sent an event"
+          "en": "Camera Station sent an event",
+          "sv": "Camera Station skickade en händelse",
+          "de": "Camera Station hat ein Ereignis gesendet",
+          "nl": "Camera Station heeft een gebeurtenis gestuurd"
         },
         "hint": {
-          "en": "Runs for every event Camera Station sends to Homey, also for sources that are not added as devices (door stations, action buttons, ...)."
+          "en": "Runs for every event Camera Station sends to Homey, also for sources that are not added as devices (door stations, action buttons, ...).",
+          "sv": "Körs för varje händelse som Camera Station skickar till Homey, även för källor som inte är tillagda som enheter (porttelefoner, åtgärdsknappar, ...).",
+          "de": "Läuft bei jedem Ereignis, das Camera Station an Homey sendet, auch für Quellen, die nicht als Geräte hinzugefügt sind (Türstationen, Aktionstasten, ...).",
+          "nl": "Wordt uitgevoerd bij elke gebeurtenis die Camera Station naar Homey stuurt, ook voor bronnen die niet als apparaat zijn toegevoegd (deurstations, actieknoppen, ...)."
         },
         "tokens": [
           {
             "name": "type",
             "type": "string",
             "title": {
-              "en": "Event type"
+              "en": "Event type",
+              "sv": "Händelsetyp",
+              "de": "Ereignistyp",
+              "nl": "Soort gebeurtenis"
             },
             "example": {
-              "en": "Motion detection"
+              "en": "Motion detection",
+              "sv": "Rörelsedetektering",
+              "de": "Bewegungserkennung",
+              "nl": "Bewegingsdetectie"
             }
           },
           {
             "name": "source",
             "type": "string",
             "title": {
-              "en": "Source name"
+              "en": "Source name",
+              "sv": "Källans namn",
+              "de": "Name der Quelle",
+              "nl": "Naam van de bron"
             },
             "example": {
-              "en": "Front door"
+              "en": "Front door",
+              "sv": "Ytterdörr",
+              "de": "Haustür",
+              "nl": "Voordeur"
             }
           },
           {
             "name": "source_id",
             "type": "string",
             "title": {
-              "en": "Source ID"
+              "en": "Source ID",
+              "sv": "Käll-ID",
+              "de": "Quell-ID",
+              "nl": "Bron-ID"
             },
             "example": {
-              "en": "73016_..."
+              "en": "73016_...",
+              "sv": "73016_...",
+              "de": "73016_...",
+              "nl": "73016_..."
             }
           },
           {
             "name": "time",
             "type": "string",
             "title": {
-              "en": "Time"
+              "en": "Time",
+              "sv": "Tid",
+              "de": "Zeit",
+              "nl": "Tijd"
             },
             "example": {
-              "en": "2026-10-13 12:00:00"
+              "en": "2026-10-13 12:00:00",
+              "sv": "2026-10-13 12:00:00",
+              "de": "2026-10-13 12:00:00",
+              "nl": "2026-10-13 12:00:00"
             }
           }
         ],
@@ -142,37 +178,58 @@
       {
         "id": "camera_event",
         "title": {
-          "en": "Camera Station sent an event"
+          "en": "Camera Station sent an event",
+          "sv": "Camera Station skickade en händelse",
+          "de": "Camera Station hat ein Ereignis gesendet",
+          "nl": "Camera Station heeft een gebeurtenis gestuurd"
         },
         "hint": {
-          "en": "Runs when a Camera Station action rule sends an event for this camera to Homey."
+          "en": "Runs when a Camera Station action rule sends an event for this camera to Homey.",
+          "sv": "Körs när en åtgärdsregel i Camera Station skickar en händelse för den här kameran till Homey.",
+          "de": "Läuft, wenn eine Camera Station-Aktionsregel ein Ereignis für diese Kamera an Homey sendet.",
+          "nl": "Wordt uitgevoerd als een Camera Station-actieregel een gebeurtenis voor deze camera naar Homey stuurt."
         },
         "tokens": [
           {
             "name": "type",
             "type": "string",
             "title": {
-              "en": "Event type"
+              "en": "Event type",
+              "sv": "Händelsetyp",
+              "de": "Ereignistyp",
+              "nl": "Soort gebeurtenis"
             },
             "example": {
-              "en": "Motion detection"
+              "en": "Motion detection",
+              "sv": "Rörelsedetektering",
+              "de": "Bewegungserkennung",
+              "nl": "Bewegingsdetectie"
             }
           },
           {
             "name": "time",
             "type": "string",
             "title": {
-              "en": "Time"
+              "en": "Time",
+              "sv": "Tid",
+              "de": "Zeit",
+              "nl": "Tijd"
             },
             "example": {
-              "en": "2026-10-13 12:00:00"
+              "en": "2026-10-13 12:00:00",
+              "sv": "2026-10-13 12:00:00",
+              "de": "2026-10-13 12:00:00",
+              "nl": "2026-10-13 12:00:00"
             }
           },
           {
             "name": "snapshot",
             "type": "image",
             "title": {
-              "en": "Snapshot"
+              "en": "Snapshot",
+              "sv": "Ögonblicksbild",
+              "de": "Schnappschuss",
+              "nl": "Momentopname"
             }
           }
         ],
@@ -187,50 +244,80 @@
       {
         "id": "server_problem",
         "title": {
-          "en": "Camera Station reported a problem"
+          "en": "Camera Station reported a problem",
+          "sv": "Camera Station rapporterade ett problem",
+          "de": "Camera Station hat ein Problem gemeldet",
+          "nl": "Camera Station heeft een probleem gemeld"
         },
         "hint": {
-          "en": "Disk errors and warnings, and recordings that failed. Repeats of the same problem are held back (see the device settings)."
+          "en": "Disk errors and warnings, and recordings that failed. Repeats of the same problem are held back (see the device settings).",
+          "sv": "Diskfel och diskvarningar samt misslyckade inspelningar. Upprepningar av samma problem hålls tillbaka (se enhetens inställningar).",
+          "de": "Festplattenfehler und -warnungen sowie fehlgeschlagene Aufnahmen. Wiederholungen desselben Problems werden zurückgehalten (siehe Geräteeinstellungen).",
+          "nl": "Schijffouten en -waarschuwingen, en mislukte opnames. Herhalingen van hetzelfde probleem worden tegengehouden (zie de apparaatinstellingen)."
         },
         "tokens": [
           {
             "name": "problem",
             "type": "string",
             "title": {
-              "en": "Problem"
+              "en": "Problem",
+              "sv": "Problem",
+              "de": "Problem",
+              "nl": "Probleem"
             },
             "example": {
-              "en": "Recording failed"
+              "en": "Recording failed",
+              "sv": "Inspelningen misslyckades",
+              "de": "Aufnahme fehlgeschlagen",
+              "nl": "Opname mislukt"
             }
           },
           {
             "name": "description",
             "type": "string",
             "title": {
-              "en": "Description"
+              "en": "Description",
+              "sv": "Beskrivning",
+              "de": "Beschreibung",
+              "nl": "Beschrijving"
             },
             "example": {
-              "en": "Recording failed: AXIS P3267-LVE"
+              "en": "Recording failed: AXIS P3267-LVE",
+              "sv": "Inspelningen misslyckades: AXIS P3267-LVE",
+              "de": "Aufnahme fehlgeschlagen: AXIS P3267-LVE",
+              "nl": "Opname mislukt: AXIS P3267-LVE"
             }
           },
           {
             "name": "camera",
             "type": "string",
             "title": {
-              "en": "Camera"
+              "en": "Camera",
+              "sv": "Kamera",
+              "de": "Kamera",
+              "nl": "Camera"
             },
             "example": {
-              "en": "AXIS P3267-LVE"
+              "en": "AXIS P3267-LVE",
+              "sv": "AXIS P3267-LVE",
+              "de": "AXIS P3267-LVE",
+              "nl": "AXIS P3267-LVE"
             }
           },
           {
             "name": "time",
             "type": "string",
             "title": {
-              "en": "Time"
+              "en": "Time",
+              "sv": "Tid",
+              "de": "Zeit",
+              "nl": "Tijd"
             },
             "example": {
-              "en": "2026-10-13 12:00"
+              "en": "2026-10-13 12:00",
+              "sv": "2026-10-13 12:00",
+              "de": "2026-10-13 12:00",
+              "nl": "2026-10-13 12:00"
             }
           }
         ],
@@ -245,37 +332,58 @@
       {
         "id": "recording_failed",
         "title": {
-          "en": "Recording failed on a camera"
+          "en": "Recording failed on a camera",
+          "sv": "Inspelningen misslyckades på en kamera",
+          "de": "Aufnahme an einer Kamera fehlgeschlagen",
+          "nl": "Opname op een camera mislukt"
         },
         "tokens": [
           {
             "name": "camera",
             "type": "string",
             "title": {
-              "en": "Camera"
+              "en": "Camera",
+              "sv": "Kamera",
+              "de": "Kamera",
+              "nl": "Camera"
             },
             "example": {
-              "en": "AXIS P3267-LVE"
+              "en": "AXIS P3267-LVE",
+              "sv": "AXIS P3267-LVE",
+              "de": "AXIS P3267-LVE",
+              "nl": "AXIS P3267-LVE"
             }
           },
           {
             "name": "time",
             "type": "string",
             "title": {
-              "en": "Time"
+              "en": "Time",
+              "sv": "Tid",
+              "de": "Zeit",
+              "nl": "Tijd"
             },
             "example": {
-              "en": "2026-10-13 12:00"
+              "en": "2026-10-13 12:00",
+              "sv": "2026-10-13 12:00",
+              "de": "2026-10-13 12:00",
+              "nl": "2026-10-13 12:00"
             }
           },
           {
             "name": "reason",
             "type": "string",
             "title": {
-              "en": "Reason"
+              "en": "Reason",
+              "sv": "Orsak",
+              "de": "Grund",
+              "nl": "Reden"
             },
             "example": {
-              "en": "Camera not reachable"
+              "en": "Camera not reachable",
+              "sv": "Kameran går inte att nå",
+              "de": "Kamera nicht erreichbar",
+              "nl": "Camera niet bereikbaar"
             }
           }
         ],
@@ -290,37 +398,58 @@
       {
         "id": "disk_problem",
         "title": {
-          "en": "Camera Station has a disk problem"
+          "en": "Camera Station has a disk problem",
+          "sv": "Camera Station har ett diskproblem",
+          "de": "Camera Station hat ein Festplattenproblem",
+          "nl": "Camera Station heeft een schijfprobleem"
         },
         "tokens": [
           {
             "name": "problem",
             "type": "string",
             "title": {
-              "en": "Problem"
+              "en": "Problem",
+              "sv": "Problem",
+              "de": "Problem",
+              "nl": "Probleem"
             },
             "example": {
-              "en": "Disk full"
+              "en": "Disk full",
+              "sv": "Disken är full",
+              "de": "Festplatte voll",
+              "nl": "Schijf vol"
             }
           },
           {
             "name": "path",
             "type": "string",
             "title": {
-              "en": "Disk or folder"
+              "en": "Disk or folder",
+              "sv": "Disk eller mapp",
+              "de": "Festplatte oder Ordner",
+              "nl": "Schijf of map"
             },
             "example": {
-              "en": "D:\\\\"
+              "en": "D:\\\\",
+              "sv": "D:\\\\",
+              "de": "D:\\\\",
+              "nl": "D:\\\\"
             }
           },
           {
             "name": "time",
             "type": "string",
             "title": {
-              "en": "Time"
+              "en": "Time",
+              "sv": "Tid",
+              "de": "Zeit",
+              "nl": "Tijd"
             },
             "example": {
-              "en": "2026-10-13 12:00"
+              "en": "2026-10-13 12:00",
+              "sv": "2026-10-13 12:00",
+              "de": "2026-10-13 12:00",
+              "nl": "2026-10-13 12:00"
             }
           }
         ],
@@ -335,37 +464,58 @@
       {
         "id": "camera_status_changed",
         "title": {
-          "en": "A camera went offline or came back"
+          "en": "A camera went offline or came back",
+          "sv": "En kamera gick offline eller kom tillbaka",
+          "de": "Eine Kamera ist offline gegangen oder wieder da",
+          "nl": "Een camera ging offline of kwam terug"
         },
         "hint": {
-          "en": "For every camera in Camera Station, also those not added to Homey."
+          "en": "For every camera in Camera Station, also those not added to Homey.",
+          "sv": "För varje kamera i Camera Station, även de som inte är tillagda i Homey.",
+          "de": "Für jede Kamera in Camera Station, auch für die, die nicht zu Homey hinzugefügt sind.",
+          "nl": "Voor elke camera in Camera Station, ook die niet aan Homey zijn toegevoegd."
         },
         "tokens": [
           {
             "name": "camera",
             "type": "string",
             "title": {
-              "en": "Camera"
+              "en": "Camera",
+              "sv": "Kamera",
+              "de": "Kamera",
+              "nl": "Camera"
             },
             "example": {
-              "en": "AXIS P3267-LVE"
+              "en": "AXIS P3267-LVE",
+              "sv": "AXIS P3267-LVE",
+              "de": "AXIS P3267-LVE",
+              "nl": "AXIS P3267-LVE"
             }
           },
           {
             "name": "time",
             "type": "string",
             "title": {
-              "en": "Time"
+              "en": "Time",
+              "sv": "Tid",
+              "de": "Zeit",
+              "nl": "Tijd"
             },
             "example": {
-              "en": "2026-10-13 12:00"
+              "en": "2026-10-13 12:00",
+              "sv": "2026-10-13 12:00",
+              "de": "2026-10-13 12:00",
+              "nl": "2026-10-13 12:00"
             }
           },
           {
             "name": "online",
             "type": "boolean",
             "title": {
-              "en": "Online"
+              "en": "Online",
+              "sv": "Online",
+              "de": "Online",
+              "nl": "Online"
             }
           }
         ],
@@ -381,33 +531,54 @@
     "actions": [
       {
         "title": {
-          "en": "Activate a Camera Station trigger"
+          "en": "Activate a Camera Station trigger",
+          "sv": "Aktivera en Camera Station-utlösare",
+          "de": "Einen Camera Station-Auslöser aktivieren",
+          "nl": "Een Camera Station-trigger activeren"
         },
         "titleFormatted": {
-          "en": "Activate Camera Station trigger [[trigger]] on [[server]]"
+          "en": "Activate Camera Station trigger [[trigger]] on [[server]]",
+          "sv": "Aktivera Camera Station-utlösaren [[trigger]] på [[server]]",
+          "de": "Camera Station-Auslöser [[trigger]] auf [[server]] aktivieren",
+          "nl": "Camera Station-trigger [[trigger]] op [[server]] activeren"
         },
         "hint": {
-          "en": "Starts the actions of a Camera Station action rule whose trigger is \"Trigger\" with this name."
+          "en": "Starts the actions of a Camera Station action rule whose trigger is \"Trigger\" with this name.",
+          "sv": "Startar åtgärderna i en åtgärdsregel i Camera Station vars utlösare är \"Trigger\" med detta namn.",
+          "de": "Startet die Aktionen einer Camera Station-Aktionsregel, deren Auslöser \"Trigger\" mit diesem Namen ist.",
+          "nl": "Start de acties van een Camera Station-actieregel waarvan de trigger \"Trigger\" met deze naam is."
         },
         "args": [
           {
             "type": "text",
             "name": "trigger",
             "title": {
-              "en": "Trigger name"
+              "en": "Trigger name",
+              "sv": "Utlösarens namn",
+              "de": "Name des Auslösers",
+              "nl": "Naam van de trigger"
             },
             "placeholder": {
-              "en": "Homey arrival"
+              "en": "Homey arrival",
+              "sv": "Homey ankomst",
+              "de": "Homey Ankunft",
+              "nl": "Homey aankomst"
             }
           },
           {
             "type": "autocomplete",
             "name": "server",
             "title": {
-              "en": "Camera Station"
+              "en": "Camera Station",
+              "sv": "Camera Station",
+              "de": "Camera Station",
+              "nl": "Camera Station"
             },
             "placeholder": {
-              "en": "Server"
+              "en": "Server",
+              "sv": "Server",
+              "de": "Server",
+              "nl": "Server"
             }
           }
         ],
@@ -415,30 +586,48 @@
       },
       {
         "title": {
-          "en": "Deactivate a Camera Station trigger"
+          "en": "Deactivate a Camera Station trigger",
+          "sv": "Inaktivera en Camera Station-utlösare",
+          "de": "Einen Camera Station-Auslöser deaktivieren",
+          "nl": "Een Camera Station-trigger deactiveren"
         },
         "titleFormatted": {
-          "en": "Deactivate Camera Station trigger [[trigger]] on [[server]]"
+          "en": "Deactivate Camera Station trigger [[trigger]] on [[server]]",
+          "sv": "Inaktivera Camera Station-utlösaren [[trigger]] på [[server]]",
+          "de": "Camera Station-Auslöser [[trigger]] auf [[server]] deaktivieren",
+          "nl": "Camera Station-trigger [[trigger]] op [[server]] deactiveren"
         },
         "args": [
           {
             "type": "text",
             "name": "trigger",
             "title": {
-              "en": "Trigger name"
+              "en": "Trigger name",
+              "sv": "Utlösarens namn",
+              "de": "Name des Auslösers",
+              "nl": "Naam van de trigger"
             },
             "placeholder": {
-              "en": "Homey arrival"
+              "en": "Homey arrival",
+              "sv": "Homey ankomst",
+              "de": "Homey Ankunft",
+              "nl": "Homey aankomst"
             }
           },
           {
             "type": "autocomplete",
             "name": "server",
             "title": {
-              "en": "Camera Station"
+              "en": "Camera Station",
+              "sv": "Camera Station",
+              "de": "Camera Station",
+              "nl": "Camera Station"
             },
             "placeholder": {
-              "en": "Server"
+              "en": "Server",
+              "sv": "Server",
+              "de": "Server",
+              "nl": "Server"
             }
           }
         ],
@@ -446,42 +635,66 @@
       },
       {
         "title": {
-          "en": "Activate a Camera Station trigger for a while"
+          "en": "Activate a Camera Station trigger for a while",
+          "sv": "Aktivera en Camera Station-utlösare en stund",
+          "de": "Einen Camera Station-Auslöser für eine Weile aktivieren",
+          "nl": "Een Camera Station-trigger een tijdje activeren"
         },
         "titleFormatted": {
-          "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds on [[server]]"
+          "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds on [[server]]",
+          "sv": "Aktivera Camera Station-utlösaren [[trigger]] i [[seconds]] sekunder på [[server]]",
+          "de": "Camera Station-Auslöser [[trigger]] für [[seconds]] Sekunden auf [[server]] aktivieren",
+          "nl": "Camera Station-trigger [[trigger]] [[seconds]] seconden op [[server]] activeren"
         },
         "args": [
           {
             "type": "text",
             "name": "trigger",
             "title": {
-              "en": "Trigger name"
+              "en": "Trigger name",
+              "sv": "Utlösarens namn",
+              "de": "Name des Auslösers",
+              "nl": "Naam van de trigger"
             },
             "placeholder": {
-              "en": "Homey arrival"
+              "en": "Homey arrival",
+              "sv": "Homey ankomst",
+              "de": "Homey Ankunft",
+              "nl": "Homey aankomst"
             }
           },
           {
             "type": "number",
             "name": "seconds",
             "title": {
-              "en": "Seconds"
+              "en": "Seconds",
+              "sv": "Sekunder",
+              "de": "Sekunden",
+              "nl": "Seconden"
             },
             "min": 0,
             "max": 86400,
             "placeholder": {
-              "en": "30"
+              "en": "30",
+              "sv": "30",
+              "de": "30",
+              "nl": "30"
             }
           },
           {
             "type": "autocomplete",
             "name": "server",
             "title": {
-              "en": "Camera Station"
+              "en": "Camera Station",
+              "sv": "Camera Station",
+              "de": "Camera Station",
+              "nl": "Camera Station"
             },
             "placeholder": {
-              "en": "Server"
+              "en": "Server",
+              "sv": "Server",
+              "de": "Server",
+              "nl": "Server"
             }
           }
         ],
@@ -489,33 +702,54 @@
       },
       {
         "title": {
-          "en": "Pulse a Camera Station trigger"
+          "en": "Pulse a Camera Station trigger",
+          "sv": "Pulsa en Camera Station-utlösare",
+          "de": "Einen Camera Station-Auslöser kurz auslösen",
+          "nl": "Een Camera Station-trigger kort activeren"
         },
         "titleFormatted": {
-          "en": "Pulse Camera Station trigger [[trigger]] on [[server]]"
+          "en": "Pulse Camera Station trigger [[trigger]] on [[server]]",
+          "sv": "Pulsa Camera Station-utlösaren [[trigger]] på [[server]]",
+          "de": "Camera Station-Auslöser [[trigger]] auf [[server]] kurz auslösen",
+          "nl": "Camera Station-trigger [[trigger]] op [[server]] kort activeren"
         },
         "hint": {
-          "en": "Activates and immediately deactivates the trigger."
+          "en": "Activates and immediately deactivates the trigger.",
+          "sv": "Aktiverar och inaktiverar utlösaren direkt.",
+          "de": "Aktiviert den Auslöser und deaktiviert ihn sofort wieder.",
+          "nl": "Activeert de trigger en deactiveert hem meteen weer."
         },
         "args": [
           {
             "type": "text",
             "name": "trigger",
             "title": {
-              "en": "Trigger name"
+              "en": "Trigger name",
+              "sv": "Utlösarens namn",
+              "de": "Name des Auslösers",
+              "nl": "Naam van de trigger"
             },
             "placeholder": {
-              "en": "Homey arrival"
+              "en": "Homey arrival",
+              "sv": "Homey ankomst",
+              "de": "Homey Ankunft",
+              "nl": "Homey aankomst"
             }
           },
           {
             "type": "autocomplete",
             "name": "server",
             "title": {
-              "en": "Camera Station"
+              "en": "Camera Station",
+              "sv": "Camera Station",
+              "de": "Camera Station",
+              "nl": "Camera Station"
             },
             "placeholder": {
-              "en": "Server"
+              "en": "Server",
+              "sv": "Server",
+              "de": "Server",
+              "nl": "Server"
             }
           }
         ],
@@ -524,17 +758,26 @@
       {
         "id": "take_snapshot",
         "title": {
-          "en": "Take a snapshot"
+          "en": "Take a snapshot",
+          "sv": "Ta en ögonblicksbild",
+          "de": "Einen Schnappschuss aufnehmen",
+          "nl": "Een momentopname maken"
         },
         "hint": {
-          "en": "Gives a picture you can use in later cards, for example in a push notification."
+          "en": "Gives a picture you can use in later cards, for example in a push notification.",
+          "sv": "Ger en bild som du kan använda i senare kort, till exempel i en pushnotis.",
+          "de": "Liefert ein Bild für spätere Karten, zum Beispiel für eine Push-Benachrichtigung.",
+          "nl": "Geeft een afbeelding die je in latere kaarten kunt gebruiken, bijvoorbeeld in een pushmelding."
         },
         "tokens": [
           {
             "name": "snapshot",
             "type": "image",
             "title": {
-              "en": "Snapshot"
+              "en": "Snapshot",
+              "sv": "Ögonblicksbild",
+              "de": "Schnappschuss",
+              "nl": "Momentopname"
             }
           }
         ],
@@ -549,7 +792,10 @@
       {
         "id": "start_recording",
         "title": {
-          "en": "Start manual recording"
+          "en": "Start manual recording",
+          "sv": "Starta manuell inspelning",
+          "de": "Manuelle Aufnahme starten",
+          "nl": "Handmatige opname starten"
         },
         "args": [
           {
@@ -562,7 +808,10 @@
       {
         "id": "stop_recording",
         "title": {
-          "en": "Stop manual recording"
+          "en": "Stop manual recording",
+          "sv": "Stoppa manuell inspelning",
+          "de": "Manuelle Aufnahme stoppen",
+          "nl": "Handmatige opname stoppen"
         },
         "args": [
           {
@@ -575,13 +824,22 @@
       {
         "id": "add_bookmark",
         "title": {
-          "en": "Add bookmark"
+          "en": "Add bookmark",
+          "sv": "Lägg till bokmärke",
+          "de": "Lesezeichen hinzufügen",
+          "nl": "Bladwijzer toevoegen"
         },
         "titleFormatted": {
-          "en": "Add bookmark [[name]] with description [[description]]"
+          "en": "Add bookmark [[name]] with description [[description]]",
+          "sv": "Lägg till bokmärket [[name]] med beskrivningen [[description]]",
+          "de": "Lesezeichen [[name]] mit Beschreibung [[description]] hinzufügen",
+          "nl": "Bladwijzer [[name]] met beschrijving [[description]] toevoegen"
         },
         "hint": {
-          "en": "Marks this moment in the camera's recording timeline in Camera Station."
+          "en": "Marks this moment in the camera's recording timeline in Camera Station.",
+          "sv": "Markerar det här ögonblicket på kamerans tidslinje för inspelningar i Camera Station.",
+          "de": "Markiert diesen Moment in der Aufnahme-Zeitleiste der Kamera in Camera Station.",
+          "nl": "Markeert dit moment op de opnametijdlijn van de camera in Camera Station."
         },
         "args": [
           {
@@ -593,21 +851,33 @@
             "type": "text",
             "name": "name",
             "title": {
-              "en": "Name"
+              "en": "Name",
+              "sv": "Namn",
+              "de": "Name",
+              "nl": "Naam"
             },
             "placeholder": {
-              "en": "Front door opened"
+              "en": "Front door opened",
+              "sv": "Ytterdörren öppnades",
+              "de": "Haustür geöffnet",
+              "nl": "Voordeur geopend"
             }
           },
           {
             "type": "text",
             "name": "description",
             "title": {
-              "en": "Description"
+              "en": "Description",
+              "sv": "Beskrivning",
+              "de": "Beschreibung",
+              "nl": "Beschrijving"
             },
             "required": false,
             "placeholder": {
-              "en": "Optional"
+              "en": "Optional",
+              "sv": "Valfritt",
+              "de": "Optional",
+              "nl": "Optioneel"
             }
           }
         ]
@@ -615,13 +885,22 @@
       {
         "id": "goto_preset",
         "title": {
-          "en": "Move to PTZ preset"
+          "en": "Move to PTZ preset",
+          "sv": "Flytta till PTZ-förinställning",
+          "de": "Zu PTZ-Voreinstellung fahren",
+          "nl": "Naar PTZ-voorinstelling gaan"
         },
         "titleFormatted": {
-          "en": "Move to PTZ preset [[preset]]"
+          "en": "Move to PTZ preset [[preset]]",
+          "sv": "Flytta till PTZ-förinställningen [[preset]]",
+          "de": "Zu PTZ-Voreinstellung [[preset]] fahren",
+          "nl": "Naar PTZ-voorinstelling [[preset]] gaan"
         },
         "hint": {
-          "en": "Only for PTZ cameras. The presets are the ones set up for the camera."
+          "en": "Only for PTZ cameras. The presets are the ones set up for the camera.",
+          "sv": "Endast för PTZ-kameror. Förinställningarna är de som är inställda för kameran.",
+          "de": "Nur für PTZ-Kameras. Es sind die für die Kamera eingerichteten Voreinstellungen.",
+          "nl": "Alleen voor PTZ-camera's. Het zijn de voorinstellingen die voor de camera zijn ingesteld."
         },
         "args": [
           {
@@ -633,10 +912,16 @@
             "type": "autocomplete",
             "name": "preset",
             "title": {
-              "en": "Preset"
+              "en": "Preset",
+              "sv": "Förinställning",
+              "de": "Voreinstellung",
+              "nl": "Voorinstelling"
             },
             "placeholder": {
-              "en": "Home"
+              "en": "Home",
+              "sv": "Hem",
+              "de": "Home",
+              "nl": "Home"
             }
           }
         ]
@@ -644,17 +929,26 @@
       {
         "id": "take_view_snapshot",
         "title": {
-          "en": "Take a picture of the view"
+          "en": "Take a picture of the view",
+          "sv": "Ta en bild av vyn",
+          "de": "Ein Bild der Ansicht aufnehmen",
+          "nl": "Een afbeelding van de weergave maken"
         },
         "hint": {
-          "en": "All cameras in the view in one picture, like the grid in Camera Station."
+          "en": "All cameras in the view in one picture, like the grid in Camera Station.",
+          "sv": "Alla kameror i vyn i en bild, som rutnätet i Camera Station.",
+          "de": "Alle Kameras der Ansicht in einem Bild, wie das Raster in Camera Station.",
+          "nl": "Alle camera's van de weergave in één afbeelding, zoals het raster in Camera Station."
         },
         "tokens": [
           {
             "name": "snapshot",
             "type": "image",
             "title": {
-              "en": "Picture"
+              "en": "Picture",
+              "sv": "Bild",
+              "de": "Bild",
+              "nl": "Afbeelding"
             }
           }
         ],
@@ -671,10 +965,16 @@
       {
         "id": "is_recording",
         "title": {
-          "en": "Manual recording !{{is|is not}} on"
+          "en": "Manual recording !{{is|is not}} on",
+          "sv": "Manuell inspelning !{{är|är inte}} på",
+          "de": "Manuelle Aufnahme !{{ist|ist nicht}} an",
+          "nl": "Handmatige opname !{{staat|staat niet}} aan"
         },
         "hint": {
-          "en": "Manual recording started from Homey or Camera Station."
+          "en": "Manual recording started from Homey or Camera Station.",
+          "sv": "Manuell inspelning startad från Homey eller Camera Station.",
+          "de": "Manuelle Aufnahme, gestartet von Homey oder Camera Station.",
+          "nl": "Handmatige opname gestart vanuit Homey of Camera Station."
         },
         "args": [
           {
@@ -687,7 +987,10 @@
       {
         "id": "is_online",
         "title": {
-          "en": "Camera !{{is|is not}} online"
+          "en": "Camera !{{is|is not}} online",
+          "sv": "Kameran !{{är|är inte}} online",
+          "de": "Kamera !{{ist|ist nicht}} online",
+          "nl": "Camera !{{is|is niet}} online"
         },
         "args": [
           {
@@ -700,10 +1003,16 @@
       {
         "id": "has_problem",
         "title": {
-          "en": "Camera Station !{{has|has no}} active problems"
+          "en": "Camera Station !{{has|has no}} active problems",
+          "sv": "Camera Station !{{har|har inga}} aktiva problem",
+          "de": "Camera Station !{{hat|hat keine}} aktiven Probleme",
+          "nl": "Camera Station !{{heeft|heeft geen}} actieve problemen"
         },
         "hint": {
-          "en": "A disk or recording problem alarm is on."
+          "en": "A disk or recording problem alarm is on.",
+          "sv": "Ett larm för disk- eller inspelningsproblem är på.",
+          "de": "Ein Festplatten- oder Aufnahmeproblem-Alarm ist an.",
+          "nl": "Een alarm voor een schijf- of opnameprobleem staat aan."
         },
         "args": [
           {
@@ -718,7 +1027,10 @@
   "drivers": [
     {
       "name": {
-        "en": "Camera"
+        "en": "Camera",
+        "sv": "Kamera",
+        "de": "Kamera",
+        "nl": "Camera"
       },
       "class": "camera",
       "capabilities": [
@@ -743,19 +1055,34 @@
           "template": "login_credentials",
           "options": {
             "title": {
-              "en": "Log in to Camera Station"
+              "en": "Log in to Camera Station",
+              "sv": "Logga in på Camera Station",
+              "de": "Bei Camera Station anmelden",
+              "nl": "Inloggen bij Camera Station"
             },
             "usernameLabel": {
-              "en": "Camera Station username"
+              "en": "Camera Station username",
+              "sv": "Användarnamn i Camera Station",
+              "de": "Camera Station-Benutzername",
+              "nl": "Camera Station-gebruikersnaam"
             },
             "usernamePlaceholder": {
-              "en": "axis"
+              "en": "axis",
+              "sv": "axis",
+              "de": "axis",
+              "nl": "axis"
             },
             "passwordLabel": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             },
             "passwordPlaceholder": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             }
           },
           "navigation": {
@@ -781,19 +1108,34 @@
           "template": "login_credentials",
           "options": {
             "title": {
-              "en": "Log in to Camera Station"
+              "en": "Log in to Camera Station",
+              "sv": "Logga in på Camera Station",
+              "de": "Bei Camera Station anmelden",
+              "nl": "Inloggen bij Camera Station"
             },
             "usernameLabel": {
-              "en": "Camera Station username"
+              "en": "Camera Station username",
+              "sv": "Användarnamn i Camera Station",
+              "de": "Camera Station-Benutzername",
+              "nl": "Camera Station-gebruikersnaam"
             },
             "usernamePlaceholder": {
-              "en": "axis"
+              "en": "axis",
+              "sv": "axis",
+              "de": "axis",
+              "nl": "axis"
             },
             "passwordLabel": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             },
             "passwordPlaceholder": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             }
           }
         }
@@ -801,13 +1143,22 @@
       "capabilitiesOptions": {
         "alarm_generic": {
           "title": {
-            "en": "Camera offline"
+            "en": "Camera offline",
+            "sv": "Kamera offline",
+            "de": "Kamera offline",
+            "nl": "Camera offline"
           },
           "insightsTitleTrue": {
-            "en": "Camera went offline"
+            "en": "Camera went offline",
+            "sv": "Kameran gick offline",
+            "de": "Kamera ist offline gegangen",
+            "nl": "Camera ging offline"
           },
           "insightsTitleFalse": {
-            "en": "Camera came back online"
+            "en": "Camera came back online",
+            "sv": "Kameran är online igen",
+            "de": "Kamera ist wieder online",
+            "nl": "Camera is weer online"
           }
         }
       },
@@ -817,35 +1168,53 @@
           "id": "stream_profile",
           "type": "dropdown",
           "label": {
-            "en": "Video quality"
+            "en": "Video quality",
+            "sv": "Videokvalitet",
+            "de": "Videoqualität",
+            "nl": "Videokwaliteit"
           },
           "hint": {
-            "en": "Which of the camera's quality levels in Camera Station to stream. Low is the default and is gentle on Homey. Automatic starts higher and lowers the quality if Homey gets busy. High can be very heavy (some cameras send 4K) and Homey may still lower it to stay responsive."
+            "en": "Which of the camera's quality levels in Camera Station to stream. Low is the default and is gentle on Homey. Automatic starts higher and lowers the quality if Homey gets busy. High can be very heavy (some cameras send 4K) and Homey may still lower it to stay responsive.",
+            "sv": "Vilken av kamerans kvalitetsnivåer i Camera Station som strömmas. Låg är standard och skonsam mot Homey. Automatisk börjar högre och sänker kvaliteten om Homey blir upptagen. Hög kan vara mycket tung (vissa kameror skickar 4K) och Homey kan ändå sänka den för att förbli snabb.",
+            "de": "Welche Qualitätsstufe der Kamera in Camera Station übertragen wird. Niedrig ist Standard und schont Homey. Automatisch beginnt höher und senkt die Qualität, wenn Homey ausgelastet ist. Hoch kann sehr schwer sein (manche Kameras senden 4K), und Homey kann sie trotzdem senken, um reaktionsschnell zu bleiben.",
+            "nl": "Welk kwaliteitsniveau van de camera in Camera Station wordt gestreamd. Laag is de standaard en ontziet Homey. Automatisch begint hoger en verlaagt de kwaliteit als Homey het druk krijgt. Hoog kan erg zwaar zijn (sommige camera's sturen 4K) en Homey kan het toch verlagen om snel te blijven."
           },
           "value": "low",
           "values": [
             {
               "id": "auto",
               "label": {
-                "en": "Automatic"
+                "en": "Automatic",
+                "sv": "Automatisk",
+                "de": "Automatisch",
+                "nl": "Automatisch"
               }
             },
             {
               "id": "high",
               "label": {
-                "en": "High"
+                "en": "High",
+                "sv": "Hög",
+                "de": "Hoch",
+                "nl": "Hoog"
               }
             },
             {
               "id": "medium",
               "label": {
-                "en": "Medium"
+                "en": "Medium",
+                "sv": "Mellan",
+                "de": "Mittel",
+                "nl": "Gemiddeld"
               }
             },
             {
               "id": "low",
               "label": {
-                "en": "Low (recommended)"
+                "en": "Low (recommended)",
+                "sv": "Låg (rekommenderas)",
+                "de": "Niedrig (empfohlen)",
+                "nl": "Laag (aanbevolen)"
               }
             }
           ]
@@ -854,10 +1223,16 @@
           "id": "snapshot_interval",
           "type": "number",
           "label": {
-            "en": "Snapshot refresh (minutes)"
+            "en": "Snapshot refresh (minutes)",
+            "sv": "Bilduppdatering (minuter)",
+            "de": "Bildaktualisierung (Minuten)",
+            "nl": "Afbeelding vernieuwen (minuten)"
           },
           "hint": {
-            "en": "How often the still picture on the device tile is updated. Example: 5. Use 0 to only update when you open the camera."
+            "en": "How often the still picture on the device tile is updated. Example: 5. Use 0 to only update when you open the camera.",
+            "sv": "Hur ofta stillbilden på enhetens ruta uppdateras. Exempel: 5. Använd 0 för att bara uppdatera när du öppnar kameran.",
+            "de": "Wie oft das Standbild auf der Gerätekachel aktualisiert wird. Beispiel: 5. 0 bedeutet: nur beim Öffnen der Kamera aktualisieren.",
+            "nl": "Hoe vaak de stilstaande afbeelding op de apparaattegel wordt vernieuwd. Voorbeeld: 5. Gebruik 0 om alleen te vernieuwen als je de camera opent."
           },
           "value": 5,
           "min": 0,
@@ -867,31 +1242,46 @@
           "id": "motion_reset",
           "type": "number",
           "label": {
-            "en": "Motion alarm duration (seconds)"
+            "en": "Motion alarm duration (seconds)",
+            "sv": "Rörelselarmets längd (sekunder)",
+            "de": "Dauer des Bewegungsalarms (Sekunden)",
+            "nl": "Duur van het bewegingsalarm (seconden)"
           },
           "value": 30,
           "min": 5,
           "max": 3600,
           "hint": {
-            "en": "How long the motion alarm stays on after Camera Station reports motion. Example: 30."
+            "en": "How long the motion alarm stays on after Camera Station reports motion. Example: 30.",
+            "sv": "Hur länge rörelselarmet är på efter att Camera Station rapporterat rörelse. Exempel: 30.",
+            "de": "Wie lange der Bewegungsalarm an bleibt, nachdem Camera Station Bewegung gemeldet hat. Beispiel: 30.",
+            "nl": "Hoe lang het bewegingsalarm aan blijft nadat Camera Station beweging meldt. Voorbeeld: 30."
           }
         },
         {
           "id": "event_address",
           "type": "label",
           "label": {
-            "en": "Address for Camera Station events"
+            "en": "Address for Camera Station events",
+            "sv": "Adress för händelser från Camera Station",
+            "de": "Adresse für Camera Station-Ereignisse",
+            "nl": "Adres voor Camera Station-gebeurtenissen"
           },
           "value": "",
           "hint": {
-            "en": "Paste this address into a \"Send HTTP notification\" action in Camera Station (Configuration > Recording and events > Action rules). Use method GET. Motion and other events for this camera then reach Homey. Keep the address private: it contains a secret key."
+            "en": "Paste this address into a \"Send HTTP notification\" action in Camera Station (Configuration > Recording and events > Action rules). Use method GET. Motion and other events for this camera then reach Homey. Keep the address private: it contains a secret key.",
+            "sv": "Klistra in den här adressen i en åtgärd \"Send HTTP notification\" i Camera Station (Configuration > Recording and events > Action rules). Använd metoden GET. Då når rörelse och andra händelser för den här kameran Homey. Håll adressen hemlig: den innehåller en hemlig nyckel.",
+            "de": "Fügen Sie diese Adresse in eine Aktion \"Send HTTP notification\" in Camera Station ein (Configuration > Recording and events > Action rules). Methode GET verwenden. Dann erreichen Bewegung und andere Ereignisse dieser Kamera Homey. Halten Sie die Adresse geheim: Sie enthält einen geheimen Schlüssel.",
+            "nl": "Plak dit adres in een actie \"Send HTTP notification\" in Camera Station (Configuration > Recording and events > Action rules). Gebruik methode GET. Beweging en andere gebeurtenissen van deze camera bereiken dan Homey. Houd het adres geheim: het bevat een geheime sleutel."
           }
         }
       ]
     },
     {
       "name": {
-        "en": "Camera Station server"
+        "en": "Camera Station server",
+        "sv": "Camera Station-server",
+        "de": "Camera Station-Server",
+        "nl": "Camera Station-server"
       },
       "class": "sensor",
       "capabilities": [
@@ -903,24 +1293,42 @@
       "capabilitiesOptions": {
         "alarm_generic.disk": {
           "title": {
-            "en": "Disk problem"
+            "en": "Disk problem",
+            "sv": "Diskproblem",
+            "de": "Festplattenproblem",
+            "nl": "Schijfprobleem"
           },
           "insightsTitleTrue": {
-            "en": "Disk problem"
+            "en": "Disk problem",
+            "sv": "Diskproblem",
+            "de": "Festplattenproblem",
+            "nl": "Schijfprobleem"
           },
           "insightsTitleFalse": {
-            "en": "Disk problem cleared"
+            "en": "Disk problem cleared",
+            "sv": "Diskproblem åtgärdat",
+            "de": "Festplattenproblem behoben",
+            "nl": "Schijfprobleem opgelost"
           }
         },
         "alarm_generic.recording": {
           "title": {
-            "en": "Recording problem"
+            "en": "Recording problem",
+            "sv": "Inspelningsproblem",
+            "de": "Aufnahmeproblem",
+            "nl": "Opnameprobleem"
           },
           "insightsTitleTrue": {
-            "en": "Recording problem"
+            "en": "Recording problem",
+            "sv": "Inspelningsproblem",
+            "de": "Aufnahmeproblem",
+            "nl": "Opnameprobleem"
           },
           "insightsTitleFalse": {
-            "en": "Recording problem cleared"
+            "en": "Recording problem cleared",
+            "sv": "Inspelningsproblem åtgärdat",
+            "de": "Aufnahmeproblem behoben",
+            "nl": "Opnameprobleem opgelost"
           }
         }
       },
@@ -941,19 +1349,34 @@
           "template": "login_credentials",
           "options": {
             "title": {
-              "en": "Log in to Camera Station"
+              "en": "Log in to Camera Station",
+              "sv": "Logga in på Camera Station",
+              "de": "Bei Camera Station anmelden",
+              "nl": "Inloggen bij Camera Station"
             },
             "usernameLabel": {
-              "en": "Camera Station username"
+              "en": "Camera Station username",
+              "sv": "Användarnamn i Camera Station",
+              "de": "Camera Station-Benutzername",
+              "nl": "Camera Station-gebruikersnaam"
             },
             "usernamePlaceholder": {
-              "en": "axis"
+              "en": "axis",
+              "sv": "axis",
+              "de": "axis",
+              "nl": "axis"
             },
             "passwordLabel": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             },
             "passwordPlaceholder": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             }
           },
           "navigation": {
@@ -979,19 +1402,34 @@
           "template": "login_credentials",
           "options": {
             "title": {
-              "en": "Log in to Camera Station"
+              "en": "Log in to Camera Station",
+              "sv": "Logga in på Camera Station",
+              "de": "Bei Camera Station anmelden",
+              "nl": "Inloggen bij Camera Station"
             },
             "usernameLabel": {
-              "en": "Camera Station username"
+              "en": "Camera Station username",
+              "sv": "Användarnamn i Camera Station",
+              "de": "Camera Station-Benutzername",
+              "nl": "Camera Station-gebruikersnaam"
             },
             "usernamePlaceholder": {
-              "en": "axis"
+              "en": "axis",
+              "sv": "axis",
+              "de": "axis",
+              "nl": "axis"
             },
             "passwordLabel": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             },
             "passwordPlaceholder": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             }
           }
         }
@@ -1002,33 +1440,48 @@
           "id": "alarm_minutes",
           "type": "number",
           "label": {
-            "en": "Keep problem alarms on for (minutes)"
+            "en": "Keep problem alarms on for (minutes)",
+            "sv": "Håll problemlarm på i (minuter)",
+            "de": "Problemalarme eingeschaltet lassen für (Minuten)",
+            "nl": "Probleemalarmen aan laten staan (minuten)"
           },
           "value": 30,
           "min": 5,
           "max": 1440,
           "hint": {
-            "en": "A disk or recording problem alarm stays on this long after Camera Station last reported the problem. Example: 30."
+            "en": "A disk or recording problem alarm stays on this long after Camera Station last reported the problem. Example: 30.",
+            "sv": "Ett larm för disk- eller inspelningsproblem är på så här länge efter att Camera Station senast rapporterade problemet. Exempel: 30.",
+            "de": "Ein Festplatten- oder Aufnahmeproblem-Alarm bleibt so lange an, nachdem Camera Station das Problem zuletzt gemeldet hat. Beispiel: 30.",
+            "nl": "Een alarm voor een schijf- of opnameprobleem blijft zo lang aan nadat Camera Station het probleem voor het laatst meldde. Voorbeeld: 30."
           }
         },
         {
           "id": "repeat_minutes",
           "type": "number",
           "label": {
-            "en": "Repeat the same problem after (minutes)"
+            "en": "Repeat the same problem after (minutes)",
+            "sv": "Upprepa samma problem efter (minuter)",
+            "de": "Dasselbe Problem erneut melden nach (Minuten)",
+            "nl": "Hetzelfde probleem opnieuw melden na (minuten)"
           },
           "value": 60,
           "min": 5,
           "max": 1440,
           "hint": {
-            "en": "Camera Station repeats some problems every few minutes (for example a camera that cannot be reached). The problem flow cards run again for the same camera only after this many minutes. Example: 60."
+            "en": "Camera Station repeats some problems every few minutes (for example a camera that cannot be reached). The problem flow cards run again for the same camera only after this many minutes. Example: 60.",
+            "sv": "Camera Station upprepar vissa problem med några minuters mellanrum (till exempel en kamera som inte går att nå). Problemkorten i flöden körs igen för samma kamera först efter så här många minuter. Exempel: 60.",
+            "de": "Camera Station wiederholt manche Probleme alle paar Minuten (zum Beispiel eine nicht erreichbare Kamera). Die Problem-Flow-Karten laufen für dieselbe Kamera erst nach so vielen Minuten erneut. Beispiel: 60.",
+            "nl": "Camera Station herhaalt sommige problemen om de paar minuten (bijvoorbeeld een camera die niet bereikbaar is). De probleemkaarten in flows lopen voor dezelfde camera pas na zoveel minuten opnieuw. Voorbeeld: 60."
           }
         },
         {
           "id": "server_name",
           "type": "label",
           "label": {
-            "en": "Server"
+            "en": "Server",
+            "sv": "Server",
+            "de": "Server",
+            "nl": "Server"
           },
           "value": ""
         },
@@ -1036,7 +1489,10 @@
           "id": "server_version",
           "type": "label",
           "label": {
-            "en": "Camera Station version"
+            "en": "Camera Station version",
+            "sv": "Camera Station-version",
+            "de": "Camera Station-Version",
+            "nl": "Camera Station-versie"
           },
           "value": ""
         },
@@ -1044,7 +1500,10 @@
           "id": "server_hardware",
           "type": "label",
           "label": {
-            "en": "Hardware"
+            "en": "Hardware",
+            "sv": "Hårdvara",
+            "de": "Hardware",
+            "nl": "Hardware"
           },
           "value": ""
         }
@@ -1052,7 +1511,10 @@
     },
     {
       "name": {
-        "en": "View"
+        "en": "View",
+        "sv": "Vy",
+        "de": "Ansicht",
+        "nl": "Weergave"
       },
       "class": "camera",
       "capabilities": [],
@@ -1073,19 +1535,34 @@
           "template": "login_credentials",
           "options": {
             "title": {
-              "en": "Log in to Camera Station"
+              "en": "Log in to Camera Station",
+              "sv": "Logga in på Camera Station",
+              "de": "Bei Camera Station anmelden",
+              "nl": "Inloggen bij Camera Station"
             },
             "usernameLabel": {
-              "en": "Camera Station username"
+              "en": "Camera Station username",
+              "sv": "Användarnamn i Camera Station",
+              "de": "Camera Station-Benutzername",
+              "nl": "Camera Station-gebruikersnaam"
             },
             "usernamePlaceholder": {
-              "en": "axis"
+              "en": "axis",
+              "sv": "axis",
+              "de": "axis",
+              "nl": "axis"
             },
             "passwordLabel": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             },
             "passwordPlaceholder": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             }
           },
           "navigation": {
@@ -1114,19 +1591,34 @@
           "template": "login_credentials",
           "options": {
             "title": {
-              "en": "Log in to Camera Station"
+              "en": "Log in to Camera Station",
+              "sv": "Logga in på Camera Station",
+              "de": "Bei Camera Station anmelden",
+              "nl": "Inloggen bij Camera Station"
             },
             "usernameLabel": {
-              "en": "Camera Station username"
+              "en": "Camera Station username",
+              "sv": "Användarnamn i Camera Station",
+              "de": "Camera Station-Benutzername",
+              "nl": "Camera Station-gebruikersnaam"
             },
             "usernamePlaceholder": {
-              "en": "axis"
+              "en": "axis",
+              "sv": "axis",
+              "de": "axis",
+              "nl": "axis"
             },
             "passwordLabel": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             },
             "passwordPlaceholder": {
-              "en": "Password"
+              "en": "Password",
+              "sv": "Lösenord",
+              "de": "Passwort",
+              "nl": "Wachtwoord"
             }
           }
         }
@@ -1137,10 +1629,16 @@
           "id": "snapshot_interval",
           "type": "number",
           "label": {
-            "en": "Picture refresh (minutes)"
+            "en": "Picture refresh (minutes)",
+            "sv": "Bilduppdatering (minuter)",
+            "de": "Bildaktualisierung (Minuten)",
+            "nl": "Afbeelding vernieuwen (minuten)"
           },
           "hint": {
-            "en": "How often the view's picture is updated, in minutes. Example: 5. While live video is playing the picture is not updated, to keep Homey responsive. Use 0 to only update when you open the view."
+            "en": "How often the view's picture is updated, in minutes. Example: 5. While live video is playing the picture is not updated, to keep Homey responsive. Use 0 to only update when you open the view.",
+            "sv": "Hur ofta vyns bild uppdateras, i minuter. Exempel: 5. Medan livevideo spelas uppdateras inte bilden, så att Homey förblir snabb. Använd 0 för att bara uppdatera när du öppnar vyn.",
+            "de": "Wie oft das Bild der Ansicht aktualisiert wird, in Minuten. Beispiel: 5. Während Live-Video läuft, wird das Bild nicht aktualisiert, damit Homey reaktionsschnell bleibt. 0 bedeutet: nur beim Öffnen der Ansicht aktualisieren.",
+            "nl": "Hoe vaak de afbeelding van de weergave wordt vernieuwd, in minuten. Voorbeeld: 5. Terwijl live video speelt wordt de afbeelding niet vernieuwd, zodat Homey snel blijft. Gebruik 0 om alleen te vernieuwen als je de weergave opent."
           },
           "value": 5,
           "min": 0,
@@ -1152,7 +1650,10 @@
   "widgets": {
     "live": {
       "name": {
-        "en": "Camera Station live"
+        "en": "Camera Station live",
+        "sv": "Camera Station live",
+        "de": "Camera Station live",
+        "nl": "Camera Station live"
       },
       "height": "56.25%",
       "settings": [
@@ -1160,36 +1661,54 @@
           "id": "source",
           "type": "autocomplete",
           "title": {
-            "en": "View or camera"
+            "en": "View or camera",
+            "sv": "Vy eller kamera",
+            "de": "Ansicht oder Kamera",
+            "nl": "Weergave of camera"
           },
           "hint": {
-            "en": "Pick a Camera Station view (all its cameras live, laid out like in Camera Station) or a single camera."
+            "en": "Pick a Camera Station view (all its cameras live, laid out like in Camera Station) or a single camera.",
+            "sv": "Välj en vy från Camera Station (alla dess kameror live, placerade som i Camera Station) eller en enskild kamera.",
+            "de": "Wählen Sie eine Camera Station-Ansicht (alle Kameras live, angeordnet wie in Camera Station) oder eine einzelne Kamera.",
+            "nl": "Kies een Camera Station-weergave (alle camera's live, geplaatst zoals in Camera Station) of één camera."
           }
         },
         {
           "id": "quality",
           "type": "dropdown",
           "title": {
-            "en": "Video quality"
+            "en": "Video quality",
+            "sv": "Videokvalitet",
+            "de": "Videoqualität",
+            "nl": "Videokwaliteit"
           },
           "value": "low",
           "values": [
             {
               "id": "low",
               "title": {
-                "en": "Low (recommended)"
+                "en": "Low (recommended)",
+                "sv": "Låg (rekommenderas)",
+                "de": "Niedrig (empfohlen)",
+                "nl": "Laag (aanbevolen)"
               }
             },
             {
               "id": "medium",
               "title": {
-                "en": "Medium"
+                "en": "Medium",
+                "sv": "Mellan",
+                "de": "Mittel",
+                "nl": "Gemiddeld"
               }
             },
             {
               "id": "auto",
               "title": {
-                "en": "Automatic"
+                "en": "Automatic",
+                "sv": "Automatisk",
+                "de": "Automatisch",
+                "nl": "Automatisch"
               }
             }
           ]
@@ -1220,7 +1739,10 @@
     "acs_cameras_offline": {
       "type": "number",
       "title": {
-        "en": "Cameras offline"
+        "en": "Cameras offline",
+        "sv": "Kameror offline",
+        "de": "Kameras offline",
+        "nl": "Camera's offline"
       },
       "getable": true,
       "setable": false,
@@ -1233,7 +1755,10 @@
     "acs_last_problem": {
       "type": "string",
       "title": {
-        "en": "Last problem"
+        "en": "Last problem",
+        "sv": "Senaste problem",
+        "de": "Letztes Problem",
+        "nl": "Laatste probleem"
       },
       "getable": true,
       "setable": false,
@@ -1243,7 +1768,10 @@
     "acs_recording": {
       "type": "boolean",
       "title": {
-        "en": "Manual recording"
+        "en": "Manual recording",
+        "sv": "Manuell inspelning",
+        "de": "Manuelle Aufnahme",
+        "nl": "Handmatige opname"
       },
       "getable": true,
       "setable": true,
@@ -1252,10 +1780,16 @@
       "icon": "/assets/recording.svg",
       "insights": true,
       "insightsTitleTrue": {
-        "en": "Manual recording started"
+        "en": "Manual recording started",
+        "sv": "Manuell inspelning startad",
+        "de": "Manuelle Aufnahme gestartet",
+        "nl": "Handmatige opname gestart"
       },
       "insightsTitleFalse": {
-        "en": "Manual recording stopped"
+        "en": "Manual recording stopped",
+        "sv": "Manuell inspelning stoppad",
+        "de": "Manuelle Aufnahme gestoppt",
+        "nl": "Handmatige opname gestopt"
       }
     }
   }

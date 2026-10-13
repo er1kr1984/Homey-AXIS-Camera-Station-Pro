@@ -1,6 +1,9 @@
 {
   "name": {
-    "en": "View"
+    "en": "View",
+    "sv": "Vy",
+    "de": "Ansicht",
+    "nl": "Weergave"
   },
   "class": "camera",
   "capabilities": [],
@@ -21,19 +24,34 @@
       "template": "login_credentials",
       "options": {
         "title": {
-          "en": "Log in to Camera Station"
+          "en": "Log in to Camera Station",
+          "sv": "Logga in på Camera Station",
+          "de": "Bei Camera Station anmelden",
+          "nl": "Inloggen bij Camera Station"
         },
         "usernameLabel": {
-          "en": "Camera Station username"
+          "en": "Camera Station username",
+          "sv": "Användarnamn i Camera Station",
+          "de": "Camera Station-Benutzername",
+          "nl": "Camera Station-gebruikersnaam"
         },
         "usernamePlaceholder": {
-          "en": "axis"
+          "en": "axis",
+          "sv": "axis",
+          "de": "axis",
+          "nl": "axis"
         },
         "passwordLabel": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         },
         "passwordPlaceholder": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         }
       },
       "navigation": {
@@ -62,19 +80,34 @@
       "template": "login_credentials",
       "options": {
         "title": {
-          "en": "Log in to Camera Station"
+          "en": "Log in to Camera Station",
+          "sv": "Logga in på Camera Station",
+          "de": "Bei Camera Station anmelden",
+          "nl": "Inloggen bij Camera Station"
         },
         "usernameLabel": {
-          "en": "Camera Station username"
+          "en": "Camera Station username",
+          "sv": "Användarnamn i Camera Station",
+          "de": "Camera Station-Benutzername",
+          "nl": "Camera Station-gebruikersnaam"
         },
         "usernamePlaceholder": {
-          "en": "axis"
+          "en": "axis",
+          "sv": "axis",
+          "de": "axis",
+          "nl": "axis"
         },
         "passwordLabel": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         },
         "passwordPlaceholder": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         }
       }
     }

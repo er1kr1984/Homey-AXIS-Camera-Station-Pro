@@ -1,49 +1,79 @@
 {
   "title": {
-    "en": "Camera Station sent an event"
+    "en": "Camera Station sent an event",
+    "sv": "Camera Station skickade en händelse",
+    "de": "Camera Station hat ein Ereignis gesendet",
+    "nl": "Camera Station heeft een gebeurtenis gestuurd"
   },
   "hint": {
-    "en": "Runs for every event Camera Station sends to Homey, also for sources that are not added as devices (door stations, action buttons, ...)."
+    "en": "Runs for every event Camera Station sends to Homey, also for sources that are not added as devices (door stations, action buttons, ...).",
+    "sv": "Körs för varje händelse som Camera Station skickar till Homey, även för källor som inte är tillagda som enheter (porttelefoner, åtgärdsknappar, ...).",
+    "de": "Läuft bei jedem Ereignis, das Camera Station an Homey sendet, auch für Quellen, die nicht als Geräte hinzugefügt sind (Türstationen, Aktionstasten, ...).",
+    "nl": "Wordt uitgevoerd bij elke gebeurtenis die Camera Station naar Homey stuurt, ook voor bronnen die niet als apparaat zijn toegevoegd (deurstations, actieknoppen, ...)."
   },
   "tokens": [
     {
       "name": "type",
       "type": "string",
       "title": {
-        "en": "Event type"
+        "en": "Event type",
+        "sv": "Händelsetyp",
+        "de": "Ereignistyp",
+        "nl": "Soort gebeurtenis"
       },
       "example": {
-        "en": "Motion detection"
+        "en": "Motion detection",
+        "sv": "Rörelsedetektering",
+        "de": "Bewegungserkennung",
+        "nl": "Bewegingsdetectie"
       }
     },
     {
       "name": "source",
       "type": "string",
       "title": {
-        "en": "Source name"
+        "en": "Source name",
+        "sv": "Källans namn",
+        "de": "Name der Quelle",
+        "nl": "Naam van de bron"
       },
       "example": {
-        "en": "Front door"
+        "en": "Front door",
+        "sv": "Ytterdörr",
+        "de": "Haustür",
+        "nl": "Voordeur"
       }
     },
     {
       "name": "source_id",
       "type": "string",
       "title": {
-        "en": "Source ID"
+        "en": "Source ID",
+        "sv": "Käll-ID",
+        "de": "Quell-ID",
+        "nl": "Bron-ID"
       },
       "example": {
-        "en": "73016_..."
+        "en": "73016_...",
+        "sv": "73016_...",
+        "de": "73016_...",
+        "nl": "73016_..."
       }
     },
     {
       "name": "time",
       "type": "string",
       "title": {
-        "en": "Time"
+        "en": "Time",
+        "sv": "Tid",
+        "de": "Zeit",
+        "nl": "Tijd"
       },
       "example": {
-        "en": "2026-10-13 12:00:00"
+        "en": "2026-10-13 12:00:00",
+        "sv": "2026-10-13 12:00:00",
+        "de": "2026-10-13 12:00:00",
+        "nl": "2026-10-13 12:00:00"
       }
     }
   ]

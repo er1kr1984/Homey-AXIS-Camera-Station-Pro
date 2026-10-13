@@ -1,7 +1,10 @@
 {
   "type": "string",
   "title": {
-    "en": "Last problem"
+    "en": "Last problem",
+    "sv": "Senaste problem",
+    "de": "Letztes Problem",
+    "nl": "Laatste probleem"
   },
   "getable": true,
   "setable": false,

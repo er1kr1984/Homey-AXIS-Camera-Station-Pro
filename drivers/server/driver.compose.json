@@ -1,6 +1,9 @@
 {
   "name": {
-    "en": "Camera Station server"
+    "en": "Camera Station server",
+    "sv": "Camera Station-server",
+    "de": "Camera Station-Server",
+    "nl": "Camera Station-server"
   },
   "class": "sensor",
   "capabilities": [
@@ -12,24 +15,42 @@
   "capabilitiesOptions": {
     "alarm_generic.disk": {
       "title": {
-        "en": "Disk problem"
+        "en": "Disk problem",
+        "sv": "Diskproblem",
+        "de": "Festplattenproblem",
+        "nl": "Schijfprobleem"
       },
       "insightsTitleTrue": {
-        "en": "Disk problem"
+        "en": "Disk problem",
+        "sv": "Diskproblem",
+        "de": "Festplattenproblem",
+        "nl": "Schijfprobleem"
       },
       "insightsTitleFalse": {
-        "en": "Disk problem cleared"
+        "en": "Disk problem cleared",
+        "sv": "Diskproblem åtgärdat",
+        "de": "Festplattenproblem behoben",
+        "nl": "Schijfprobleem opgelost"
       }
     },
     "alarm_generic.recording": {
       "title": {
-        "en": "Recording problem"
+        "en": "Recording problem",
+        "sv": "Inspelningsproblem",
+        "de": "Aufnahmeproblem",
+        "nl": "Opnameprobleem"
       },
       "insightsTitleTrue": {
-        "en": "Recording problem"
+        "en": "Recording problem",
+        "sv": "Inspelningsproblem",
+        "de": "Aufnahmeproblem",
+        "nl": "Opnameprobleem"
       },
       "insightsTitleFalse": {
-        "en": "Recording problem cleared"
+        "en": "Recording problem cleared",
+        "sv": "Inspelningsproblem åtgärdat",
+        "de": "Aufnahmeproblem behoben",
+        "nl": "Opnameprobleem opgelost"
       }
     }
   },
@@ -50,19 +71,34 @@
       "template": "login_credentials",
       "options": {
         "title": {
-          "en": "Log in to Camera Station"
+          "en": "Log in to Camera Station",
+          "sv": "Logga in på Camera Station",
+          "de": "Bei Camera Station anmelden",
+          "nl": "Inloggen bij Camera Station"
         },
         "usernameLabel": {
-          "en": "Camera Station username"
+          "en": "Camera Station username",
+          "sv": "Användarnamn i Camera Station",
+          "de": "Camera Station-Benutzername",
+          "nl": "Camera Station-gebruikersnaam"
         },
         "usernamePlaceholder": {
-          "en": "axis"
+          "en": "axis",
+          "sv": "axis",
+          "de": "axis",
+          "nl": "axis"
         },
         "passwordLabel": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         },
         "passwordPlaceholder": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         }
       },
       "navigation": {
@@ -88,19 +124,34 @@
       "template": "login_credentials",
       "options": {
         "title": {
-          "en": "Log in to Camera Station"
+          "en": "Log in to Camera Station",
+          "sv": "Logga in på Camera Station",
+          "de": "Bei Camera Station anmelden",
+          "nl": "Inloggen bij Camera Station"
         },
         "usernameLabel": {
-          "en": "Camera Station username"
+          "en": "Camera Station username",
+          "sv": "Användarnamn i Camera Station",
+          "de": "Camera Station-Benutzername",
+          "nl": "Camera Station-gebruikersnaam"
         },
         "usernamePlaceholder": {
-          "en": "axis"
+          "en": "axis",
+          "sv": "axis",
+          "de": "axis",
+          "nl": "axis"
         },
         "passwordLabel": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         },
         "passwordPlaceholder": {
-          "en": "Password"
+          "en": "Password",
+          "sv": "Lösenord",
+          "de": "Passwort",
+          "nl": "Wachtwoord"
         }
       }
     }

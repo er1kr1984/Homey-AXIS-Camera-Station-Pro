@@ -9,10 +9,16 @@
   ],
   "brandColor": "#1f3a5f",
   "name": {
-    "en": "Camera Station Live"
+    "en": "Camera Station Live",
+    "sv": "Camera Station Live",
+    "de": "Camera Station Live",
+    "nl": "Camera Station Live"
   },
   "description": {
-    "en": "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server."
+    "en": "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server.",
+    "sv": "Livevideo från AXIS Camera Station Pro via WebRTC, direkt från din inspelningsserver.",
+    "de": "Live-Video von AXIS Camera Station Pro über WebRTC, direkt von Ihrem Aufnahmeserver.",
+    "nl": "Live video van AXIS Camera Station Pro via WebRTC, rechtstreeks van je opnameserver."
   },
   "category": [
     "security"

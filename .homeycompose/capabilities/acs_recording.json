@@ -1,7 +1,10 @@
 {
   "type": "boolean",
   "title": {
-    "en": "Manual recording"
+    "en": "Manual recording",
+    "sv": "Manuell inspelning",
+    "de": "Manuelle Aufnahme",
+    "nl": "Handmatige opname"
   },
   "getable": true,
   "setable": true,
@@ -10,9 +13,15 @@
   "icon": "/assets/recording.svg",
   "insights": true,
   "insightsTitleTrue": {
-    "en": "Manual recording started"
+    "en": "Manual recording started",
+    "sv": "Manuell inspelning startad",
+    "de": "Manuelle Aufnahme gestartet",
+    "nl": "Handmatige opname gestart"
   },
   "insightsTitleFalse": {
-    "en": "Manual recording stopped"
+    "en": "Manual recording stopped",
+    "sv": "Manuell inspelning stoppad",
+    "de": "Manuelle Aufnahme gestoppt",
+    "nl": "Handmatige opname gestopt"
   }
 }
