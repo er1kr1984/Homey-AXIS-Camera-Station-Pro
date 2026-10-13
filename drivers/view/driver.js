@@ -5,6 +5,12 @@ const { registerLogin } = require('../../lib/pair-login');
 
 class ViewDriver extends Homey.Driver {
 
+  async onInit() {
+    this.homey.flow.getActionCard('take_view_snapshot').registerRunListener(async ({ device }) => ({
+      snapshot: await this.homey.app.createSnapshotImage(() => device.gridJpeg()),
+    }));
+  }
+
   async onPair(session) {
     registerLogin(this, session);
     session.setHandler('list_devices', async () => {

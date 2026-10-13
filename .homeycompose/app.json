@@ -45,6 +45,16 @@
     "getPreviousLogs": {
       "method": "GET",
       "path": "/previous-logs"
+    },
+    "receiveEventGet": {
+      "method": "GET",
+      "path": "/event",
+      "public": true
+    },
+    "receiveEventPost": {
+      "method": "POST",
+      "path": "/event",
+      "public": true
     }
   }
 }

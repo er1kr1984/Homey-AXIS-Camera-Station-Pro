@@ -48,5 +48,29 @@
     "value": 5,
     "min": 0,
     "max": 1440
+  },
+  {
+    "id": "motion_reset",
+    "type": "number",
+    "label": {
+      "en": "Motion alarm duration (seconds)"
+    },
+    "value": 30,
+    "min": 5,
+    "max": 3600,
+    "hint": {
+      "en": "How long the motion alarm stays on after Camera Station reports motion. Example: 30."
+    }
+  },
+  {
+    "id": "event_address",
+    "type": "label",
+    "label": {
+      "en": "Address for Camera Station events"
+    },
+    "value": "",
+    "hint": {
+      "en": "Paste this address into a \"Send HTTP notification\" action in Camera Station (Configuration > Recording and events > Action rules). Use method GET. Motion and other events for this camera then reach Homey. Keep the address private: it contains a secret key."
+    }
   }
 ]

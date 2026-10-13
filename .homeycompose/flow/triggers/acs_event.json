@@ -1,0 +1,50 @@
+{
+  "title": {
+    "en": "Camera Station sent an event"
+  },
+  "hint": {
+    "en": "Runs for every event Camera Station sends to Homey, also for sources that are not added as devices (door stations, action buttons, ...)."
+  },
+  "tokens": [
+    {
+      "name": "type",
+      "type": "string",
+      "title": {
+        "en": "Event type"
+      },
+      "example": {
+        "en": "Motion detection"
+      }
+    },
+    {
+      "name": "source",
+      "type": "string",
+      "title": {
+        "en": "Source name"
+      },
+      "example": {
+        "en": "Front door"
+      }
+    },
+    {
+      "name": "source_id",
+      "type": "string",
+      "title": {
+        "en": "Source ID"
+      },
+      "example": {
+        "en": "73016_..."
+      }
+    },
+    {
+      "name": "time",
+      "type": "string",
+      "title": {
+        "en": "Time"
+      },
+      "example": {
+        "en": "2026-10-13 12:00:00"
+      }
+    }
+  ]
+}

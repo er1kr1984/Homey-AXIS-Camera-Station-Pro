@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "Activate a Camera Station trigger for a while"
+  },
+  "titleFormatted": {
+    "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds"
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "trigger",
+      "title": {
+        "en": "Trigger name"
+      },
+      "placeholder": {
+        "en": "Homey arrival"
+      }
+    },
+    {
+      "type": "number",
+      "name": "seconds",
+      "title": {
+        "en": "Seconds"
+      },
+      "min": 0,
+      "max": 86400,
+      "placeholder": {
+        "en": "30"
+      }
+    }
+  ]
+}

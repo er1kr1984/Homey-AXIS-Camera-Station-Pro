@@ -1,0 +1,150 @@
+{
+  "triggers": [
+    {
+      "id": "camera_event",
+      "title": {
+        "en": "Camera Station sent an event"
+      },
+      "hint": {
+        "en": "Runs when a Camera Station action rule sends an event for this camera to Homey."
+      },
+      "tokens": [
+        {
+          "name": "type",
+          "type": "string",
+          "title": {
+            "en": "Event type"
+          },
+          "example": {
+            "en": "Motion detection"
+          }
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "title": {
+            "en": "Time"
+          },
+          "example": {
+            "en": "2026-10-13 12:00:00"
+          }
+        },
+        {
+          "name": "snapshot",
+          "type": "image",
+          "title": {
+            "en": "Snapshot"
+          }
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "is_recording",
+      "title": {
+        "en": "Camera !{{is|is not}} recording"
+      },
+      "hint": {
+        "en": "Manual recording started from Homey or Camera Station."
+      }
+    },
+    {
+      "id": "is_online",
+      "title": {
+        "en": "Camera !{{is|is not}} online"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "id": "take_snapshot",
+      "title": {
+        "en": "Take a snapshot"
+      },
+      "hint": {
+        "en": "Gives a picture you can use in later cards, for example in a push notification."
+      },
+      "tokens": [
+        {
+          "name": "snapshot",
+          "type": "image",
+          "title": {
+            "en": "Snapshot"
+          }
+        }
+      ]
+    },
+    {
+      "id": "start_recording",
+      "title": {
+        "en": "Start recording"
+      }
+    },
+    {
+      "id": "stop_recording",
+      "title": {
+        "en": "Stop recording"
+      }
+    },
+    {
+      "id": "add_bookmark",
+      "title": {
+        "en": "Add bookmark"
+      },
+      "titleFormatted": {
+        "en": "Add bookmark [[name]] with description [[description]]"
+      },
+      "hint": {
+        "en": "Marks this moment in the camera's recording timeline in Camera Station."
+      },
+      "args": [
+        {
+          "type": "text",
+          "name": "name",
+          "title": {
+            "en": "Name"
+          },
+          "placeholder": {
+            "en": "Front door opened"
+          }
+        },
+        {
+          "type": "text",
+          "name": "description",
+          "title": {
+            "en": "Description"
+          },
+          "required": false,
+          "placeholder": {
+            "en": "Optional"
+          }
+        }
+      ]
+    },
+    {
+      "id": "goto_preset",
+      "title": {
+        "en": "Move to PTZ preset"
+      },
+      "titleFormatted": {
+        "en": "Move to PTZ preset [[preset]]"
+      },
+      "hint": {
+        "en": "Only for PTZ cameras. The presets are the ones set up for the camera."
+      },
+      "args": [
+        {
+          "type": "autocomplete",
+          "name": "preset",
+          "title": {
+            "en": "Preset"
+          },
+          "placeholder": {
+            "en": "Home"
+          }
+        }
+      ]
+    }
+  ]
+}

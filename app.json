@@ -46,7 +46,397 @@
     "getPreviousLogs": {
       "method": "GET",
       "path": "/previous-logs"
+    },
+    "receiveEventGet": {
+      "method": "GET",
+      "path": "/event",
+      "public": true
+    },
+    "receiveEventPost": {
+      "method": "POST",
+      "path": "/event",
+      "public": true
     }
+  },
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Camera Station sent an event"
+        },
+        "hint": {
+          "en": "Runs for every event Camera Station sends to Homey, also for sources that are not added as devices (door stations, action buttons, ...)."
+        },
+        "tokens": [
+          {
+            "name": "type",
+            "type": "string",
+            "title": {
+              "en": "Event type"
+            },
+            "example": {
+              "en": "Motion detection"
+            }
+          },
+          {
+            "name": "source",
+            "type": "string",
+            "title": {
+              "en": "Source name"
+            },
+            "example": {
+              "en": "Front door"
+            }
+          },
+          {
+            "name": "source_id",
+            "type": "string",
+            "title": {
+              "en": "Source ID"
+            },
+            "example": {
+              "en": "73016_..."
+            }
+          },
+          {
+            "name": "time",
+            "type": "string",
+            "title": {
+              "en": "Time"
+            },
+            "example": {
+              "en": "2026-10-13 12:00:00"
+            }
+          }
+        ],
+        "id": "acs_event"
+      },
+      {
+        "id": "camera_event",
+        "title": {
+          "en": "Camera Station sent an event"
+        },
+        "hint": {
+          "en": "Runs when a Camera Station action rule sends an event for this camera to Homey."
+        },
+        "tokens": [
+          {
+            "name": "type",
+            "type": "string",
+            "title": {
+              "en": "Event type"
+            },
+            "example": {
+              "en": "Motion detection"
+            }
+          },
+          {
+            "name": "time",
+            "type": "string",
+            "title": {
+              "en": "Time"
+            },
+            "example": {
+              "en": "2026-10-13 12:00:00"
+            }
+          },
+          {
+            "name": "snapshot",
+            "type": "image",
+            "title": {
+              "en": "Snapshot"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Activate a Camera Station trigger"
+        },
+        "titleFormatted": {
+          "en": "Activate Camera Station trigger [[trigger]]"
+        },
+        "hint": {
+          "en": "Starts the actions of a Camera Station action rule whose trigger is \"Trigger\" with this name."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "trigger",
+            "title": {
+              "en": "Trigger name"
+            },
+            "placeholder": {
+              "en": "Homey arrival"
+            }
+          }
+        ],
+        "id": "acs_trigger_activate"
+      },
+      {
+        "title": {
+          "en": "Deactivate a Camera Station trigger"
+        },
+        "titleFormatted": {
+          "en": "Deactivate Camera Station trigger [[trigger]]"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "trigger",
+            "title": {
+              "en": "Trigger name"
+            },
+            "placeholder": {
+              "en": "Homey arrival"
+            }
+          }
+        ],
+        "id": "acs_trigger_deactivate"
+      },
+      {
+        "title": {
+          "en": "Activate a Camera Station trigger for a while"
+        },
+        "titleFormatted": {
+          "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "trigger",
+            "title": {
+              "en": "Trigger name"
+            },
+            "placeholder": {
+              "en": "Homey arrival"
+            }
+          },
+          {
+            "type": "number",
+            "name": "seconds",
+            "title": {
+              "en": "Seconds"
+            },
+            "min": 0,
+            "max": 86400,
+            "placeholder": {
+              "en": "30"
+            }
+          }
+        ],
+        "id": "acs_trigger_for"
+      },
+      {
+        "title": {
+          "en": "Pulse a Camera Station trigger"
+        },
+        "titleFormatted": {
+          "en": "Pulse Camera Station trigger [[trigger]]"
+        },
+        "hint": {
+          "en": "Activates and immediately deactivates the trigger."
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "trigger",
+            "title": {
+              "en": "Trigger name"
+            },
+            "placeholder": {
+              "en": "Homey arrival"
+            }
+          }
+        ],
+        "id": "acs_trigger_pulse"
+      },
+      {
+        "id": "take_snapshot",
+        "title": {
+          "en": "Take a snapshot"
+        },
+        "hint": {
+          "en": "Gives a picture you can use in later cards, for example in a push notification."
+        },
+        "tokens": [
+          {
+            "name": "snapshot",
+            "type": "image",
+            "title": {
+              "en": "Snapshot"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          }
+        ]
+      },
+      {
+        "id": "start_recording",
+        "title": {
+          "en": "Start recording"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          }
+        ]
+      },
+      {
+        "id": "stop_recording",
+        "title": {
+          "en": "Stop recording"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          }
+        ]
+      },
+      {
+        "id": "add_bookmark",
+        "title": {
+          "en": "Add bookmark"
+        },
+        "titleFormatted": {
+          "en": "Add bookmark [[name]] with description [[description]]"
+        },
+        "hint": {
+          "en": "Marks this moment in the camera's recording timeline in Camera Station."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          },
+          {
+            "type": "text",
+            "name": "name",
+            "title": {
+              "en": "Name"
+            },
+            "placeholder": {
+              "en": "Front door opened"
+            }
+          },
+          {
+            "type": "text",
+            "name": "description",
+            "title": {
+              "en": "Description"
+            },
+            "required": false,
+            "placeholder": {
+              "en": "Optional"
+            }
+          }
+        ]
+      },
+      {
+        "id": "goto_preset",
+        "title": {
+          "en": "Move to PTZ preset"
+        },
+        "titleFormatted": {
+          "en": "Move to PTZ preset [[preset]]"
+        },
+        "hint": {
+          "en": "Only for PTZ cameras. The presets are the ones set up for the camera."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          },
+          {
+            "type": "autocomplete",
+            "name": "preset",
+            "title": {
+              "en": "Preset"
+            },
+            "placeholder": {
+              "en": "Home"
+            }
+          }
+        ]
+      },
+      {
+        "id": "take_view_snapshot",
+        "title": {
+          "en": "Take a picture of the view"
+        },
+        "hint": {
+          "en": "All cameras in the view in one picture, like the grid in Camera Station."
+        },
+        "tokens": [
+          {
+            "name": "snapshot",
+            "type": "image",
+            "title": {
+              "en": "Picture"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=view"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_recording",
+        "title": {
+          "en": "Camera !{{is|is not}} recording"
+        },
+        "hint": {
+          "en": "Manual recording started from Homey or Camera Station."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          }
+        ]
+      },
+      {
+        "id": "is_online",
+        "title": {
+          "en": "Camera !{{is|is not}} online"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=camera"
+          }
+        ]
+      }
+    ]
   },
   "drivers": [
     {
@@ -54,7 +444,11 @@
         "en": "Camera"
       },
       "class": "camera",
-      "capabilities": [],
+      "capabilities": [
+        "alarm_motion",
+        "alarm_generic",
+        "acs_recording"
+      ],
       "platforms": [
         "local"
       ],
@@ -127,6 +521,19 @@
           }
         }
       ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "Camera offline"
+          },
+          "insightsTitleTrue": {
+            "en": "Camera went offline"
+          },
+          "insightsTitleFalse": {
+            "en": "Camera came back online"
+          }
+        }
+      },
       "id": "camera",
       "settings": [
         {
@@ -178,6 +585,30 @@
           "value": 5,
           "min": 0,
           "max": 1440
+        },
+        {
+          "id": "motion_reset",
+          "type": "number",
+          "label": {
+            "en": "Motion alarm duration (seconds)"
+          },
+          "value": 30,
+          "min": 5,
+          "max": 3600,
+          "hint": {
+            "en": "How long the motion alarm stays on after Camera Station reports motion. Example: 30."
+          }
+        },
+        {
+          "id": "event_address",
+          "type": "label",
+          "label": {
+            "en": "Address for Camera Station events"
+          },
+          "value": "",
+          "hint": {
+            "en": "Paste this address into a \"Send HTTP notification\" action in Camera Station (Configuration > Recording and events > Action rules). Use method GET. Motion and other events for this camera then reach Homey. Keep the address private: it contains a secret key."
+          }
         }
       ]
     },
@@ -279,5 +710,25 @@
         }
       ]
     }
-  ]
+  ],
+  "capabilities": {
+    "acs_recording": {
+      "type": "boolean",
+      "title": {
+        "en": "Recording"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "toggle",
+      "uiQuickAction": false,
+      "icon": "/assets/recording.svg",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Recording started"
+      },
+      "insightsTitleFalse": {
+        "en": "Recording stopped"
+      }
+    }
+  }
 }

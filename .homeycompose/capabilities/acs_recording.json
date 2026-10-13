@@ -1,0 +1,18 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Recording"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "toggle",
+  "uiQuickAction": false,
+  "icon": "/assets/recording.svg",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Recording started"
+  },
+  "insightsTitleFalse": {
+    "en": "Recording stopped"
+  }
+}

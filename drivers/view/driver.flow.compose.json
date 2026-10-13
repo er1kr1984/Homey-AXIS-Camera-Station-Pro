@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "id": "take_view_snapshot",
+      "title": {
+        "en": "Take a picture of the view"
+      },
+      "hint": {
+        "en": "All cameras in the view in one picture, like the grid in Camera Station."
+      },
+      "tokens": [
+        {
+          "name": "snapshot",
+          "type": "image",
+          "title": {
+            "en": "Picture"
+          }
+        }
+      ]
+    }
+  ]
+}

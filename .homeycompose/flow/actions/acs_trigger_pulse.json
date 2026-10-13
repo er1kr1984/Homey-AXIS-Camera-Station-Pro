@@ -1,0 +1,23 @@
+{
+  "title": {
+    "en": "Pulse a Camera Station trigger"
+  },
+  "titleFormatted": {
+    "en": "Pulse Camera Station trigger [[trigger]]"
+  },
+  "hint": {
+    "en": "Activates and immediately deactivates the trigger."
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "trigger",
+      "title": {
+        "en": "Trigger name"
+      },
+      "placeholder": {
+        "en": "Homey arrival"
+      }
+    }
+  ]
+}

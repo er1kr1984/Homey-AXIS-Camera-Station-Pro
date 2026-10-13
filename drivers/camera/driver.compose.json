@@ -3,7 +3,11 @@
     "en": "Camera"
   },
   "class": "camera",
-  "capabilities": [],
+  "capabilities": [
+    "alarm_motion",
+    "alarm_generic",
+    "acs_recording"
+  ],
   "platforms": [
     "local"
   ],
@@ -75,5 +79,18 @@
         }
       }
     }
-  ]
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "Camera offline"
+      },
+      "insightsTitleTrue": {
+        "en": "Camera went offline"
+      },
+      "insightsTitleFalse": {
+        "en": "Camera came back online"
+      }
+    }
+  }
 }

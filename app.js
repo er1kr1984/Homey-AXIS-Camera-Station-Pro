@@ -6,6 +6,10 @@ const { applyWeriftTuning } = require('./lib/werift-tuning');
 
 const tuningFailures = applyWeriftTuning();
 const LiveRelay = require('./lib/live-relay');
+const events = require('./lib/events');
+
+const STATUS_POLL_MS = 60 * 1000;
+const MAX_SNAPSHOT_IMAGES = 30;
 
 class CameraStationLiveApp extends Homey.App {
 
@@ -29,8 +33,73 @@ class CameraStationLiveApp extends Homey.App {
     this.homey.settings.on('set', (key) => {
       if (key.startsWith('acs_')) this.resetConnection();
     });
+    this.snapshotImages = [];
+    this._registerFlowCards();
+    this.statusTimer = this.homey.setInterval(() => this.pollStatus(), STATUS_POLL_MS);
+    this.homey.setTimeout(() => this.pollStatus(), 10000);
     this.diag('Camera Station Live started');
     if (tuningFailures.length) this.diagError('Running without some speed-ups:', tuningFailures.join('; '));
+  }
+
+  _registerFlowCards() {
+    this.eventTrigger = this.homey.flow.getTriggerCard('acs_event');
+    const triggerAction = (id, action) => this.homey.flow.getActionCard(id).registerRunListener(async (args) => {
+      await this.getAcs().trigger(action, args.trigger, args.seconds);
+    });
+    triggerAction('acs_trigger_activate', 'activate');
+    triggerAction('acs_trigger_deactivate', 'deactivate');
+    triggerAction('acs_trigger_pulse', 'pulse');
+    triggerAction('acs_trigger_for', 'activateFor');
+  }
+
+  // Called by the public /event endpoint (api.js).
+  async receiveEvent(query, body) {
+    const ev = events.parseEvent(query, body);
+    if (!events.sameSecret(ev.key, events.getSecret(this.homey))) {
+      this.diagError('event: rejected request with a wrong or missing key');
+      throw new Error('Unauthorized');
+    }
+    this.diag(`event: ${ev.type} from ${ev.source || ev.cameraId || 'unknown source'}`);
+    const device = ev.cameraId && this.homey.drivers.getDriver('camera').getDevices()
+      .find((d) => d.getData().id === ev.cameraId);
+    const source = ev.source || (device && device.getName()) || ev.cameraId;
+    await this.eventTrigger.trigger({
+      type: ev.type, source, source_id: ev.cameraId, time: ev.time,
+    }).catch((err) => this.diagError('event trigger failed:', err.message));
+    if (device) await device.onCameraStationEvent(ev);
+    return { ok: true };
+  }
+
+  // A picture frozen at this moment (unlike the device image, which is fetched when viewed).
+  // Old ones are released so they don't pile up.
+  async createSnapshotImage(getJpeg) {
+    const jpeg = await getJpeg();
+    const image = await this.homey.images.createImage();
+    image.setStream(async (stream) => {
+      stream.end(jpeg);
+    });
+    this.snapshotImages.push(image);
+    while (this.snapshotImages.length > MAX_SNAPSHOT_IMAGES) {
+      this.snapshotImages.shift().unregister().catch(() => {});
+    }
+    return image;
+  }
+
+  // Camera online/offline and manual recording status for all camera devices.
+  async pollStatus() {
+    const devices = this.homey.drivers.getDriver('camera').getDevices();
+    if (!devices.length || !this.homey.settings.get('acs_host')) return;
+    try {
+      const acs = this.getAcs();
+      const statuses = await acs.getCameraStatuses();
+      for (const device of devices) {
+        await device.updateStatus(statuses[device.getData().id]).catch(() => {});
+      }
+      this._statusErrorLogged = false;
+    } catch (err) {
+      if (!this._statusErrorLogged) this.diagError('status check failed:', err.message);
+      this._statusErrorLogged = true;
+    }
   }
 
   // Logs and keeps recent lines so they can be read through the app's API (GET /logs).

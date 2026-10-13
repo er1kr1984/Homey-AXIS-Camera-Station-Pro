@@ -1,0 +1,23 @@
+{
+  "title": {
+    "en": "Activate a Camera Station trigger"
+  },
+  "titleFormatted": {
+    "en": "Activate Camera Station trigger [[trigger]]"
+  },
+  "hint": {
+    "en": "Starts the actions of a Camera Station action rule whose trigger is \"Trigger\" with this name."
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "trigger",
+      "title": {
+        "en": "Trigger name"
+      },
+      "placeholder": {
+        "en": "Homey arrival"
+      }
+    }
+  ]
+}

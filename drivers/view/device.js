@@ -19,7 +19,7 @@ class ViewDevice extends Homey.Device {
     }
 
     this.image = await this.homey.images.createImage();
-    this.image.setStream(async (stream) => stream.end(await this._gridJpeg()));
+    this.image.setStream(async (stream) => stream.end(await this.gridJpeg()));
     await this.setCameraImage('grid', this.getName(), this.image);
 
     this._scheduleSnapshots();
@@ -41,7 +41,7 @@ class ViewDevice extends Homey.Device {
     }
   }
 
-  async _gridJpeg() {
+  async gridJpeg() {
     const acs = this.homey.app.getAcs();
     const snapshots = new Map();
     await Promise.all(this.layout.tiles.map(async (tile) => {

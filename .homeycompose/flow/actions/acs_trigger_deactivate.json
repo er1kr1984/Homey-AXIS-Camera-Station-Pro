@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Deactivate a Camera Station trigger"
+  },
+  "titleFormatted": {
+    "en": "Deactivate Camera Station trigger [[trigger]]"
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "trigger",
+      "title": {
+        "en": "Trigger name"
+      },
+      "placeholder": {
+        "en": "Homey arrival"
+      }
+    }
+  ]
+}
