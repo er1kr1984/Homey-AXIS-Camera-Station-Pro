@@ -2,6 +2,9 @@
 
 const Homey = require('homey');
 const AcsClient = require('./lib/acs-client');
+const { applyWeriftTuning } = require('./lib/werift-tuning');
+
+applyWeriftTuning();
 const LiveRelay = require('./lib/live-relay');
 
 class CameraStationLiveApp extends Homey.App {
@@ -73,14 +76,40 @@ class CameraStationLiveApp extends Homey.App {
 
   // One relay for all cameras: shares a single ACS stream per camera between viewers.
   getRelay() {
-    if (!this.relay) this.relay = new LiveRelay({ acs: this.getAcs(), log: (...args) => this.diag(...args) });
+    if (!this.relay) {
+      this.relay = new LiveRelay({
+        acs: this.getAcs(),
+        log: (...args) => this.diag(...args),
+        onProfileLearned: (sourceId, profile) => this._rememberProfile(sourceId, profile),
+      });
+    }
     return this.relay;
+  }
+
+  // Camera Station's quality profiles per camera, refreshed hourly.
+  async getCameraProfiles() {
+    if (!this.profiles || Date.now() - this.profilesAt > 60 * 60 * 1000) {
+      this.profiles = await this.getAcs().getCameraProfiles();
+      this.profilesAt = Date.now();
+    }
+    return this.profiles;
+  }
+
+  // Auto quality stepped down for a camera: start there next time.
+  _rememberProfile(sourceId, profile) {
+    const driver = this.homey.drivers.getDriver('camera');
+    const device = driver.getDevices().find((d) => d.getData().id === sourceId);
+    if (device) {
+      device.setStoreValue('autoProfile', { profile, at: Date.now() }).catch(() => {});
+      this.diag(`[${device.getName()}] Auto quality will start at ${profile} from now on`);
+    }
   }
 
   resetConnection() {
     if (this.relay) this.relay.closeAll();
     this.relay = null;
     this.acs = null;
+    this.profiles = null;
   }
 
   // Checks a login before saving it. Throws with a readable message on failure.

@@ -136,10 +136,16 @@
             "en": "Video quality"
           },
           "hint": {
-            "en": "Which of the camera's quality levels in Camera Station to stream. Medium works well for most cameras. High can be very heavy (some cameras send 4K at over 10 Mbit/s) and may show a black screen; if that happens, choose Medium. Choose Low on slow mobile data."
+            "en": "Automatic picks the best quality your Homey can handle and lowers it if Homey gets busy. Choose High, Medium or Low to always use that quality level from Camera Station. High can be very heavy (some cameras send 4K) and Homey may still lower it to stay responsive."
           },
-          "value": "medium",
+          "value": "auto",
           "values": [
+            {
+              "id": "auto",
+              "label": {
+                "en": "Automatic (recommended)"
+              }
+            },
             {
               "id": "high",
               "label": {

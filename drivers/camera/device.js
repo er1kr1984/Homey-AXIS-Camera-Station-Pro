@@ -1,7 +1,10 @@
 'use strict';
 
 const Homey = require('homey');
+const { chooseStartProfile } = require('../../lib/quality');
+
 const MAX_VIEWERS = 4;
+const LEARNED_PROFILE_DAYS = 7;
 
 class CameraDevice extends Homey.Device {
 
@@ -39,7 +42,8 @@ class CameraDevice extends Homey.Device {
           orgId: this.getStore().orgId,
           targetId: this.getStore().targetId,
         },
-        streamProfile: this.getSetting('stream_profile') || 'medium',
+        mode: this.getSetting('stream_profile') || 'auto',
+        startProfile: await this._autoStartProfile(),
         viewerOfferSdp: offerSdp,
         onClose: (v) => {
           this.viewers.delete(v.id);
@@ -51,6 +55,20 @@ class CameraDevice extends Homey.Device {
     } catch (err) {
       this.homey.app.diagError(`${tag} Could not start live video:`, err.message);
       throw new Error(this.homey.__('errors.liveFailed'));
+    }
+  }
+
+  // Where Auto quality starts: what worked last time, else the camera's largest profile
+  // up to 720p at 15 fps.
+  async _autoStartProfile() {
+    const learned = this.getStoreValue('autoProfile');
+    if (learned && Date.now() - learned.at < LEARNED_PROFILE_DAYS * 24 * 60 * 60 * 1000) return learned.profile;
+    try {
+      const profiles = await this.homey.app.getCameraProfiles();
+      return chooseStartProfile(profiles[this.getData().id]);
+    } catch (err) {
+      this.homey.app.diagError(`[${this.getName()}] Could not read quality profiles:`, err.message);
+      return 'medium';
     }
   }
 
@@ -66,7 +84,10 @@ class CameraDevice extends Homey.Device {
   async onSettings({ changedKeys }) {
     if (changedKeys.includes('snapshot_interval')) this._scheduleSnapshots();
     // New quality applies to the next viewer; close current streams so it takes effect.
-    if (changedKeys.includes('stream_profile')) this._closeAll();
+    if (changedKeys.includes('stream_profile')) {
+      this.unsetStoreValue('autoProfile').catch(() => {});
+      this._closeAll();
+    }
   }
 
   async onDeleted() {
