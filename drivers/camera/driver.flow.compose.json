@@ -43,7 +43,7 @@
     {
       "id": "is_recording",
       "title": {
-        "en": "Camera !{{is|is not}} recording"
+        "en": "Manual recording !{{is|is not}} on"
       },
       "hint": {
         "en": "Manual recording started from Homey or Camera Station."
@@ -78,13 +78,13 @@
     {
       "id": "start_recording",
       "title": {
-        "en": "Start recording"
+        "en": "Start manual recording"
       }
     },
     {
       "id": "stop_recording",
       "title": {
-        "en": "Stop recording"
+        "en": "Stop manual recording"
       }
     },
     {

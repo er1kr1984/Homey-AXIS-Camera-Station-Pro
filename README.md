@@ -4,7 +4,7 @@ Live video, events and control for AXIS Camera Station Pro in Homey. Video uses 
 Station's own WebRTC service: no camera RTSP, no transcoding.
 
 ## Devices
-- **Camera**: live video (WebRTC), picture, motion alarm, camera offline alarm, recording switch.
+- **Camera**: live video (WebRTC), picture, motion alarm, camera offline alarm, manual recording button.
   Quality: Low (default), Medium, High or Automatic (lowers quality when Homey gets busy).
 - **View**: a Camera Station split view as one picture laid out like the view's grid,
   refreshed every minute by default.
@@ -12,8 +12,8 @@ Station's own WebRTC service: no camera RTSP, no transcoding.
 ## Flow cards
 - When: *Camera Station sent an event* (per camera, with snapshot), *Camera Station sent an event*
   (app-wide, any source), motion alarm, camera offline alarm.
-- And: *Camera is recording*, *Camera is online*.
-- Then: *Take a snapshot* (camera or view, gives an image for notifications), *Start/Stop recording*,
+- And: *Manual recording is on*, *Camera is online*.
+- Then: *Take a snapshot* (camera or view, gives an image for notifications), *Start/Stop manual recording*,
   *Add bookmark*, *Move to PTZ preset*, *Activate / Deactivate / Pulse / Activate for a while* a
   Camera Station trigger.
 
