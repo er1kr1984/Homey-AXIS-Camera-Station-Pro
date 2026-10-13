@@ -36,5 +36,11 @@
   "author": {
     "name": "Erik Richardson",
     "email": "er1kr1984@gmail.com"
+  },
+  "api": {
+    "getLogs": {
+      "method": "GET",
+      "path": "/logs"
+    }
   }
 }

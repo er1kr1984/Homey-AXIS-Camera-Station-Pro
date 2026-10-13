@@ -32,6 +32,7 @@ class CameraDevice extends Homey.Device {
     // Drop the oldest viewer rather than piling up streams on the server.
     if (this.relays.size >= MAX_VIEWERS) this.relays.values().next().value.close();
 
+    this.homey.app.diag(`[${this.getName()}] Viewer offer received (${offerSdp.length} bytes)`);
     const relay = new LiveRelay({
       acs: this.homey.app.getAcs(),
       camera: {
@@ -41,7 +42,7 @@ class CameraDevice extends Homey.Device {
         targetId: this.getStore().targetId,
       },
       streamProfile: this.getSetting('stream_profile') || 'high',
-      log: (...args) => this.log(...args),
+      log: (...args) => this.homey.app.diag(`[${this.getName()}]`, ...args),
       onClose: (r) => this.relays.delete(r.id),
     });
     this.relays.set(relay.id, relay);
@@ -51,7 +52,7 @@ class CameraDevice extends Homey.Device {
       return { answerSdp, streamId: relay.id };
     } catch (err) {
       relay.close();
-      this.error('Could not start live video:', err.message);
+      this.homey.app.diagError(`[${this.getName()}] Could not start live video:`, err.message);
       throw new Error(this.homey.__('errors.liveFailed'));
     }
   }
@@ -61,7 +62,7 @@ class CameraDevice extends Homey.Device {
     const minutes = Number(this.getSetting('snapshot_interval'));
     if (!minutes) return;
     this.snapshotTimer = this.homey.setInterval(() => {
-      this.image.update().catch((err) => this.error('Snapshot update failed:', err.message));
+      this.image.update().catch((err) => this.homey.app.diagError(`[${this.getName()}] Snapshot update failed:`, err.message));
     }, minutes * 60 * 1000);
   }
 
