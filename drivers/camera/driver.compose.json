@@ -17,7 +17,25 @@
   },
   "pair": [
     {
-      "id": "login",
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "title": {
+          "en": "Log in to Camera Station"
+        },
+        "usernameLabel": {
+          "en": "Camera Station username"
+        },
+        "usernamePlaceholder": {
+          "en": "axis"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      },
       "navigation": {
         "next": "list_devices"
       }
@@ -26,7 +44,7 @@
       "id": "list_devices",
       "template": "list_devices",
       "navigation": {
-        "prev": "login",
+        "prev": "login_credentials",
         "next": "add_devices"
       }
     },
@@ -37,7 +55,25 @@
   ],
   "repair": [
     {
-      "id": "login"
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "title": {
+          "en": "Log in to Camera Station"
+        },
+        "usernameLabel": {
+          "en": "Camera Station username"
+        },
+        "usernamePlaceholder": {
+          "en": "axis"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      }
     }
   ]
 }
