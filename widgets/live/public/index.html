@@ -54,6 +54,9 @@
       // remote connection instead, and try live again later.
       const LIVE_TIMEOUT_MS = 8000;
       const PICTURE_EVERY_MS = 2000;
+      // First live retry comes quickly (a single failed attempt is usually a hiccup),
+      // later ones once a minute (e.g. on a mobile network that blocks direct connections).
+      const LIVE_RETRY_FIRST_MS = 10000;
       const LIVE_RETRY_MS = 60000;
 
       function showMessage(text) {
@@ -86,8 +89,8 @@
         };
         refresh();
         tile.pictureTimer = setInterval(refresh, PICTURE_EVERY_MS);
-        // Every so often, see if live video works again (e.g. back on Wi-Fi).
-        tile.liveRetry = setTimeout(() => connect(tile), LIVE_RETRY_MS);
+        // See if live video works again (e.g. back on Wi-Fi).
+        tile.liveRetry = setTimeout(() => connect(tile), tile.liveRetries++ ? LIVE_RETRY_MS : LIVE_RETRY_FIRST_MS);
       }
 
       function stopPictures(tile) {
@@ -121,6 +124,7 @@
         };
         tile.video.onplaying = () => {
           clearTimeout(tile.liveTimer);
+          tile.liveRetries = 0;
           stopPictures(tile);
           tile.el.classList.add('live');
         };
@@ -212,7 +216,9 @@
           badge.hidden = true;
           el.append(video, img, label, badge, status);
           grid.append(el);
-          const tile = { el, video, img, badge, status, sourceId: t.sourceId };
+          const tile = {
+            el, video, img, badge, status, sourceId: t.sourceId, liveRetries: 0,
+          };
           tiles.push(tile);
           el.addEventListener('click', () => {
             try { Homey.hapticFeedback(); } catch (e) { /* not available */ }
