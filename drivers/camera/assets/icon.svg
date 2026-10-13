@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect x="140" y="320" width="440" height="320" rx="40" fill="#000"/><path d="M600 440 L820 330 L820 630 L600 520 Z" fill="#000"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" fill="none" stroke="#000" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+  <!-- sun shield -->
+  <path d="M96 296 C 250 222, 570 206, 760 240 L 780 288"/>
+  <!-- body, pointing left -->
+  <path d="M168 326 H 690 a 72 72 0 0 1 72 72 V 512 a 72 72 0 0 1 -72 72 H 168"/>
+  <!-- front face and lens -->
+  <ellipse cx="168" cy="455" rx="66" ry="129"/>
+  <ellipse cx="160" cy="455" rx="30" ry="60"/>
+  <!-- body seam -->
+  <path d="M308 334 C 290 410, 290 500, 308 576"/>
+  <!-- status LED -->
+  <circle cx="660" cy="398" r="9" fill="#000"/>
+  <!-- mount arm and wall plate -->
+  <path d="M560 584 V 660 Q 560 712 612 712 H 790"/>
+  <rect x="790" y="604" width="74" height="216" rx="26"/>
+</svg>

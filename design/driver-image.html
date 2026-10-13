@@ -1,0 +1,9 @@
+<!doctype html><html><head><style>
+html,body{margin:0;width:100%;height:100%;background:#fff}
+.wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.disc{position:absolute;width:78%;height:78%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#f4f7fb,#e3e9f1)}
+.icon{position:relative;width:62%;height:62%;background:#1f3a5f;-webkit-mask:var(--icon) center/contain no-repeat;mask:var(--icon) center/contain no-repeat}
+.accent{position:absolute;width:9%;height:9%;border-radius:50%;background:#f2b705;right:17%;top:17%;box-shadow:0 0 0 6px #fff}
+</style></head><body><div class="wrap"><div class="disc"></div><div class="icon" id="i"></div><div class="accent" id="a"></div></div>
+<script>const q=new URLSearchParams(location.search);document.getElementById('i').style.setProperty('--icon',`url(${q.get('icon')}.svg)`);if(q.get('accent')!=='1')document.getElementById('a').remove();</script>
+</body></html>

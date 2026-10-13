@@ -1,0 +1,12 @@
+<!doctype html><html><head><style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:var(--bg)}
+.g{position:absolute;inset:4%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1.2%;border-radius:3%;overflow:hidden;background:#111}
+.t{position:relative}
+.t1{background:linear-gradient(#9cc3e6 0 45%,#5f8f4e 45%)}
+.t2{background:linear-gradient(#b8d4ee 0 38%,#a4553f 38% 75%,#6d9a52 75%)}
+.t3{background:linear-gradient(#c9d6e2 0 55%,#8a8f96 55%)}
+.t4{background:linear-gradient(#e9e4dc 0 60%,#b9ada0 60%)}
+.t1::after{content:'';position:absolute;left:4%;top:7%;width:4%;aspect-ratio:1;border-radius:50%;background:#e5484d}
+</style></head><body><div class="g"><div class="t t1"></div><div class="t t2"></div><div class="t t3"></div><div class="t t4"></div></div>
+<script>document.body.style.setProperty('--bg', new URLSearchParams(location.search).get('bg'))</script></body></html>

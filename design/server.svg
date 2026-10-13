@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" fill="none" stroke="#000" stroke-width="36" stroke-linecap="round" stroke-linejoin="round">
+  <!-- top and side faces for depth -->
+  <path d="M110 300 L 220 190 H 860 L 860 680 L 770 770"/>
+  <path d="M770 300 L 860 190"/>
+  <!-- front -->
+  <rect x="110" y="300" width="660" height="470" rx="36"/>
+  <!-- four drive bays -->
+  <rect x="166" y="370" width="96" height="330" rx="18"/>
+  <rect x="300" y="370" width="96" height="330" rx="18"/>
+  <rect x="434" y="370" width="96" height="330" rx="18"/>
+  <rect x="568" y="370" width="96" height="330" rx="18"/>
+  <path d="M190 420 h 48 M324 420 h 48 M458 420 h 48 M592 420 h 48"/>
+  <!-- status lights and power -->
+  <circle cx="716" cy="400" r="10" fill="#000"/>
+  <circle cx="716" cy="460" r="10" fill="#000"/>
+  <circle cx="716" cy="650" r="30"/>
+</svg>

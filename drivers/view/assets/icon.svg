@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect x="120" y="200" width="330" height="250" rx="24" fill="#000"/><rect x="510" y="200" width="330" height="250" rx="24" fill="#000"/><rect x="120" y="510" width="330" height="250" rx="24" fill="#000"/><rect x="510" y="510" width="330" height="250" rx="24" fill="#000"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" fill="none" stroke="#000" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+  <!-- screen -->
+  <rect x="90" y="130" width="780" height="520" rx="46"/>
+  <!-- 2x2 split view -->
+  <path d="M480 130 V 650 M90 390 H 870"/>
+  <!-- live play mark in the first tile -->
+  <path d="M248 210 L 336 260 L 248 310 Z"/>
+  <!-- stand -->
+  <path d="M418 650 L 394 790 M542 650 L 566 790 M290 810 H 670"/>
+</svg>

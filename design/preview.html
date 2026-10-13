@@ -1,0 +1,7 @@
+<!doctype html><html><body style="margin:0;font:13px sans-serif;background:#fff">
+<div id="rows"></div>
+<script>
+const names=['app','camera','view','server','recording','camera-offline','warning'];
+const row=(bg,fg,size)=>`<div style="display:flex;gap:24px;padding:14px;background:${bg};align-items:center">`+names.map(n=>`<div style="text-align:center;color:${fg}"><img src="${n}.svg" style="width:${size}px;height:${size}px;${fg==='#fff'?'filter:invert(1)':''}"><div>${size>60?n:''}</div></div>`).join('')+`</div>`;
+document.getElementById('rows').innerHTML=row('#fff','#000',140)+row('#1c1c1e','#fff',140)+row('#fff','#000',36)+row('#1c1c1e','#fff',36);
+</script></body></html>

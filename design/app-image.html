@@ -1,0 +1,19 @@
+<!doctype html><html><head><style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:sans-serif}
+body{background:radial-gradient(120% 140% at 15% 10%,#2d5a8c 0%,#1f3a5f 45%,#0f1f33 100%)}
+.cam{position:absolute;left:8%;top:22%;width:40%;aspect-ratio:1;background:#f2b705;-webkit-mask:url(app.svg) center/contain no-repeat;mask:url(app.svg) center/contain no-repeat}
+.phone{position:absolute;right:9%;top:9%;height:82%;aspect-ratio:9/17;border-radius:7% / 3.7%;background:#0b1522;border:0.7vw solid #dfe6ee;box-shadow:0 2vw 5vw rgba(0,0,0,.45)}
+.screen{position:absolute;inset:9% 6% 9% 6%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3%}
+.t{border-radius:6%;position:relative;overflow:hidden}
+.t1{background:linear-gradient(#9cc3e6 0 45%,#5f8f4e 45% 100%)}
+.t2{background:linear-gradient(#b8d4ee 0 38%,#a4553f 38% 75%,#6d9a52 75%)}
+.t3{background:linear-gradient(#c9d6e2 0 55%,#8a8f96 55%)}
+.t4{background:linear-gradient(#e9e4dc 0 60%,#b9ada0 60%)}
+.t::after{content:'';position:absolute;left:8%;top:8%;width:12%;aspect-ratio:1;border-radius:50%;background:#e5484d}
+.t2::after,.t3::after,.t4::after{display:none}
+.tag{position:absolute;left:7%;bottom:16%;color:#fff;font-weight:700;font-size:6vw;letter-spacing:.02em;line-height:1.1}
+.tag small{display:block;font-weight:500;font-size:2.6vw;opacity:.85;margin-top:1.2vw}
+</style></head><body>
+<div class="cam"></div>
+<div class="phone"><div class="screen"><div class="t t1"></div><div class="t t2"></div><div class="t t3"></div><div class="t t4"></div></div></div>
+</body></html>
