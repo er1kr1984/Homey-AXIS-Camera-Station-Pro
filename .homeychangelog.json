@@ -1,9 +1,9 @@
 {
   "1.0.1": {
-    "en": "New name: Live view for AXIS Camera Station Pro.",
-    "sv": "Nytt namn: Livebild för AXIS Camera Station Pro.",
-    "de": "Neuer Name: Livebild für AXIS Camera Station Pro.",
-    "nl": "Nieuwe naam: Livebeeld voor AXIS Camera Station Pro."
+    "en": "New name: Live view for AXIS Camera Station Pro. Homey's standard icons.",
+    "sv": "Nytt namn: Livebild för AXIS Camera Station Pro. Homeys standardikoner.",
+    "de": "Neuer Name: Livebild für AXIS Camera Station Pro. Homeys Standardsymbole.",
+    "nl": "Nieuwe naam: Livebeeld voor AXIS Camera Station Pro. De standaardpictogrammen van Homey."
   },
   "1.0.0": {
     "en": "First release: live video from AXIS Camera Station Pro over WebRTC, views, dashboard widget, events, recording, bookmarks, PTZ, triggers and server health.",

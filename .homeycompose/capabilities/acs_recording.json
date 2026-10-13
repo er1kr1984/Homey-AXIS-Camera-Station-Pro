@@ -10,7 +10,6 @@
   "setable": true,
   "uiComponent": "button",
   "uiQuickAction": false,
-  "icon": "/assets/recording.svg",
   "insights": true,
   "insightsTitleTrue": {
     "en": "Manual recording started",

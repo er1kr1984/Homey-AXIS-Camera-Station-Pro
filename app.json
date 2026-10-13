@@ -1794,8 +1794,7 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": "sensor",
-      "icon": "/assets/warning.svg"
+      "uiComponent": "sensor"
     },
     "acs_recording": {
       "type": "boolean",
@@ -1809,7 +1808,6 @@
       "setable": true,
       "uiComponent": "button",
       "uiQuickAction": false,
-      "icon": "/assets/recording.svg",
       "insights": true,
       "insightsTitleTrue": {
         "en": "Manual recording started",
