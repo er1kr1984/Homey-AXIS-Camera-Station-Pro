@@ -234,6 +234,13 @@ class CameraStationLiveApp extends Homey.App {
     }
   }
 
+  // What a widget tile's player reports a few seconds after connecting (see the widget).
+  widgetReport({ sourceId, ...stats }) {
+    const name = this._cameraName(sourceId) || sourceId;
+    this.diag(`[${name}] widget player: ${JSON.stringify(stats).slice(0, 600)}`);
+    return { ok: true };
+  }
+
   _cameraName(sourceId) {
     const cam = this.homey.drivers.getDriver('camera').getDevices().find((d) => d.getData().id === sourceId);
     return cam ? cam.getName() : null;

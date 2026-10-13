@@ -1730,6 +1730,10 @@
         "mp4": {
           "method": "POST",
           "path": "/mp4"
+        },
+        "report": {
+          "method": "POST",
+          "path": "/report"
         }
       },
       "id": "live"

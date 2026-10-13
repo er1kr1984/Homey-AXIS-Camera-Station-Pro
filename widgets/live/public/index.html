@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     html, body { margin: 0; height: 100%; background: transparent; }
+    [hidden] { display: none !important; } /* the display rules below must not show hidden elements */
     #grid {
       position: absolute; inset: 0; display: grid; gap: 2px;
       background: #111; border-radius: var(--homey-border-radius-default, 10px); overflow: hidden;
@@ -245,8 +246,10 @@
         pc.addTransceiver('video', { direction: 'recvonly' });
         pc.ontrack = (e) => {
           tile.video.srcObject = e.streams[0] || new MediaStream([e.track]);
-          tile.video.play().catch(() => {});
+          tile.video.play().catch((err) => { tile.playError = String(err && err.name || err); });
         };
+        // Tell Homey what this phone's player sees (for the app's diagnostic log).
+        [4000, 12000].forEach((ms) => setTimeout(() => report(tile, pc, ms), ms));
         tile.video.onplaying = () => {
           // Only WebRTC sets srcObject; HTTP video plays through src and keeps its badge.
           if (!tile.video.srcObject) return;
@@ -280,6 +283,46 @@
           tile.status.textContent = Homey.__('widget.failed');
           scheduleRetry(tile);
         }
+      }
+
+      async function report(tile, pc, ms) {
+        if (tile.pc !== pc) return;
+        const out = {
+          sourceId: tile.sourceId, after: ms, pc: pc.connectionState,
+          ready: tile.video.readyState, paused: tile.video.paused, time: +tile.video.currentTime.toFixed(1),
+          size: `${tile.video.videoWidth}x${tile.video.videoHeight}`, playError: tile.playError || null,
+          ua: navigator.userAgent,
+        };
+        // Average brightness (0-255) of the current frame: tells a black picture from one
+        // that is decoded fine but covered or not shown.
+        try {
+          const c = document.createElement('canvas');
+          c.width = 32; c.height = 18;
+          const g = c.getContext('2d');
+          g.drawImage(tile.video, 0, 0, 32, 18);
+          const px = g.getImageData(0, 0, 32, 18).data;
+          let sum = 0;
+          for (let i = 0; i < px.length; i += 4) sum += (px[i] + px[i + 1] + px[i + 2]) / 3;
+          out.luma = Math.round(sum / (px.length / 4));
+        } catch (e) { out.lumaError = String(e); }
+        const r = tile.el.getBoundingClientRect();
+        out.box = `${Math.round(r.width)}x${Math.round(r.height)}`;
+        out.cls = tile.el.className;
+        try {
+          const stats = await pc.getStats();
+          const codecs = {};
+          stats.forEach((s) => { if (s.type === 'codec') codecs[s.id] = `${s.mimeType} ${s.sdpFmtpLine || ''}`; });
+          stats.forEach((s) => {
+            if (s.type !== 'inbound-rtp' || s.kind !== 'video') return;
+            Object.assign(out, {
+              packets: s.packetsReceived, lost: s.packetsLost, framesReceived: s.framesReceived,
+              decoded: s.framesDecoded, keyframes: s.keyFramesDecoded, dropped: s.framesDropped,
+              pli: s.pliCount, nack: s.nackCount, freezes: s.freezeCount, decoder: s.decoderImplementation,
+              codec: codecs[s.codecId],
+            });
+          });
+        } catch (e) { out.statsError = String(e); }
+        Homey.api('POST', '/report', out).catch(() => {});
       }
 
       // keepFallback: leave HTTP video or pictures running (used while trying live again).

@@ -18,4 +18,8 @@ module.exports = {
   async offer({ homey, body }) {
     return homey.app.widgetOffer(body || {});
   },
+  // body: { sourceId, ... playback numbers } -> logged, to find out why a tile shows no video
+  async report({ homey, body }) {
+    return homey.app.widgetReport(body || {});
+  },
 };
