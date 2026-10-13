@@ -14,7 +14,7 @@ const [filter = 'p3267', secs = '8'] = process.argv.slice(2);
 (async () => {
   const acs = new AcsClient({ host: process.env.ACS_HOST, username: process.env.ACS_USER, password: process.env.ACS_PASS });
   const cam = (await acs.listCameras()).find((c) => c.name.toLowerCase().includes(filter));
-  const relay = new LiveRelay({ getAcs: () => acs, log: (...a) => console.log(...a) });
+  const relay = new LiveRelay({ getAcs: () => acs, knownBFrames: process.env.KNOWN_BFRAMES ? [cam.sourceId] : [], log: (...a) => console.log(...a) });
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--autoplay-policy=no-user-gesture-required'] });
   const page = await browser.newPage();
   await page.exposeFunction('relayOffer', async (sdp) => (await relay.openViewer({ camera: cam, mode: 'low', startProfile: 'low', viewerOfferSdp: sdp })).answerSdp);

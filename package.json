@@ -9,10 +9,14 @@
   },
   "dependencies": {
     "jpeg-js": "^0.4.4",
-    "werift": "^0.22.9",
+    "werift": "^0.25.0",
     "ws": "^8.22.0"
   },
   "scripts": {
-    "test": "node --test test/*.test.js"
+    "test": "node --test test/*.test.js",
+    "postinstall": "node scripts/prune-modules.js"
+  },
+  "overrides": {
+    "mediabunny": "file:./stubs/mediabunny-0.0.0-stub.tgz"
   }
 }

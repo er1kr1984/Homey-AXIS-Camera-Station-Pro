@@ -1,4 +1,11 @@
 test/
-README.md
 bench/
 design/
+README.md
+# Source maps, TypeScript sources and type definitions are not needed at runtime
+*.map
+*.ts
+*.mts
+*.cts
+scripts/
+stubs/

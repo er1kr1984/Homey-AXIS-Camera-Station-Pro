@@ -86,6 +86,12 @@ class CameraStationLiveApp extends Homey.App {
         getAcs: (camera) => this.getAcs(this.serverIdFor(camera.sourceId)),
         log: (...args) => this.diag(...args),
         onProfileLearned: (sourceId, profile) => this._rememberProfile(sourceId, profile),
+        knownBFrames: this.homey.settings.get('bframe_cameras') || [],
+        onBFrames: (sourceId) => {
+          const known = new Set(this.homey.settings.get('bframe_cameras') || []);
+          known.add(sourceId);
+          this.homey.settings.set('bframe_cameras', [...known]);
+        },
       });
     }
     return this.relay;
