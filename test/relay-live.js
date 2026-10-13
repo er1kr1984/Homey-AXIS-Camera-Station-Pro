@@ -2,7 +2,7 @@
 
 // End-to-end relay test: a fake "Homey viewer" peer makes the offer, the relay answers
 // and forwards ACS video. Usage: ACS_USER=.. ACS_PASS=.. node test-relay.js [camera] [seconds]
-const { RTCPeerConnection, RTCRtpCodecParameters } = require('werift');
+const { RTCPeerConnection, RTCRtpCodecParameters, useOPUS } = require('werift');
 const AcsClient = require('../lib/acs-client');
 const LiveRelay = require('../lib/live-relay');
 
@@ -18,8 +18,9 @@ const seconds = Number(process.argv[3] || 10);
 
   // Fake viewer, like the Homey app: recvonly video, non-trickle offer.
   const viewer = new RTCPeerConnection({
-    codecs: { video: [new RTCRtpCodecParameters({ mimeType: 'video/H264', clockRate: 90000, rtcpFeedback: [{ type: 'nack' }, { type: 'nack', parameter: 'pli' }], parameters: 'packetization-mode=1;profile-level-id=42e01f;level-asymmetry-allowed=1' })] },
+    codecs: { video: [new RTCRtpCodecParameters({ mimeType: 'video/H264', clockRate: 90000, rtcpFeedback: [{ type: 'nack' }, { type: 'nack', parameter: 'pli' }], parameters: 'packetization-mode=1;profile-level-id=42e01f;level-asymmetry-allowed=1' })], audio: [useOPUS()] },
   });
+  viewer.addTransceiver('audio', { direction: 'recvonly' });
   viewer.addTransceiver('video', { direction: 'recvonly' });
   const t0 = Date.now();
   const stats = { rtp: 0, idr: 0, firstMs: null };
