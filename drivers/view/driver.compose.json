@@ -1,0 +1,82 @@
+{
+  "name": {
+    "en": "View"
+  },
+  "class": "camera",
+  "capabilities": [],
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "lan"
+  ],
+  "images": {
+    "small": "/drivers/view/assets/images/small.png",
+    "large": "/drivers/view/assets/images/large.png",
+    "xlarge": "/drivers/view/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "title": {
+          "en": "Log in to Camera Station"
+        },
+        "usernameLabel": {
+          "en": "Camera Station username"
+        },
+        "usernamePlaceholder": {
+          "en": "axis"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      },
+      "navigation": {
+        "next": "list_devices"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "prev": "login_credentials",
+        "next": "add_devices"
+      },
+      "options": {
+        "singular": false
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "title": {
+          "en": "Log in to Camera Station"
+        },
+        "usernameLabel": {
+          "en": "Camera Station username"
+        },
+        "usernamePlaceholder": {
+          "en": "axis"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      }
+    }
+  ]
+}

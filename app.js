@@ -96,14 +96,23 @@ class CameraStationLiveApp extends Homey.App {
     return this.profiles;
   }
 
-  // Auto quality stepped down for a camera: start there next time.
+  // Auto quality stepped down for a camera: start there next time (shared by camera
+  // and view devices).
   _rememberProfile(sourceId, profile) {
-    const driver = this.homey.drivers.getDriver('camera');
-    const device = driver.getDevices().find((d) => d.getData().id === sourceId);
-    if (device) {
-      device.setStoreValue('autoProfile', { profile, at: Date.now() }).catch(() => {});
-      this.diag(`[${device.getName()}] Auto quality will start at ${profile} from now on`);
-    }
+    const learned = this.homey.settings.get('auto_profiles') || {};
+    learned[sourceId] = { profile, at: Date.now() };
+    this.homey.settings.set('auto_profiles', learned);
+    this.diag(`[${sourceId}] Auto quality will start at ${profile} from now on`);
+  }
+
+  getLearnedProfile(sourceId) {
+    return (this.homey.settings.get('auto_profiles') || {})[sourceId] || null;
+  }
+
+  forgetLearnedProfile(sourceId) {
+    const learned = this.homey.settings.get('auto_profiles') || {};
+    delete learned[sourceId];
+    this.homey.settings.set('auto_profiles', learned);
   }
 
   resetConnection() {

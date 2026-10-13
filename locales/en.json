@@ -8,6 +8,7 @@
   },
   "errors": {
     "notConfigured": "Not connected to Camera Station yet. Open the camera in Homey, tap the cog (⚙) in the top right, then tap Repair and log in.",
-    "liveFailed": "Could not start live video from Camera Station. Check that the server is on, then try again."
+    "liveFailed": "Could not start live video from Camera Station. Check that the server is on, then try again.",
+    "viewMissing": "This view no longer exists in Camera Station. Remove this device, or add the view again."
   }
 }

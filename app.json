@@ -180,6 +180,141 @@
           "max": 1440
         }
       ]
+    },
+    {
+      "name": {
+        "en": "View"
+      },
+      "class": "camera",
+      "capabilities": [],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/view/assets/images/small.png",
+        "large": "/drivers/view/assets/images/large.png",
+        "xlarge": "/drivers/view/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "title": {
+              "en": "Log in to Camera Station"
+            },
+            "usernameLabel": {
+              "en": "Camera Station username"
+            },
+            "usernamePlaceholder": {
+              "en": "axis"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          },
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login_credentials",
+            "next": "add_devices"
+          },
+          "options": {
+            "singular": false
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "title": {
+              "en": "Log in to Camera Station"
+            },
+            "usernameLabel": {
+              "en": "Camera Station username"
+            },
+            "usernamePlaceholder": {
+              "en": "axis"
+            },
+            "passwordLabel": {
+              "en": "Password"
+            },
+            "passwordPlaceholder": {
+              "en": "Password"
+            }
+          }
+        }
+      ],
+      "id": "view",
+      "settings": [
+        {
+          "id": "stream_profile",
+          "type": "dropdown",
+          "label": {
+            "en": "Video quality"
+          },
+          "hint": {
+            "en": "Automatic picks the best quality your Homey can handle and lowers it if Homey gets busy. Choose High, Medium or Low to always use that quality level from Camera Station. High can be very heavy (some cameras send 4K) and Homey may still lower it to stay responsive."
+          },
+          "value": "auto",
+          "values": [
+            {
+              "id": "auto",
+              "label": {
+                "en": "Automatic (recommended)"
+              }
+            },
+            {
+              "id": "high",
+              "label": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "medium",
+              "label": {
+                "en": "Medium"
+              }
+            },
+            {
+              "id": "low",
+              "label": {
+                "en": "Low"
+              }
+            }
+          ]
+        },
+        {
+          "id": "snapshot_interval",
+          "type": "number",
+          "label": {
+            "en": "Picture refresh (minutes)"
+          },
+          "hint": {
+            "en": "How often the view's picture (all cameras in a grid) is updated. Example: 5. Use 0 to only update when you open the view."
+          },
+          "value": 5,
+          "min": 0,
+          "max": 1440
+        }
+      ]
     }
   ]
 }
