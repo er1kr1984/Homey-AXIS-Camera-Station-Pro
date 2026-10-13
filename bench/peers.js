@@ -16,10 +16,13 @@ const codec = () => new RTCRtpCodecParameters({
 
 let acs;
 let received = 0;
+let sessions = 0;
 const send = (m) => process.send(m);
 
 process.on('message', async (m) => {
   if (m.type === 'acsStart') {
+    sessions++;
+    const session = sessions;
     acs = new RTCPeerConnection({ codecs: { video: [codec()] } });
     acs.createDataChannel('ctrl');
     const track = new MediaStreamTrack({ kind: 'video' });
@@ -30,7 +33,11 @@ process.on('message', async (m) => {
     // Synthetic stream: a "keyframe" (IDR FU-A start) every 2 s, otherwise P slices.
     let seq = 0; let ts = 0; let n = 0;
     const perTick = Math.max(1, Math.round(RATE / 100));
+    const started = Date.now();
+    const pauseAfter = Number(process.env.PAUSE_AFTER_MS || 0);
     setInterval(() => {
+      // Simulate a stalled camera: the first session goes silent after PAUSE_AFTER_MS.
+      if (pauseAfter && session === 1 && Date.now() - started > pauseAfter) return;
       for (let i = 0; i < perTick; i++) {
         const payload = Buffer.alloc(SIZE, 0x41);
         payload[0] = 28; // FU-A

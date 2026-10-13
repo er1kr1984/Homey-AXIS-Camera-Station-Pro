@@ -58,6 +58,11 @@
       // later ones once a minute (e.g. on a mobile network that blocks direct connections).
       const LIVE_RETRY_FIRST_MS = 10000;
       const LIVE_RETRY_MS = 60000;
+      // Homey can only relay a few live streams at once: the first tiles play live, the
+      // rest show pictures. Tapping a tile enlarges it and plays it live.
+      const MAX_LIVE_TILES = 4;
+      let zoomedTile = null;
+      const mayGoLive = (tile) => (zoomedTile ? tile === zoomedTile : tile.index < MAX_LIVE_TILES);
 
       function showMessage(text) {
         message.textContent = text;
@@ -75,7 +80,8 @@
         });
       }
 
-      function startPictures(tile) {
+      // retryLive: try live video again later (false for tiles over the live limit).
+      function startPictures(tile, retryLive = true) {
         if (tile.pictureTimer || document.hidden) return;
         tile.badge.hidden = false;
         tile.badge.textContent = Homey.__('widget.pictureBadge');
@@ -90,7 +96,7 @@
         refresh();
         tile.pictureTimer = setInterval(refresh, PICTURE_EVERY_MS);
         // See if live video works again (e.g. back on Wi-Fi).
-        tile.liveRetry = setTimeout(() => connect(tile), tile.liveRetries++ ? LIVE_RETRY_MS : LIVE_RETRY_FIRST_MS);
+        if (retryLive) tile.liveRetry = setTimeout(() => connect(tile), tile.liveRetries++ ? LIVE_RETRY_MS : LIVE_RETRY_FIRST_MS);
       }
 
       function stopPictures(tile) {
@@ -104,6 +110,7 @@
       async function connect(tile) {
         disconnect(tile, true);
         if (document.hidden) return;
+        if (!mayGoLive(tile)) { startPictures(tile, false); return; }
         if (!tile.pictureTimer) tile.el.classList.remove('live');
         tile.status.textContent = Homey.__('widget.connecting');
         // Fall back to pictures if live video hasn't started in time.
@@ -143,6 +150,12 @@
           await pc.setRemoteDescription({ type: 'answer', sdp: answerSdp });
         } catch (err) {
           if (tile.pictureTimer) return;
+          // Homey is already relaying as many streams as it can: show pictures instead.
+          if (err && /too many live streams/i.test(err.message || String(err))) {
+            disconnect(tile, true);
+            startPictures(tile);
+            return;
+          }
           tile.status.textContent = Homey.__('widget.failed');
           scheduleRetry(tile);
         }
@@ -169,7 +182,11 @@
       }
 
       function connectAll() {
-        tiles.forEach((tile, i) => setTimeout(() => connect(tile), i * STAGGER_MS));
+        let n = 0;
+        tiles.forEach((tile) => {
+          if (zoomedTile && tile !== zoomedTile) return;
+          setTimeout(() => connect(tile), (n++) * STAGGER_MS);
+        });
       }
 
       function disconnectAll() {
@@ -217,16 +234,22 @@
           el.append(video, img, label, badge, status);
           grid.append(el);
           const tile = {
-            el, video, img, badge, status, sourceId: t.sourceId, liveRetries: 0,
+            el, video, img, badge, status, sourceId: t.sourceId, liveRetries: 0, index: tiles.length,
           };
           tiles.push(tile);
           el.addEventListener('click', () => {
             try { Homey.hapticFeedback(); } catch (e) { /* not available */ }
-            if (tile.pc === null && !tile.pictureTimer) { connect(tile); return; }
-            if (layout.tiles.length < 2) return;
+            if (layout.tiles.length < 2) {
+              if (tile.pc === null && !tile.pictureTimer) connect(tile);
+              return;
+            }
             const zoomed = el.classList.toggle('zoom');
             tiles.forEach((o) => { if (o !== tile) o.el.classList.remove('zoom'); });
             grid.classList.toggle('zoomed', zoomed);
+            // Enlarged: only this tile streams (live). Back to the grid: the normal set.
+            zoomedTile = zoomed ? tile : null;
+            disconnectAll();
+            connectAll();
           });
         }
         Homey.ready();

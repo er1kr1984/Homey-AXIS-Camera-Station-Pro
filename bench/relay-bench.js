@@ -30,7 +30,7 @@ const acs = {
 };
 
 (async () => {
-  const relay = new LiveRelay({ acs, log: () => {} });
+  const relay = new LiveRelay({ acs, log: process.env.VERBOSE ? (...a) => console.log(...a) : () => {} });
   const camera = { name: 'bench', sourceId: 'bench_1', orgId: 'o', targetId: 't' };
   child.send({ type: 'viewersStart' });
   const viewers = Number(process.env.VIEWERS || 1);
@@ -42,7 +42,7 @@ const acs = {
   await new Promise((r) => setTimeout(r, 4000));
   const statsP0 = next('stats'); child.send({ type: 'stats' }); const s0 = (await statsP0).received;
   const c0 = process.cpuUsage(); const t0 = Date.now();
-  await new Promise((r) => setTimeout(r, 15000));
+  await new Promise((r) => setTimeout(r, Number(process.env.MEASURE_MS) || 15000));
   const c = process.cpuUsage(c0); const wall = (Date.now() - t0) / 1000;
   const statsP1 = next('stats'); child.send({ type: 'stats' }); const s1 = (await statsP1).received;
   const delivered = (s1 - s0) / wall;

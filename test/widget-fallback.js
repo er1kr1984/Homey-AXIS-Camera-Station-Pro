@@ -14,7 +14,7 @@ const puppeteer = require(path.join(process.env.CHROME_PUPPETEER, 'node_modules'
 const locales = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'locales', 'en.json'), 'utf8'));
 
 (async () => {
-  const acs = new AcsClient({ host: '192.168.1.250', username: process.env.ACS_USER, password: process.env.ACS_PASS });
+  const acs = new AcsClient({ host: process.env.ACS_HOST, username: process.env.ACS_USER, password: process.env.ACS_PASS });
   const cams = await acs.listCameras();
   const m1045 = cams.find((c) => /M1045/.test(c.name));
   const p3267 = cams.find((c) => /P3267/.test(c.name));
