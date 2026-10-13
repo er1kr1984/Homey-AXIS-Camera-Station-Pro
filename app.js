@@ -98,6 +98,16 @@ class CameraStationLiveApp extends Homey.App {
     return { answerSdp };
   }
 
+  // A small picture for a widget tile that can't play live video (e.g. on mobile data,
+  // where the phone can't reach Homey directly). Camera Station makes the JPEG; Homey only
+  // passes it on, so this is cheap.
+  async widgetSnapshot({ source, sourceId }) {
+    const camera = this._findCamera(source, sourceId);
+    if (!camera) throw new Error(this.homey.__('widget.missing'));
+    const jpeg = await this.getAcs().getSnapshot(camera.sourceId, 640, 360);
+    return { jpeg: jpeg.toString('base64') };
+  }
+
   // Camera details for a source id, from a camera device or a view's layout.
   _findCamera(source, sourceId) {
     const cam = this.homey.drivers.getDriver('camera').getDevices().find((d) => d.getData().id === sourceId);

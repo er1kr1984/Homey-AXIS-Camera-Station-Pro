@@ -765,6 +765,10 @@
         "offer": {
           "method": "POST",
           "path": "/offer"
+        },
+        "snapshot": {
+          "method": "POST",
+          "path": "/snapshot"
         }
       },
       "id": "live"

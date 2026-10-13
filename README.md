@@ -14,6 +14,12 @@ Station's own WebRTC service: no camera RTSP, no transcoding.
 single camera. Low quality by default; streams stop while the dashboard is hidden; tap a tile to
 enlarge it. Each tile is its own WebRTC stream through the app's relay.
 
+Live video needs a direct connection between the phone and Homey, which normally exists only on
+the home network (apps can't use Athom's relay servers). When a tile can't go live within 8 s,
+for example on mobile data, it shows a picture refreshed every 2 s (marked PICTURE), fetched
+through Homey's normal remote connection, and tries live again every minute. Homey's own camera
+widget (for camera devices) does play live remotely.
+
 ## Cameras with B-frames
 Some cameras send H.264 B-frames, which phones' WebRTC players can't play. The app detects this
 and drops those frames (lower frame rate, but the picture plays). For full frame rate, turn

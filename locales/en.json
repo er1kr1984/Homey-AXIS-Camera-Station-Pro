@@ -20,6 +20,7 @@
     "missing": "This view or camera is no longer in Homey. Pick another one in the widget settings.",
     "tapHint": "Tap a camera to enlarge it",
     "connecting": "Connecting…",
-    "failed": "No video. Tap to retry."
+    "failed": "No video. Tap to retry.",
+    "pictureBadge": "PICTURE"
   }
 }
