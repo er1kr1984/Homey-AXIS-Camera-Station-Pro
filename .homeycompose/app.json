@@ -41,6 +41,10 @@
     "getLogs": {
       "method": "GET",
       "path": "/logs"
+    },
+    "getPreviousLogs": {
+      "method": "GET",
+      "path": "/previous-logs"
     }
   }
 }

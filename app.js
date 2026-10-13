@@ -8,6 +8,19 @@ class CameraStationLiveApp extends Homey.App {
 
   async onInit() {
     this.recentLogs = [];
+    // Keep the log of the run that crashed, so it can be read after the restart.
+    const crashed = this.homey.settings.get('diag_running_logs');
+    if (crashed && crashed.length) this.homey.settings.set('diag_previous_logs', crashed);
+    this.previousLogs = this.homey.settings.get('diag_previous_logs') || [];
+    process.on('uncaughtException', (err) => {
+      this.diagError('UNCAUGHT', err && err.stack);
+      this._persistLogs();
+    });
+    process.on('unhandledRejection', (err) => {
+      this.diagError('UNHANDLED REJECTION', (err && err.stack) || err);
+      this._persistLogs();
+    });
+    this.homey.setInterval(() => this._persistLogs(), 15000);
     this.acs = null;
     this.relay = null;
     this.homey.settings.on('set', (key) => {
@@ -25,6 +38,17 @@ class CameraStationLiveApp extends Homey.App {
   diagError(...args) {
     this._remember('ERROR ', args);
     this.error(...args);
+  }
+
+  _persistLogs() {
+    try {
+      this.homey.settings.set('diag_running_logs', this.recentLogs.slice(-150));
+    } catch (e) { /* ignore */ }
+  }
+
+  async onUninit() {
+    // A clean stop is not a crash.
+    this.homey.settings.unset('diag_running_logs');
   }
 
   _remember(prefix, args) {
