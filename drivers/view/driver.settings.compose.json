@@ -6,9 +6,9 @@
       "en": "Picture refresh (minutes)"
     },
     "hint": {
-      "en": "How often the view's picture is updated while Homey is running. Example: 1. Use 0 to only update when you open the view."
+      "en": "How often the view's picture is updated, in minutes. Example: 5. While live video is playing the picture is not updated, to keep Homey responsive. Use 0 to only update when you open the view."
     },
-    "value": 1,
+    "value": 5,
     "min": 0,
     "max": 1440
   }

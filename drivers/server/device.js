@@ -22,7 +22,7 @@ class ServerDevice extends Homey.Device {
   }
 
   async _refreshInfo() {
-    const system = await this.homey.app.getAcs().getSystem();
+    const system = await this.homey.app.getAcs(this.getData().id).getSystem();
     await this.setSettings({
       server_name: system.Name || '',
       server_version: system.ServerDisplayVersion || '',
@@ -34,7 +34,7 @@ class ServerDevice extends Homey.Device {
     if (this.polling) return;
     this.polling = true;
     try {
-      const acs = this.homey.app.getAcs();
+      const acs = this.homey.app.getAcs(this.getData().id);
       const statuses = await acs.getCameraStatuses();
       await this.setCapabilityValue('acs_cameras_offline', Object.values(statuses).filter((s) => s !== 'ok').length);
 
@@ -56,7 +56,7 @@ class ServerDevice extends Homey.Device {
     } catch (err) {
       if (!this.pollErrorLogged) this.homey.app.diagError('[server] poll failed:', err.message);
       this.pollErrorLogged = true;
-      await this.setUnavailable(this.homey.__('errors.serverUnreachable')).catch(() => {});
+      await this.setUnavailable(this.homey.app.friendly(err)).catch(() => {});
     } finally {
       this.polling = false;
     }
@@ -124,6 +124,11 @@ class ServerDevice extends Homey.Device {
 
   async onSettings({ changedKeys }) {
     if (changedKeys.includes('alarm_minutes')) this.homey.setTimeout(() => this._updateAlarms().catch(() => {}), 100);
+  }
+
+  // Which Camera Station a Repair updates the login of.
+  serverIdForRepair() {
+    return this.getData().id;
   }
 
   async onDeleted() {

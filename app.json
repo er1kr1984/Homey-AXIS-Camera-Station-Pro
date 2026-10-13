@@ -39,6 +39,34 @@
     "email": "er1kr1984@gmail.com"
   },
   "api": {
+    "getSettingsState": {
+      "method": "GET",
+      "path": "/settings"
+    },
+    "saveServer": {
+      "method": "POST",
+      "path": "/servers"
+    },
+    "testServer": {
+      "method": "POST",
+      "path": "/servers/:id/test"
+    },
+    "trustServer": {
+      "method": "POST",
+      "path": "/servers/:id/trust"
+    },
+    "removeServer": {
+      "method": "DELETE",
+      "path": "/servers/:id"
+    },
+    "setDiagnostics": {
+      "method": "POST",
+      "path": "/diagnostics"
+    },
+    "newEventKey": {
+      "method": "POST",
+      "path": "/event-key"
+    },
     "getLogs": {
       "method": "GET",
       "path": "/logs"
@@ -356,7 +384,7 @@
           "en": "Activate a Camera Station trigger"
         },
         "titleFormatted": {
-          "en": "Activate Camera Station trigger [[trigger]]"
+          "en": "Activate Camera Station trigger [[trigger]] on [[server]]"
         },
         "hint": {
           "en": "Starts the actions of a Camera Station action rule whose trigger is \"Trigger\" with this name."
@@ -371,6 +399,16 @@
             "placeholder": {
               "en": "Homey arrival"
             }
+          },
+          {
+            "type": "autocomplete",
+            "name": "server",
+            "title": {
+              "en": "Camera Station"
+            },
+            "placeholder": {
+              "en": "Server"
+            }
           }
         ],
         "id": "acs_trigger_activate"
@@ -380,7 +418,7 @@
           "en": "Deactivate a Camera Station trigger"
         },
         "titleFormatted": {
-          "en": "Deactivate Camera Station trigger [[trigger]]"
+          "en": "Deactivate Camera Station trigger [[trigger]] on [[server]]"
         },
         "args": [
           {
@@ -392,6 +430,16 @@
             "placeholder": {
               "en": "Homey arrival"
             }
+          },
+          {
+            "type": "autocomplete",
+            "name": "server",
+            "title": {
+              "en": "Camera Station"
+            },
+            "placeholder": {
+              "en": "Server"
+            }
           }
         ],
         "id": "acs_trigger_deactivate"
@@ -401,7 +449,7 @@
           "en": "Activate a Camera Station trigger for a while"
         },
         "titleFormatted": {
-          "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds"
+          "en": "Activate Camera Station trigger [[trigger]] for [[seconds]] seconds on [[server]]"
         },
         "args": [
           {
@@ -425,6 +473,16 @@
             "placeholder": {
               "en": "30"
             }
+          },
+          {
+            "type": "autocomplete",
+            "name": "server",
+            "title": {
+              "en": "Camera Station"
+            },
+            "placeholder": {
+              "en": "Server"
+            }
           }
         ],
         "id": "acs_trigger_for"
@@ -434,7 +492,7 @@
           "en": "Pulse a Camera Station trigger"
         },
         "titleFormatted": {
-          "en": "Pulse Camera Station trigger [[trigger]]"
+          "en": "Pulse Camera Station trigger [[trigger]] on [[server]]"
         },
         "hint": {
           "en": "Activates and immediately deactivates the trigger."
@@ -448,6 +506,16 @@
             },
             "placeholder": {
               "en": "Homey arrival"
+            }
+          },
+          {
+            "type": "autocomplete",
+            "name": "server",
+            "title": {
+              "en": "Camera Station"
+            },
+            "placeholder": {
+              "en": "Server"
             }
           }
         ],
@@ -1072,9 +1140,9 @@
             "en": "Picture refresh (minutes)"
           },
           "hint": {
-            "en": "How often the view's picture is updated while Homey is running. Example: 1. Use 0 to only update when you open the view."
+            "en": "How often the view's picture is updated, in minutes. Example: 5. While live video is playing the picture is not updated, to keep Homey responsive. Use 0 to only update when you open the view."
           },
-          "value": 1,
+          "value": 5,
           "min": 0,
           "max": 1440
         }

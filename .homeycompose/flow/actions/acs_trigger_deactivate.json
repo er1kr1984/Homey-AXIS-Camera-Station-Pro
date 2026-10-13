@@ -3,7 +3,7 @@
     "en": "Deactivate a Camera Station trigger"
   },
   "titleFormatted": {
-    "en": "Deactivate Camera Station trigger [[trigger]]"
+    "en": "Deactivate Camera Station trigger [[trigger]] on [[server]]"
   },
   "args": [
     {
@@ -14,6 +14,16 @@
       },
       "placeholder": {
         "en": "Homey arrival"
+      }
+    },
+    {
+      "type": "autocomplete",
+      "name": "server",
+      "title": {
+        "en": "Camera Station"
+      },
+      "placeholder": {
+        "en": "Server"
       }
     }
   ]

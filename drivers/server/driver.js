@@ -19,14 +19,15 @@ class ServerDriver extends Homey.Driver {
   async onPair(session) {
     registerLogin(this, session);
     session.setHandler('list_devices', async () => {
-      const system = await this.homey.app.getAcs().getSystem();
-      if (this.getDevices().some((d) => d.getData().id === system.Id)) return [];
-      return [{ name: system.Name || 'Camera Station', data: { id: system.Id } }];
+      const added = new Set(this.getDevices().map((d) => d.getData().id));
+      return this.homey.app.servers.list()
+        .filter((s) => !added.has(s.id))
+        .map((s) => ({ name: s.name || s.host, data: { id: s.id } }));
     });
   }
 
-  async onRepair(session) {
-    registerLogin(this, session);
+  async onRepair(session, device) {
+    registerLogin(this, session, device);
   }
 
 }

@@ -3,7 +3,7 @@
     "en": "Pulse a Camera Station trigger"
   },
   "titleFormatted": {
-    "en": "Pulse Camera Station trigger [[trigger]]"
+    "en": "Pulse Camera Station trigger [[trigger]] on [[server]]"
   },
   "hint": {
     "en": "Activates and immediately deactivates the trigger."
@@ -17,6 +17,16 @@
       },
       "placeholder": {
         "en": "Homey arrival"
+      }
+    },
+    {
+      "type": "autocomplete",
+      "name": "server",
+      "title": {
+        "en": "Camera Station"
+      },
+      "placeholder": {
+        "en": "Server"
       }
     }
   ]

@@ -18,7 +18,7 @@ const locales = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'locales',
   const cams = await acs.listCameras();
   const m1045 = cams.find((c) => /M1045/.test(c.name));
   const p3267 = cams.find((c) => /P3267/.test(c.name));
-  const relay = new LiveRelay({ acs, log: () => {} });
+  const relay = new LiveRelay({ getAcs: () => acs, log: () => {} });
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--autoplay-policy=no-user-gesture-required'] });
   const page = await browser.newPage();
   await page.setViewport({ width: 640, height: 360 });

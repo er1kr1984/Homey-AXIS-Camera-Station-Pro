@@ -15,21 +15,29 @@ class ViewDriver extends Homey.Driver {
     registerLogin(this, session);
     session.setHandler('list_devices', async () => {
       this.homey.app.diag('pair: listing views');
-      const views = await this.homey.app.getAcs().listViews();
-      this.homey.app.diag(`pair: found ${views.length} views`);
+      const found = [];
+      for (const serverId of this.homey.app.servers.ids()) {
+        try {
+          const views = await this.homey.app.getAcs(serverId).listViews();
+          found.push(...views.map((v) => ({ view: v, serverId })));
+        } catch (err) {
+          throw new Error(this.homey.app.friendly(err));
+        }
+      }
+      this.homey.app.diag(`pair: found ${found.length} views`);
       const added = new Set(this.getDevices().map((d) => d.getData().id));
-      return views
-        .filter((v) => !added.has(v.id))
-        .map((v) => ({
-          name: v.name,
-          data: { id: v.id },
-          store: { layout: v },
+      return found
+        .filter(({ view }) => !added.has(view.id))
+        .map(({ view, serverId }) => ({
+          name: view.name,
+          data: { id: view.id },
+          store: { layout: view, serverId },
         }));
     });
   }
 
-  async onRepair(session) {
-    registerLogin(this, session);
+  async onRepair(session, device) {
+    registerLogin(this, session, device);
   }
 
 }

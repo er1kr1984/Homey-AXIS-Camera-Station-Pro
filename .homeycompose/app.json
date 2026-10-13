@@ -38,6 +38,34 @@
     "email": "er1kr1984@gmail.com"
   },
   "api": {
+    "getSettingsState": {
+      "method": "GET",
+      "path": "/settings"
+    },
+    "saveServer": {
+      "method": "POST",
+      "path": "/servers"
+    },
+    "testServer": {
+      "method": "POST",
+      "path": "/servers/:id/test"
+    },
+    "trustServer": {
+      "method": "POST",
+      "path": "/servers/:id/trust"
+    },
+    "removeServer": {
+      "method": "DELETE",
+      "path": "/servers/:id"
+    },
+    "setDiagnostics": {
+      "method": "POST",
+      "path": "/diagnostics"
+    },
+    "newEventKey": {
+      "method": "POST",
+      "path": "/event-key"
+    },
     "getLogs": {
       "method": "GET",
       "path": "/logs"

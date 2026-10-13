@@ -14,25 +14,27 @@ class CameraDevice extends Homey.Device {
       if (!this.hasCapability(cap)) await this.addCapability(cap).catch((err) => this.homey.app.diagError(`addCapability ${cap}:`, err.message));
     }
     this.registerCapabilityListener('acs_recording', async (on) => {
-      const acs = this.homey.app.getAcs();
-      if (on) await acs.startRecording(this.getData().id);
-      else await acs.stopRecording(this.getData().id);
+      try {
+        if (on) await this.acs().startRecording(this.getData().id);
+        else await this.acs().stopRecording(this.getData().id);
+      } catch (err) {
+        throw new Error(this.homey.app.friendly(err));
+      }
     });
-    eventAddress(this.homey, this.getData().id)
-      .then((url) => this.setSettings({ event_address: url }))
-      .catch((err) => this.homey.app.diagError(`[${this.getName()}] event address:`, err.message));
+    this.refreshEventAddress().catch((err) => this.homey.app.diagError(`[${this.getName()}] event address:`, err.message));
 
     this.image = await this.homey.images.createImage();
     this.image.setStream(async (stream) => {
-      const jpeg = await this.homey.app.getAcs().getSnapshot(this.getData().id);
+      const jpeg = await this.snapshotJpeg();
       stream.end(jpeg);
     });
     await this.setCameraImage('live', this.homey.__('device.liveTitle'), this.image);
 
+    const device = this;
     this.live = new LiveVideo({
       device: this,
       camera: {
-        name: this.getName(),
+        get name() { return device.getName(); }, // follows renames in Homey
         sourceId: this.getData().id,
         orgId: this.getStore().orgId,
         targetId: this.getStore().targetId,
@@ -44,8 +46,18 @@ class CameraDevice extends Homey.Device {
     this._scheduleSnapshots();
   }
 
+  // The Camera Station server this camera belongs to.
+  acs() {
+    return this.homey.app.getAcs(this.homey.app.serverIdFor(this.getData().id));
+  }
+
   snapshotJpeg() {
-    return this.homey.app.getAcs().getSnapshot(this.getData().id);
+    return this.acs().getSnapshot(this.getData().id);
+  }
+
+  // The address Camera Station's action rules call; changes with Homey's IP or a new key.
+  async refreshEventAddress() {
+    await this.setSettings({ event_address: await eventAddress(this.homey, this.getData().id) });
   }
 
   // From the public /event endpoint (see app.receiveEvent).
@@ -76,7 +88,7 @@ class CameraDevice extends Homey.Device {
       this.homey.app.diag(`[${this.getName()}] camera ${offline ? `offline (${status})` : 'back online'}`);
     }
     if (!offline) {
-      const recording = await this.homey.app.getAcs().isRecording(this.getData().id).catch(() => null);
+      const recording = await this.acs().isRecording(this.getData().id).catch(() => null);
       if (recording !== null && this.getCapabilityValue('acs_recording') !== recording) {
         await this.setCapabilityValue('acs_recording', recording);
       }
@@ -99,6 +111,11 @@ class CameraDevice extends Homey.Device {
       this.homey.app.forgetLearnedProfile(this.getData().id);
       this._closeStreams();
     }
+  }
+
+  // Which Camera Station a Repair updates the login of.
+  serverIdForRepair() {
+    return this.homey.app.serverIdFor(this.getData().id);
   }
 
   async onDeleted() {

@@ -34,7 +34,7 @@ async function fakeViewer(relay, cam, i) {
 (async () => {
   const acs = new AcsClient({ host: process.env.ACS_HOST, username: process.env.ACS_USER, password: process.env.ACS_PASS });
   const cam = (await acs.listCameras()).find((c) => c.name.toLowerCase().includes(filter));
-  const relay = new LiveRelay({ acs, log: (...a) => console.log(...a) });
+  const relay = new LiveRelay({ getAcs: () => acs, log: (...a) => console.log(...a) });
   const viewers = [];
   for (let i = 0; i < Number(count); i++) {
     viewers.push(await fakeViewer(relay, cam, i));

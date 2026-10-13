@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    .server { border: 1px solid var(--homey-color-mono-100, #ddd); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+    .server h3 { margin: 0 0 4px; font-size: 16px; }
+    .meta { font-size: 13px; color: var(--homey-text-color-light, #777); line-height: 1.5; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .msg { font-size: 13px; margin-top: 8px; min-height: 1em; }
+    .msg.err { color: var(--homey-color-danger, #d00); }
+    .msg.ok { color: var(--homey-color-success, #2a7); }
+    ol.steps { padding-left: 20px; line-height: 1.6; font-size: 14px; }
+    .row { display: flex; gap: 8px; }
+    .row .homey-form-group { flex: 1; }
+  </style>
+</head>
+<body>
+  <header class="homey-header">
+    <h1 class="homey-title" data-i18n="settings.title"></h1>
+    <p class="homey-subtitle" data-i18n="settings.subtitle"></p>
+  </header>
+
+  <fieldset class="homey-form-fieldset">
+    <legend class="homey-form-legend" data-i18n="settings.serversTitle"></legend>
+    <div id="servers"></div>
+    <p class="homey-form-hint" id="noServers" hidden data-i18n="settings.noServers"></p>
+  </fieldset>
+
+  <fieldset class="homey-form-fieldset">
+    <legend class="homey-form-legend" data-i18n="settings.addTitle"></legend>
+    <p class="homey-form-hint" data-i18n="settings.addHint"></p>
+    <div class="homey-form-group">
+      <label class="homey-form-label" for="host" data-i18n="settings.host"></label>
+      <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.250" autocomplete="off" />
+    </div>
+    <div class="row">
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="port" data-i18n="settings.webPort"></label>
+        <input class="homey-form-input" id="port" type="number" value="443" />
+      </div>
+      <div class="homey-form-group">
+        <label class="homey-form-label" for="apiPort" data-i18n="settings.apiPort"></label>
+        <input class="homey-form-input" id="apiPort" type="number" value="29204" />
+      </div>
+    </div>
+    <p class="homey-form-hint" data-i18n="settings.portsHint"></p>
+    <div class="homey-form-group">
+      <label class="homey-form-label" for="username" data-i18n="settings.username"></label>
+      <input class="homey-form-input" id="username" type="text" autocomplete="off" />
+    </div>
+    <div class="homey-form-group">
+      <label class="homey-form-label" for="password" data-i18n="settings.password"></label>
+      <input class="homey-form-input" id="password" type="password" autocomplete="off" />
+    </div>
+    <button class="homey-button-primary-full" id="save" data-i18n="settings.save"></button>
+    <div class="msg" id="saveMsg"></div>
+  </fieldset>
+
+  <fieldset class="homey-form-fieldset">
+    <legend class="homey-form-legend" data-i18n="settings.eventsTitle"></legend>
+    <p class="homey-form-hint" data-i18n="settings.eventsIntro"></p>
+    <ol class="steps">
+      <li data-i18n="settings.eventsStep1"></li>
+      <li data-i18n="settings.eventsStep2"></li>
+      <li data-i18n="settings.eventsStep3"></li>
+      <li data-i18n="settings.eventsStep4"></li>
+    </ol>
+    <p class="homey-form-hint" data-i18n="settings.eventsIp"></p>
+    <button class="homey-button-secondary-full" id="newKey" data-i18n="settings.newKey"></button>
+    <div class="msg" id="keyMsg"></div>
+  </fieldset>
+
+  <fieldset class="homey-form-fieldset">
+    <legend class="homey-form-legend" data-i18n="settings.diagnosticsTitle"></legend>
+    <label class="homey-form-checkbox">
+      <input class="homey-form-checkbox-input" id="diagnostics" type="checkbox" />
+      <span class="homey-form-checkbox-checkmark"></span>
+      <span class="homey-form-checkbox-text" data-i18n="settings.diagnostics"></span>
+    </label>
+    <p class="homey-form-hint" data-i18n="settings.diagnosticsHint"></p>
+  </fieldset>
+
+  <script type="text/javascript">
+    function onHomeyReady(Homey) {
+      (function () {
+        var el = function (id) { return document.getElementById(id); };
+        var call = function (method, path, body) {
+          return new Promise(function (resolve, reject) {
+            Homey.api(method, path, body || {}, function (err, result) {
+              if (err) reject(err); else resolve(result);
+            });
+          });
+        };
+        var show = function (box, text, ok) {
+          box.textContent = text || '';
+          box.className = 'msg ' + (ok ? 'ok' : 'err');
+        };
+        var errText = function (err) { return (err && err.message) || String(err); };
+
+        function renderServers(state) {
+          var list = el('servers');
+          list.textContent = '';
+          el('noServers').hidden = state.servers.length > 0;
+          state.servers.forEach(function (s) {
+            var box = document.createElement('div');
+            box.className = 'server';
+            var h = document.createElement('h3');
+            h.textContent = s.name || s.host;
+            var meta = document.createElement('div');
+            meta.className = 'meta';
+            meta.textContent = s.host + ' · ' + Homey.__('settings.ports') + ' ' + s.port + ' / ' + s.apiPort
+              + ' · Camera Station ' + (s.version || '?') + ' · ' + Homey.__('settings.user') + ' ' + s.username;
+            var actions = document.createElement('div');
+            actions.className = 'actions';
+            var msg = document.createElement('div');
+            msg.className = 'msg';
+            var button = function (label, onClick) {
+              var b = document.createElement('button');
+              b.className = 'homey-button-secondary-small';
+              b.textContent = Homey.__(label);
+              b.addEventListener('click', function () { onClick(b); });
+              actions.appendChild(b);
+            };
+            button('settings.test', function () {
+              show(msg, Homey.__('settings.testing'), true);
+              call('POST', '/servers/' + s.id + '/test').then(function (r) {
+                show(msg, Homey.__('settings.testOk') + ' (' + r.version + ')', true);
+              }).catch(function (err) { show(msg, errText(err), false); });
+            });
+            button('settings.trust', function () {
+              if (!confirm(Homey.__('settings.trustConfirm'))) return;
+              call('POST', '/servers/' + s.id + '/trust').then(function () {
+                show(msg, Homey.__('settings.trusted'), true);
+              }).catch(function (err) { show(msg, errText(err), false); });
+            });
+            button('settings.edit', function () {
+              el('host').value = s.host;
+              el('port').value = s.port;
+              el('apiPort').value = s.apiPort;
+              el('username').value = s.username;
+              el('password').value = '';
+              el('password').focus();
+            });
+            button('settings.remove', function () {
+              if (!confirm(Homey.__('settings.removeConfirm'))) return;
+              call('DELETE', '/servers/' + s.id).then(load).catch(function (err) { show(msg, errText(err), false); });
+            });
+            box.appendChild(h);
+            box.appendChild(meta);
+            box.appendChild(actions);
+            box.appendChild(msg);
+            list.appendChild(box);
+          });
+          el('diagnostics').checked = !!state.diagnostics;
+        }
+
+        function load() {
+          return call('GET', '/settings').then(renderServers).catch(function (err) {
+            show(el('saveMsg'), errText(err), false);
+          });
+        }
+
+        el('save').addEventListener('click', function () {
+          show(el('saveMsg'), Homey.__('settings.saving'), true);
+          call('POST', '/servers', {
+            host: el('host').value,
+            port: Number(el('port').value) || 443,
+            apiPort: Number(el('apiPort').value) || 29204,
+            username: el('username').value,
+            password: el('password').value,
+          }).then(function (s) {
+            el('password').value = '';
+            show(el('saveMsg'), Homey.__('settings.saved') + ' ' + (s.name || s.host), true);
+            load();
+          }).catch(function (err) { show(el('saveMsg'), errText(err), false); });
+        });
+
+        el('newKey').addEventListener('click', function () {
+          if (!confirm(Homey.__('settings.newKeyConfirm'))) return;
+          call('POST', '/event-key').then(function () {
+            show(el('keyMsg'), Homey.__('settings.newKeyDone'), true);
+          }).catch(function (err) { show(el('keyMsg'), errText(err), false); });
+        });
+
+        el('diagnostics').addEventListener('change', function () {
+          call('POST', '/diagnostics', { on: el('diagnostics').checked }).catch(function () {});
+        });
+
+        load().then(function () { Homey.ready(); });
+      })();
+    }
+  </script>
+</body>
+</html>

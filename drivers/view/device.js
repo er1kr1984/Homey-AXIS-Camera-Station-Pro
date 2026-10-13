@@ -28,13 +28,24 @@ class ViewDevice extends Homey.Device {
     }, LAYOUT_REFRESH_MS);
   }
 
+  // The Camera Station server this view belongs to (its cameras' ids end in it).
+  serverId() {
+    const stored = this.getStoreValue('serverId');
+    if (stored) return stored;
+    const tile = ((this.layout || {}).tiles || [])[0];
+    return tile ? this.homey.app.serverIdFor(tile.camera.sourceId) : null;
+  }
+
   async _refreshLayout() {
-    const views = await this.homey.app.getAcs().listViews();
+    const views = await this.homey.app.getAcs(this.serverId()).listViews();
     const view = views.find((v) => v.id === this.getData().id);
     if (!view) return;
     const changed = this.image && JSON.stringify(view.tiles) !== JSON.stringify(this.layout && this.layout.tiles);
     this.layout = view;
     await this.setStoreValue('layout', view);
+    if (!this.getStoreValue('serverId') && view.tiles[0]) {
+      await this.setStoreValue('serverId', this.homey.app.serverIdFor(view.tiles[0].camera.sourceId));
+    }
     if (changed) {
       this.homey.app.diag(`[${this.getName()}] view changed in Camera Station; updating picture`);
       await this.image.update();
@@ -42,7 +53,7 @@ class ViewDevice extends Homey.Device {
   }
 
   async gridJpeg() {
-    const acs = this.homey.app.getAcs();
+    const acs = this.homey.app.getAcs(this.serverId());
     const snapshots = new Map();
     await Promise.all(this.layout.tiles.map(async (tile) => {
       const size = tileSize(this.layout, tile);
@@ -57,12 +68,19 @@ class ViewDevice extends Homey.Device {
     const minutes = Number(this.getSetting('snapshot_interval'));
     if (!minutes) return;
     this.snapshotTimer = this.homey.setInterval(() => {
+      // Building the grid costs Homey about a second of CPU: skip it while live video runs.
+      if (this.homey.app.isStreaming()) return;
       this.image.update().catch((err) => this.homey.app.diagError(`[${this.getName()}] Picture update failed:`, err.message));
     }, minutes * 60 * 1000);
   }
 
   async onSettings({ changedKeys }) {
     if (changedKeys.includes('snapshot_interval')) this._scheduleSnapshots();
+  }
+
+  // Which Camera Station a Repair updates the login of.
+  serverIdForRepair() {
+    return this.serverId();
   }
 
   async onDeleted() {

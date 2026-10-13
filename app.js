@@ -1,46 +1,129 @@
 'use strict';
 
 const Homey = require('homey');
-const AcsClient = require('./lib/acs-client');
 const { applyWeriftTuning } = require('./lib/werift-tuning');
 
 const tuningFailures = applyWeriftTuning();
 const LiveRelay = require('./lib/live-relay');
+const ServerRegistry = require('./lib/servers');
 const events = require('./lib/events');
+const { classify } = require('./lib/errors');
 
 const STATUS_POLL_MS = 60 * 1000;
 const MAX_SNAPSHOT_IMAGES = 30;
+const LOG_LINES = 300;
+const LOG_PERSIST_MS = 60 * 1000;
 
 class CameraStationLiveApp extends Homey.App {
 
   async onInit() {
     this.recentLogs = [];
-    // Keep the log of the run that crashed, so it can be read after the restart.
+    this.logsDirty = false;
+    // With diagnostics on, keep the log of a run that crashed so it can be read after the restart.
     const crashed = this.homey.settings.get('diag_running_logs');
     if (crashed && crashed.length) this.homey.settings.set('diag_previous_logs', crashed);
-    this.previousLogs = this.homey.settings.get('diag_previous_logs') || [];
+    this.homey.settings.unset('diag_running_logs');
     process.on('uncaughtException', (err) => {
       this.diagError('UNCAUGHT', err && err.stack);
-      this._persistLogs();
+      this._persistLogs(true);
     });
     process.on('unhandledRejection', (err) => {
       this.diagError('UNHANDLED REJECTION', (err && err.stack) || err);
-      this._persistLogs();
+      this._persistLogs(true);
     });
-    this.homey.setInterval(() => this._persistLogs(), 15000);
-    this.acs = null;
+    this.homey.setInterval(() => this._persistLogs(false), LOG_PERSIST_MS);
+
+    if (!this.homey.settings.get('diagnostics')) this.homey.settings.unset('diag_previous_logs');
     this.relay = null;
-    this.homey.settings.on('set', (key) => {
-      if (key.startsWith('acs_')) this.resetConnection();
+    this.profiles = new Map(); // server id -> { at, profiles }
+    this.servers = new ServerRegistry({
+      homey: this.homey,
+      log: (...args) => this.diag(...args),
+      onServerChanged: (id) => this._serverChanged(id),
     });
+    await this.servers.migrateLegacy();
     this.snapshotImages = [];
+    this.lastRejectedLog = 0;
     this._registerFlowCards();
     this._registerWidget();
     this.statusTimer = this.homey.setInterval(() => this.pollStatus(), STATUS_POLL_MS);
     this.homey.setTimeout(() => this.pollStatus(), 10000);
-    this.diag('Camera Station Live started');
+    this.diag(`Camera Station Live started (${this.servers.ids().length} server(s))`);
     if (tuningFailures.length) this.diagError('Running without some speed-ups:', tuningFailures.join('; '));
   }
+
+  // ---- Servers ----
+
+  // ACS client for a server id (or the only server when there is one).
+  getAcs(serverId) {
+    return this.servers.client(serverId);
+  }
+
+  // Server id for a camera/source id ("73016_<server id>").
+  serverIdFor(sourceId) {
+    return this.servers.idForSource(sourceId) || String(sourceId || '').split('_')[1];
+  }
+
+  _serverChanged(serverId) {
+    if (this.relay) this.relay.closeServer(serverId);
+    if (this.profiles) this.profiles.delete(serverId);
+  }
+
+  // A clear, translated message for an error from Camera Station.
+  friendly(err) {
+    const code = classify(err);
+    const key = `errors.${code}`;
+    const text = this.homey.__(key);
+    return text && text !== key ? text : (err && err.message) || String(err);
+  }
+
+  // ---- Live video ----
+
+  // One relay for all cameras of all servers: shares a single ACS stream per camera.
+  getRelay() {
+    if (!this.relay) {
+      this.relay = new LiveRelay({
+        getAcs: (camera) => this.getAcs(this.serverIdFor(camera.sourceId)),
+        log: (...args) => this.diag(...args),
+        onProfileLearned: (sourceId, profile) => this._rememberProfile(sourceId, profile),
+      });
+    }
+    return this.relay;
+  }
+
+  // True while any live stream is running (used to postpone CPU-heavy work).
+  isStreaming() {
+    return !!(this.relay && [...this.relay.streams.values()].some((s) => !s.closed));
+  }
+
+  // Camera Station's quality profiles per camera, refreshed hourly per server.
+  async getCameraProfiles(serverId) {
+    const cached = this.profiles.get(serverId);
+    if (cached && Date.now() - cached.at < 60 * 60 * 1000) return cached.profiles;
+    const profiles = await this.getAcs(serverId).getCameraProfiles();
+    this.profiles.set(serverId, { at: Date.now(), profiles });
+    return profiles;
+  }
+
+  // Auto quality stepped down for a camera: start there next time.
+  _rememberProfile(sourceId, profile) {
+    const learned = this.homey.settings.get('auto_profiles') || {};
+    learned[sourceId] = { profile, at: Date.now() };
+    this.homey.settings.set('auto_profiles', learned);
+    this.diag(`[${sourceId}] Auto quality will start at ${profile} from now on`);
+  }
+
+  getLearnedProfile(sourceId) {
+    return (this.homey.settings.get('auto_profiles') || {})[sourceId] || null;
+  }
+
+  forgetLearnedProfile(sourceId) {
+    const learned = this.homey.settings.get('auto_profiles') || {};
+    delete learned[sourceId];
+    this.homey.settings.set('auto_profiles', learned);
+  }
+
+  // ---- Dashboard widget ----
 
   _registerWidget() {
     const widget = this.homey.dashboards.getWidget('live');
@@ -78,7 +161,7 @@ class CameraStationLiveApp extends Homey.App {
       rows,
       columns,
       tiles: layout.tiles.map((t) => ({
-        row: t.row, column: t.column, rowSpan: t.rowSpan, columnSpan: t.columnSpan, sourceId: t.camera.sourceId, name: t.camera.name,
+        row: t.row, column: t.column, rowSpan: t.rowSpan, columnSpan: t.columnSpan, sourceId: t.camera.sourceId, name: this._cameraName(t.camera.sourceId) || t.camera.name,
       })),
     };
   }
@@ -89,13 +172,19 @@ class CameraStationLiveApp extends Homey.App {
     if (!camera) throw new Error(this.homey.__('widget.missing'));
     const mode = ['low', 'medium', 'auto'].includes(quality) ? quality : 'low';
     this.diag(`[${camera.name}] widget viewer offer (${mode})`);
-    const { answerSdp } = await this.getRelay().openViewer({
-      camera,
-      mode,
-      startProfile: 'low',
-      viewerOfferSdp: sdp,
-    });
-    return { answerSdp };
+    try {
+      const { answerSdp } = await this.getRelay().openViewer({
+        camera,
+        mode,
+        startProfile: 'low',
+        viewerOfferSdp: sdp,
+      });
+      return { answerSdp };
+    } catch (err) {
+      // The widget recognises "too many live streams" and shows pictures instead.
+      if (err.code === 'too_many_streams') throw new Error('Too many live streams');
+      throw new Error(this.friendly(err));
+    }
   }
 
   // A small picture for a widget tile that can't play live video (e.g. on mobile data,
@@ -104,8 +193,13 @@ class CameraStationLiveApp extends Homey.App {
   async widgetSnapshot({ source, sourceId }) {
     const camera = this._findCamera(source, sourceId);
     if (!camera) throw new Error(this.homey.__('widget.missing'));
-    const jpeg = await this.getAcs().getSnapshot(camera.sourceId, 640, 360);
+    const jpeg = await this.getAcs(this.serverIdFor(camera.sourceId)).getSnapshot(camera.sourceId, 640, 360);
     return { jpeg: jpeg.toString('base64') };
+  }
+
+  _cameraName(sourceId) {
+    const cam = this.homey.drivers.getDriver('camera').getDevices().find((d) => d.getData().id === sourceId);
+    return cam ? cam.getName() : null;
   }
 
   // Camera details for a source id, from a camera device or a view's layout.
@@ -123,23 +217,44 @@ class CameraStationLiveApp extends Homey.App {
     return null;
   }
 
+  // ---- Flow cards ----
+
   _registerFlowCards() {
     this.eventTrigger = this.homey.flow.getTriggerCard('acs_event');
-    const triggerAction = (id, action) => this.homey.flow.getActionCard(id).registerRunListener(async (args) => {
-      await this.getAcs().trigger(action, args.trigger, args.seconds);
-    });
+    const serverAutocomplete = async (query) => {
+      const q = (query || '').toLowerCase();
+      return this.servers.list()
+        .map((s) => ({ name: s.name || s.host, description: s.host, id: s.id }))
+        .filter((s) => s.name.toLowerCase().includes(q));
+    };
+    const triggerAction = (id, action) => {
+      const card = this.homey.flow.getActionCard(id);
+      card.registerArgumentAutocompleteListener('server', serverAutocomplete);
+      card.registerRunListener(async (args) => {
+        try {
+          await this.getAcs(args.server && args.server.id).trigger(action, args.trigger, args.seconds);
+        } catch (err) {
+          throw new Error(this.friendly(err));
+        }
+      });
+    };
     triggerAction('acs_trigger_activate', 'activate');
     triggerAction('acs_trigger_deactivate', 'deactivate');
     triggerAction('acs_trigger_pulse', 'pulse');
     triggerAction('acs_trigger_for', 'activateFor');
   }
 
-  // Called by the public /event endpoint (api.js).
+  // ---- Events from Camera Station (public /event endpoint) ----
+
   async receiveEvent(query, body) {
     const ev = events.parseEvent(query, body);
     if (!events.sameSecret(ev.key, events.getSecret(this.homey))) {
-      this.diagError('event: rejected request with a wrong or missing key');
-      throw new Error('Unauthorized');
+      // Answer plainly and log at most once a minute: anyone on the network can call this.
+      if (Date.now() - this.lastRejectedLog > 60000) {
+        this.lastRejectedLog = Date.now();
+        this.diagError('event: rejected a request with a wrong or missing key');
+      }
+      return { ok: false, error: 'unauthorized' };
     }
     this.diag(`event: ${ev.type} from ${ev.source || ev.cameraId || 'unknown source'}`);
     const device = ev.cameraId && this.homey.drivers.getDriver('camera').getDevices()
@@ -150,6 +265,16 @@ class CameraStationLiveApp extends Homey.App {
     }).catch((err) => this.diagError('event trigger failed:', err.message));
     if (device) await device.onCameraStationEvent(ev);
     return { ok: true };
+  }
+
+  // A new event key: the old addresses stop working, so Camera Station's action rules need
+  // the new addresses (shown in each camera's settings).
+  async newEventKey() {
+    events.regenerateSecret(this.homey);
+    for (const device of this.homey.drivers.getDriver('camera').getDevices()) {
+      await device.refreshEventAddress().catch(() => {});
+    }
+    this.diag('event: made a new event key');
   }
 
   // A picture frozen at this moment (unlike the device image, which is fetched when viewed).
@@ -167,24 +292,88 @@ class CameraStationLiveApp extends Homey.App {
     return image;
   }
 
-  // Camera online/offline and manual recording status for all camera devices.
+  // Camera online/offline and manual recording status for all camera devices, per server.
   async pollStatus() {
     const devices = this.homey.drivers.getDriver('camera').getDevices();
-    if (!devices.length || !this.homey.settings.get('acs_host')) return;
-    try {
-      const acs = this.getAcs();
-      const statuses = await acs.getCameraStatuses();
-      for (const device of devices) {
-        await device.updateStatus(statuses[device.getData().id]).catch(() => {});
+    if (!devices.length) return;
+    const byServer = new Map();
+    for (const device of devices) {
+      const id = this.serverIdFor(device.getData().id);
+      if (!byServer.has(id)) byServer.set(id, []);
+      byServer.get(id).push(device);
+    }
+    for (const [serverId, list] of byServer) {
+      try {
+        const statuses = await this.getAcs(serverId).getCameraStatuses();
+        for (const device of list) {
+          await device.updateStatus(statuses[device.getData().id]).catch(() => {});
+        }
+        this.statusErrorLogged = false;
+      } catch (err) {
+        if (!this.statusErrorLogged) this.diagError('status check failed:', err.message);
+        this.statusErrorLogged = true;
       }
-      this._statusErrorLogged = false;
-    } catch (err) {
-      if (!this._statusErrorLogged) this.diagError('status check failed:', err.message);
-      this._statusErrorLogged = true;
     }
   }
 
-  // Logs and keeps recent lines so they can be read through the app's API (GET /logs).
+  // ---- Settings page API (see api.js) ----
+
+  async settingsState() {
+    return {
+      servers: this.servers.list(),
+      diagnostics: !!this.homey.settings.get('diagnostics'),
+      streaming: this.relay ? [...this.relay.streams.values()].filter((s) => !s.closed).length : 0,
+    };
+  }
+
+  async settingsSaveServer(body) {
+    try {
+      return await this.servers.addOrUpdate(body || {});
+    } catch (err) {
+      throw new Error(this.friendly(err));
+    }
+  }
+
+  async settingsTestServer(id) {
+    try {
+      const info = await this.getAcs(id).checkCompatibility();
+      await this.getAcs(id).getAccessToken();
+      return { ok: true, version: info.version };
+    } catch (err) {
+      throw new Error(this.friendly(err));
+    }
+  }
+
+  async settingsTrustServer(id) {
+    try {
+      return await this.servers.retrust(id);
+    } catch (err) {
+      throw new Error(this.friendly(err));
+    }
+  }
+
+  async settingsRemoveServer(id) {
+    this.servers.remove(id);
+    return { ok: true };
+  }
+
+  async settingsSetDiagnostics(on) {
+    this.homey.settings.set('diagnostics', !!on);
+    if (!on) {
+      this.homey.settings.unset('diag_previous_logs');
+      this.homey.settings.unset('diag_running_logs');
+    }
+    return { diagnostics: !!on };
+  }
+
+  diagnosticsLogs(previous) {
+    if (!this.homey.settings.get('diagnostics')) throw new Error(this.homey.__('errors.diagnosticsOff'));
+    return previous ? (this.homey.settings.get('diag_previous_logs') || []) : this.recentLogs;
+  }
+
+  // ---- Logging ----
+
+  // Keeps recent lines in memory; written to storage only with diagnostics on.
   diag(...args) {
     this._remember('', args);
     this.log(...args);
@@ -195,94 +384,25 @@ class CameraStationLiveApp extends Homey.App {
     this.error(...args);
   }
 
-  _persistLogs() {
+  _remember(prefix, args) {
+    this.recentLogs.push(`${new Date().toISOString()} ${prefix}${args.map(String).join(' ')}`);
+    if (this.recentLogs.length > LOG_LINES) this.recentLogs.shift();
+    this.logsDirty = true;
+  }
+
+  _persistLogs(force) {
+    if (!this.homey.settings.get('diagnostics')) return;
+    if (!this.logsDirty && !force) return;
     try {
       this.homey.settings.set('diag_running_logs', this.recentLogs.slice(-150));
+      this.logsDirty = false;
     } catch (e) { /* ignore */ }
   }
 
   async onUninit() {
     // A clean stop is not a crash.
     this.homey.settings.unset('diag_running_logs');
-  }
-
-  _remember(prefix, args) {
-    this.recentLogs.push(`${new Date().toISOString()} ${prefix}${args.map(String).join(' ')}`);
-    if (this.recentLogs.length > 300) this.recentLogs.shift();
-  }
-
-  // Shared ACS connection for all cameras; rebuilt when the login changes.
-  getAcs() {
-    if (!this.acs) {
-      const host = this.homey.settings.get('acs_host');
-      if (!host) throw new Error(this.homey.__('errors.notConfigured'));
-      this.acs = new AcsClient({
-        host,
-        username: this.homey.settings.get('acs_username'),
-        password: this.homey.settings.get('acs_password'),
-        log: (...args) => this.diag(...args),
-      });
-    }
-    return this.acs;
-  }
-
-  // One relay for all cameras: shares a single ACS stream per camera between viewers.
-  getRelay() {
-    if (!this.relay) {
-      this.relay = new LiveRelay({
-        acs: this.getAcs(),
-        log: (...args) => this.diag(...args),
-        onProfileLearned: (sourceId, profile) => this._rememberProfile(sourceId, profile),
-      });
-    }
-    return this.relay;
-  }
-
-  // Camera Station's quality profiles per camera, refreshed hourly.
-  async getCameraProfiles() {
-    if (!this.profiles || Date.now() - this.profilesAt > 60 * 60 * 1000) {
-      this.profiles = await this.getAcs().getCameraProfiles();
-      this.profilesAt = Date.now();
-    }
-    return this.profiles;
-  }
-
-  // Auto quality stepped down for a camera: start there next time (shared by camera
-  // and view devices).
-  _rememberProfile(sourceId, profile) {
-    const learned = this.homey.settings.get('auto_profiles') || {};
-    learned[sourceId] = { profile, at: Date.now() };
-    this.homey.settings.set('auto_profiles', learned);
-    this.diag(`[${sourceId}] Auto quality will start at ${profile} from now on`);
-  }
-
-  getLearnedProfile(sourceId) {
-    return (this.homey.settings.get('auto_profiles') || {})[sourceId] || null;
-  }
-
-  forgetLearnedProfile(sourceId) {
-    const learned = this.homey.settings.get('auto_profiles') || {};
-    delete learned[sourceId];
-    this.homey.settings.set('auto_profiles', learned);
-  }
-
-  resetConnection() {
     if (this.relay) this.relay.closeAll();
-    this.relay = null;
-    this.acs = null;
-    this.profiles = null;
-  }
-
-  // Checks a login before saving it. Throws with a readable message on failure.
-  async saveLogin({ host, username, password }) {
-    const acs = new AcsClient({ host: host.trim(), username: username.trim(), password, log: (...a) => this.diag(...a) });
-    await acs.login();
-    this.homey.settings.set('acs_host', host.trim());
-    this.homey.settings.set('acs_username', username.trim());
-    this.homey.settings.set('acs_password', password);
-    this.resetConnection();
-    this.acs = acs;
-    return acs;
   }
 
 }

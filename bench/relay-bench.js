@@ -30,7 +30,7 @@ const acs = {
 };
 
 (async () => {
-  const relay = new LiveRelay({ acs, log: process.env.VERBOSE ? (...a) => console.log(...a) : () => {} });
+  const relay = new LiveRelay({ getAcs: () => acs, log: process.env.VERBOSE ? (...a) => console.log(...a) : () => {} });
   const camera = { name: 'bench', sourceId: 'bench_1', orgId: 'o', targetId: 't' };
   child.send({ type: 'viewersStart' });
   const viewers = Number(process.env.VIEWERS || 1);

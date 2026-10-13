@@ -1,18 +1,25 @@
 {
   "pair": {
     "loginFailed": "Camera Station did not accept that username and password. Use the same login as the Camera Station web client, for example: axis",
-    "noServer": "Could not find a Camera Station Pro server on your network. Check that the Camera Station computer is on and connected to the same network as Homey, then try again."
+    "noServer": "Could not find a Camera Station Pro server on your network. Check that the Camera Station computer is on and on the same network as Homey. If it is on another network, add it by address in the app settings (More > Apps > Camera Station Live > Configure app)."
   },
   "device": {
     "liveTitle": "Live"
   },
   "errors": {
     "notConfigured": "Not connected to Camera Station yet. Open the camera in Homey, tap the cog (⚙) in the top right, then tap Repair and log in.",
-    "liveFailed": "Could not start live video from Camera Station. Check that the server is on, then try again.",
     "viewMissing": "This view no longer exists in Camera Station. Remove this device, or add the view again.",
     "cameraOffline": "Camera Station cannot reach this camera right now.",
     "noPtz": "This camera has no PTZ presets, or Camera Station cannot reach it.",
-    "serverUnreachable": "Cannot reach Camera Station. Check that the server is on and that the login still works (tap the cog, then Repair)."
+    "unreachable": "Cannot reach Camera Station. Check that the Camera Station computer is on and on the same network as Homey.",
+    "login_failed": "Camera Station did not accept the username and password. Open the device, tap the cog (⚙) in the top right, then tap Repair and log in again.",
+    "no_rights": "The Camera Station user may not do this. In the Camera Station client, give the user the right (for example live view, recording or PTZ), or log in with another user.",
+    "unsupported": "This Camera Station version is not supported. The app needs AXIS Camera Station Pro with its web client (tested with version 6.16).",
+    "cert_changed": "Camera Station's security certificate has changed. If you replaced, reinstalled or renewed the server, open the app settings and tap \"Trust again\" for this server. If you did not, someone may be pretending to be your server.",
+    "too_many_streams": "Homey is already showing as many live cameras as it can. Close another camera and try again.",
+    "not_configured": "No Camera Station is set up yet. Add a device, or add the server in the app settings.",
+    "missing_fields": "Fill in the address, username and password.",
+    "diagnosticsOff": "Diagnostics are switched off in the app settings."
   },
   "widget": {
     "view": "Camera Station view",
@@ -32,5 +39,46 @@
     "CameraStatusDown": "Camera offline",
     "CameraStatusUp": "Camera online",
     "none": "No problems"
+  },
+  "settings": {
+    "title": "Camera Station Live",
+    "subtitle": "Your AXIS Camera Station Pro servers, events and diagnostics.",
+    "serversTitle": "Servers",
+    "noServers": "No server yet. Add a camera device, or add a server below.",
+    "ports": "ports",
+    "user": "user",
+    "test": "Test",
+    "testing": "Testing…",
+    "testOk": "Connection works",
+    "trust": "Trust again",
+    "trustConfirm": "Only do this if you replaced, reinstalled or renewed this Camera Station server. Trust the certificate it shows now?",
+    "trusted": "The new certificate is trusted.",
+    "edit": "Change login",
+    "remove": "Remove",
+    "removeConfirm": "Remove this server? Its devices stop working until you add it again.",
+    "addTitle": "Add or update a server",
+    "addHint": "Use this when Homey cannot find the server by itself, or to change a login. Example address: 192.168.1.250.",
+    "host": "Server address",
+    "webPort": "Web client port",
+    "apiPort": "API port",
+    "portsHint": "Leave the ports as they are unless they were changed in Camera Station Service Control (defaults 443 and 29204).",
+    "username": "Camera Station username",
+    "password": "Password",
+    "save": "Save and test",
+    "saving": "Logging in…",
+    "saved": "Saved:",
+    "eventsTitle": "Motion and other events",
+    "eventsIntro": "Camera Station can tell Homey about motion and other events. Set this up once per camera in the Camera Station client:",
+    "eventsStep1": "In Homey, open the camera, tap the cog (⚙) in the top right and copy \"Address for Camera Station events\".",
+    "eventsStep2": "In the Camera Station client, go to Configuration > Recording and events > Action rules and click New.",
+    "eventsStep3": "Choose a trigger, for example Motion detection for that camera.",
+    "eventsStep4": "Add the action Send HTTP notification, method GET, and paste the address. Finish the rule.",
+    "eventsIp": "Tip: give Homey a fixed IP address in your router. If Homey's address changes, the addresses in Camera Station stop working.",
+    "newKey": "Make a new event key",
+    "newKeyConfirm": "All event addresses get a new key. Camera Station's action rules stop reaching Homey until you paste the new addresses. Continue?",
+    "newKeyDone": "Done. Copy the new address from each camera's settings into Camera Station.",
+    "diagnosticsTitle": "Diagnostics",
+    "diagnostics": "Keep diagnostic logs",
+    "diagnosticsHint": "Only switch this on when asked for help. Homey then keeps recent log lines (camera names, addresses, events), also after a crash."
   }
 }
