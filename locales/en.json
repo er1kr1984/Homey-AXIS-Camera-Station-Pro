@@ -81,5 +81,38 @@
     "diagnosticsTitle": "Diagnostics",
     "diagnostics": "Keep diagnostic logs",
     "diagnosticsHint": "Only switch this on when asked for help. Homey then keeps recent log lines (camera names, addresses, events), also after a crash."
+  },
+  "status": {
+    "online": "__n__ of __total__ online",
+    "allOnline": "All cameras online",
+    "camerasOffline": "__n__ offline",
+    "disksOk": "Disks OK",
+    "diskProblem": "Disk problem",
+    "recordingOk": "Recording OK",
+    "recordingProblem": "Recording problem",
+    "recordingNow": "__n__ recording",
+    "cameras": "Cameras",
+    "latestEvents": "Latest events",
+    "noEvents": "No events in the last 24 hours.",
+    "unreachable": "Not reachable",
+    "loginRefused": "Camera Station can't log in to this camera",
+    "manualOn": "Manual recording on",
+    "lastActivity": "Last recording __when__",
+    "noActivity": "No recordings in the last 24 hours",
+    "justNow": "just now",
+    "minAgo": "__n__ min ago",
+    "hoursAgo": "__n__ h ago",
+    "startRecording": "Start manual recording",
+    "stopRecording": "Stop manual recording",
+    "noServer": "No Camera Station is set up yet. Add a device, or add the server in the app settings.",
+    "events": {
+      "RecordingStarted": "__camera__: recording started",
+      "RecordingFailure": "__camera__: recording failed",
+      "RecordingFailCameraAccess": "__camera__: not reachable for recording",
+      "DiskError": "Disk error __disk__",
+      "DiskWarning": "Disk warning __disk__",
+      "CameraStatusDown": "__camera__ went offline",
+      "CameraStatusUp": "__camera__ is back online"
+    }
   }
 }

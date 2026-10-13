@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    [hidden] { display: none !important; }
+    :root {
+      --ok: #2fb86a; --bad: #e5484d; --warn: #f5a524; --rec: #e5484d;
+      --text: var(--homey-text-color, #1d1d1f);
+      --muted: var(--homey-text-color-light, #8a8a8e);
+      --line: var(--homey-line-color, rgba(127,127,127,.18));
+      --chip: rgba(127,127,127,.12);
+      --font: var(--homey-font-family, -apple-system, system-ui, sans-serif);
+    }
+    html, body { margin: 0; background: transparent; color: var(--text); font: 13px/1.35 var(--font); }
+    body { padding: 12px 14px 10px; }
+    .server + .server { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .head h2 { margin: 0; font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .head .count { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 10px; }
+    .chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: var(--chip); font-size: 11.5px; font-weight: 500; }
+    .chip::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+    .chip.bad { background: rgba(229,72,77,.14); color: var(--bad); }
+    .chip.bad::before { background: var(--bad); }
+    .chip.rec::before { background: var(--rec); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 50% { opacity: .35; } }
+    h3 { margin: 12px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+    .cam { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+    .cam:last-child { border-bottom: 0; }
+    .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(47,184,106,.15); }
+    .cam.off .dot { background: var(--bad); box-shadow: 0 0 0 3px rgba(229,72,77,.15); }
+    .cam .main { flex: 1; min-width: 0; }
+    .cam .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+    .cam .sub { color: var(--muted); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cam.off .sub { color: var(--bad); }
+    .tag { flex: none; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--rec); }
+    .recbtn {
+      flex: none; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent;
+      display: grid; place-items: center; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    }
+    .recbtn::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--rec); opacity: .55; }
+    .recbtn.on { border-color: var(--rec); background: rgba(229,72,77,.12); }
+    .recbtn.on::after { width: 10px; height: 10px; border-radius: 2px; opacity: 1; }
+    .recbtn:disabled { opacity: .35; }
+    .recbtn.busy { animation: pulse 1s infinite; }
+    .ev { display: flex; gap: 8px; padding: 3px 0; font-size: 12px; }
+    .ev time { flex: none; width: 38px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .ev .what { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ev.bad .what { color: var(--bad); }
+    .ev .times { flex: none; margin-left: auto; padding-left: 6px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .empty, .error { color: var(--muted); font-size: 12px; padding: 4px 0; }
+    .error { color: var(--bad); }
+    .toast { margin-top: 6px; color: var(--bad); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="toast" class="toast" hidden></div>
+  <script type="text/javascript">
+    function onHomeyReady(Homey) {
+      const REFRESH_MS = 20000;
+      const root = document.getElementById('root');
+      const toast = document.getElementById('toast');
+      const t = (key, vars) => Homey.__(`status.${key}`, vars);
+      const busy = new Set(); // cameras whose record button was just tapped
+      let timer = null;
+      let lastData = null;
+
+      const el = (tag, cls, text) => {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text !== undefined) e.textContent = text;
+        return e;
+      };
+
+      function ago(iso) {
+        const min = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+        if (min < 1) return t('justNow');
+        if (min < 60) return t('minAgo', { n: min });
+        return t('hoursAgo', { n: Math.round(min / 60) });
+      }
+
+      const clock = (iso) => {
+        const d = new Date(iso);
+        return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+      };
+
+      function chip(text, bad, cls) {
+        const c = el('span', `chip${bad ? ' bad' : ''}${cls ? ` ${cls}` : ''}`, text);
+        return c;
+      }
+
+      async function toggleRecording(cam) {
+        busy.add(cam.id);
+        render(lastData);
+        try {
+          await Homey.api('POST', '/record', { sourceId: cam.id, on: !cam.manual });
+          cam.manual = !cam.manual;
+          toast.hidden = true;
+        } catch (err) {
+          toast.textContent = (err && err.message) || String(err);
+          toast.hidden = false;
+        }
+        busy.delete(cam.id);
+        render(lastData);
+      }
+
+      function renderServer(s) {
+        const box = el('div', 'server');
+        const head = el('div', 'head');
+        head.append(el('h2', '', s.name), el('span', 'count', s.error ? '' : t('online', { n: s.online, total: s.total })));
+        box.append(head);
+        if (s.error) {
+          box.append(el('div', 'error', s.error));
+          return box;
+        }
+        const offline = s.total - s.online;
+        const chips = el('div', 'chips');
+        chips.append(
+          chip(offline ? t('camerasOffline', { n: offline }) : t('allOnline'), offline > 0),
+          chip(s.health.disk ? t('diskProblem') : t('disksOk'), s.health.disk),
+          chip(s.health.recording ? t('recordingProblem') : t('recordingOk'), s.health.recording),
+        );
+        if (s.recordingCount) chips.append(chip(t('recordingNow', { n: s.recordingCount }), false, 'rec'));
+        box.append(chips);
+
+        box.append(el('h3', '', t('cameras')));
+        for (const cam of s.cameras) {
+          const row = el('div', `cam${cam.online ? '' : ' off'}`);
+          const main = el('div', 'main');
+          main.append(el('div', 'name', cam.name));
+          let sub;
+          if (!cam.online) sub = cam.status === 'unauthenticated' ? t('loginRefused') : t('unreachable');
+          else if (cam.manual) sub = t('manualOn');
+          else if (cam.lastActivity) sub = t('lastActivity', { when: ago(cam.lastActivity) });
+          else sub = t('noActivity');
+          main.append(el('div', 'sub', sub));
+          row.append(el('span', 'dot'), main);
+          if (cam.recording || cam.manual) row.append(el('span', 'tag', 'REC'));
+          const btn = el('button', `recbtn${cam.manual ? ' on' : ''}${busy.has(cam.id) ? ' busy' : ''}`);
+          btn.title = cam.manual ? t('stopRecording') : t('startRecording');
+          btn.setAttribute('aria-label', btn.title);
+          btn.disabled = !cam.online || busy.has(cam.id);
+          btn.addEventListener('click', () => {
+            try { Homey.hapticFeedback(); } catch (e) { /* not available */ }
+            toggleRecording(cam);
+          });
+          row.append(btn);
+          box.append(row);
+        }
+
+        box.append(el('h3', '', t('latestEvents')));
+        if (!s.events.length) box.append(el('div', 'empty', t('noEvents')));
+        for (const e of s.events) {
+          const bad = /Fail|Disk|Down/.test(e.type);
+          const row = el('div', `ev${bad ? ' bad' : ''}`);
+          const time = el('time', '', clock(e.time));
+          const text = Homey.__(`status.events.${e.type}`, { camera: e.camera, disk: e.disk });
+          row.append(time, el('span', 'what', text));
+          if (e.count > 1) row.append(el('span', 'times', `×${e.count}`));
+          box.append(row);
+        }
+        return box;
+      }
+
+      function render(data) {
+        if (!data) return;
+        root.textContent = '';
+        if (!data.servers.length) root.append(el('div', 'empty', t('noServer')));
+        for (const s of data.servers) root.append(renderServer(s));
+        try { Homey.setHeight(document.body.scrollHeight); } catch (e) { /* older Homey */ }
+      }
+
+      async function refresh() {
+        clearTimeout(timer);
+        if (document.hidden) return;
+        try {
+          lastData = await Homey.api('GET', '/status');
+          render(lastData);
+        } catch (err) {
+          if (!lastData) {
+            root.textContent = '';
+            root.append(el('div', 'error', (err && err.message) || String(err)));
+          }
+        }
+        timer = setTimeout(refresh, REFRESH_MS);
+      }
+
+      // Only ask Camera Station while the dashboard is visible.
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) clearTimeout(timer);
+        else refresh();
+      });
+
+      refresh().then(() => Homey.ready());
+    }
+  </script>
+</body>
+</html>

@@ -1737,6 +1737,28 @@
         }
       },
       "id": "live"
+    },
+    "status": {
+      "name": {
+        "en": "Camera Station status",
+        "sv": "Camera Station status",
+        "de": "Camera Station Status",
+        "nl": "Camera Station status"
+      },
+      "height": 420,
+      "transparent": false,
+      "api": {
+        "status": {
+          "method": "GET",
+          "path": "/status"
+        },
+        "record": {
+          "method": "POST",
+          "path": "/record"
+        }
+      },
+      "id": "status",
+      "settings": []
     }
   },
   "capabilities": {

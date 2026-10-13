@@ -81,5 +81,38 @@
     "diagnosticsTitle": "Diagnostik",
     "diagnostics": "Spara diagnostikloggar",
     "diagnosticsHint": "Slå bara på detta när du blir ombedd att hjälpa till att felsöka. Homey sparar då de senaste loggraderna (kameranamn, adresser, händelser), även efter en krasch."
+  },
+  "status": {
+    "online": "__n__ av __total__ online",
+    "allOnline": "Alla kameror online",
+    "camerasOffline": "__n__ offline",
+    "disksOk": "Diskar OK",
+    "diskProblem": "Diskproblem",
+    "recordingOk": "Inspelning OK",
+    "recordingProblem": "Inspelningsproblem",
+    "recordingNow": "__n__ spelar in",
+    "cameras": "Kameror",
+    "latestEvents": "Senaste händelser",
+    "noEvents": "Inga händelser det senaste dygnet.",
+    "unreachable": "Går inte att nå",
+    "loginRefused": "Camera Station kan inte logga in på kameran",
+    "manualOn": "Manuell inspelning på",
+    "lastActivity": "Senaste inspelning __when__",
+    "noActivity": "Inga inspelningar det senaste dygnet",
+    "justNow": "nyss",
+    "minAgo": "för __n__ min sedan",
+    "hoursAgo": "för __n__ h sedan",
+    "startRecording": "Starta manuell inspelning",
+    "stopRecording": "Stoppa manuell inspelning",
+    "noServer": "Ingen Camera Station är inställd än. Lägg till en enhet eller lägg till servern i appens inställningar.",
+    "events": {
+      "RecordingStarted": "__camera__: inspelning startad",
+      "RecordingFailure": "__camera__: inspelningen misslyckades",
+      "RecordingFailCameraAccess": "__camera__: går inte att nå för inspelning",
+      "DiskError": "Diskfel __disk__",
+      "DiskWarning": "Diskvarning __disk__",
+      "CameraStatusDown": "__camera__ gick offline",
+      "CameraStatusUp": "__camera__ är online igen"
+    }
   }
 }

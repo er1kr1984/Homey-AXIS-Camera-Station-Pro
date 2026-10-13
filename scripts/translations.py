@@ -280,3 +280,32 @@ T = {
  "Schalten Sie dies nur ein, wenn Sie um Hilfe bei der Fehlersuche gebeten werden. Homey behält dann die letzten Protokollzeilen (Kameranamen, Adressen, Ereignisse), auch nach einem Absturz.",
  "Zet dit alleen aan als je gevraagd wordt om te helpen zoeken naar een fout. Homey bewaart dan de laatste logregels (cameranamen, adressen, gebeurtenissen), ook na een crash."),
 }
+
+# Status widget
+T.update({
+"Camera Station status": ("Camera Station status", "Camera Station Status", "Camera Station status"),
+"__n__ of __total__ online": ("__n__ av __total__ online", "__n__ von __total__ online", "__n__ van __total__ online"),
+"All cameras online": ("Alla kameror online", "Alle Kameras online", "Alle camera's online"),
+"__n__ offline": ("__n__ offline", "__n__ offline", "__n__ offline"),
+"Disks OK": ("Diskar OK", "Festplatten OK", "Schijven OK"),
+"Recording OK": ("Inspelning OK", "Aufnahme OK", "Opname OK"),
+"__n__ recording": ("__n__ spelar in", "__n__ nehmen auf", "__n__ nemen op"),
+"Cameras": ("Kameror", "Kameras", "Camera's"),
+"Latest events": ("Senaste händelser", "Letzte Ereignisse", "Laatste gebeurtenissen"),
+"No events in the last 24 hours.": ("Inga händelser det senaste dygnet.", "Keine Ereignisse in den letzten 24 Stunden.", "Geen gebeurtenissen in de laatste 24 uur."),
+"Not reachable": ("Går inte att nå", "Nicht erreichbar", "Niet bereikbaar"),
+"Camera Station can't log in to this camera": ("Camera Station kan inte logga in på kameran", "Camera Station kann sich nicht bei dieser Kamera anmelden", "Camera Station kan niet inloggen op deze camera"),
+"Manual recording on": ("Manuell inspelning på", "Manuelle Aufnahme an", "Handmatige opname aan"),
+"Last recording __when__": ("Senaste inspelning __when__", "Letzte Aufnahme __when__", "Laatste opname __when__"),
+"No recordings in the last 24 hours": ("Inga inspelningar det senaste dygnet", "Keine Aufnahmen in den letzten 24 Stunden", "Geen opnames in de laatste 24 uur"),
+"just now": ("nyss", "gerade eben", "zojuist"),
+"__n__ min ago": ("för __n__ min sedan", "vor __n__ Min.", "__n__ min geleden"),
+"__n__ h ago": ("för __n__ h sedan", "vor __n__ Std.", "__n__ u geleden"),
+"__camera__: recording started": ("__camera__: inspelning startad", "__camera__: Aufnahme gestartet", "__camera__: opname gestart"),
+"__camera__: recording failed": ("__camera__: inspelningen misslyckades", "__camera__: Aufnahme fehlgeschlagen", "__camera__: opname mislukt"),
+"__camera__: not reachable for recording": ("__camera__: går inte att nå för inspelning", "__camera__: für Aufnahme nicht erreichbar", "__camera__: niet bereikbaar voor opname"),
+"Disk error __disk__": ("Diskfel __disk__", "Festplattenfehler __disk__", "Schijffout __disk__"),
+"Disk warning __disk__": ("Diskvarning __disk__", "Festplattenwarnung __disk__", "Schijfwaarschuwing __disk__"),
+"__camera__ went offline": ("__camera__ gick offline", "__camera__ ist offline gegangen", "__camera__ ging offline"),
+"__camera__ is back online": ("__camera__ är online igen", "__camera__ ist wieder online", "__camera__ is weer online"),
+})

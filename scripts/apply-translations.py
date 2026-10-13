@@ -25,7 +25,7 @@ def walk(o):
         for v in o:
             walk(v)
 
-files = glob.glob('.homeycompose/**/*.json', recursive=True) + glob.glob('drivers/*/*.compose.json') + ['widgets/live/widget.compose.json']
+files = glob.glob('.homeycompose/**/*.json', recursive=True) + glob.glob('drivers/*/*.compose.json') + glob.glob('widgets/*/widget.compose.json')
 for f in files:
     d = json.load(open(f))
     walk(d)

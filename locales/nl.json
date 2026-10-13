@@ -81,5 +81,38 @@
     "diagnosticsTitle": "Diagnose",
     "diagnostics": "Diagnoselogboeken bewaren",
     "diagnosticsHint": "Zet dit alleen aan als je gevraagd wordt om te helpen zoeken naar een fout. Homey bewaart dan de laatste logregels (cameranamen, adressen, gebeurtenissen), ook na een crash."
+  },
+  "status": {
+    "online": "__n__ van __total__ online",
+    "allOnline": "Alle camera's online",
+    "camerasOffline": "__n__ offline",
+    "disksOk": "Schijven OK",
+    "diskProblem": "Schijfprobleem",
+    "recordingOk": "Opname OK",
+    "recordingProblem": "Opnameprobleem",
+    "recordingNow": "__n__ nemen op",
+    "cameras": "Camera's",
+    "latestEvents": "Laatste gebeurtenissen",
+    "noEvents": "Geen gebeurtenissen in de laatste 24 uur.",
+    "unreachable": "Niet bereikbaar",
+    "loginRefused": "Camera Station kan niet inloggen op deze camera",
+    "manualOn": "Handmatige opname aan",
+    "lastActivity": "Laatste opname __when__",
+    "noActivity": "Geen opnames in de laatste 24 uur",
+    "justNow": "zojuist",
+    "minAgo": "__n__ min geleden",
+    "hoursAgo": "__n__ u geleden",
+    "startRecording": "Handmatige opname starten",
+    "stopRecording": "Handmatige opname stoppen",
+    "noServer": "Er is nog geen Camera Station ingesteld. Voeg een apparaat toe, of voeg de server toe in de app-instellingen.",
+    "events": {
+      "RecordingStarted": "__camera__: opname gestart",
+      "RecordingFailure": "__camera__: opname mislukt",
+      "RecordingFailCameraAccess": "__camera__: niet bereikbaar voor opname",
+      "DiskError": "Schijffout __disk__",
+      "DiskWarning": "Schijfwaarschuwing __disk__",
+      "CameraStatusDown": "__camera__ ging offline",
+      "CameraStatusUp": "__camera__ is weer online"
+    }
   }
 }

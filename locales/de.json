@@ -81,5 +81,38 @@
     "diagnosticsTitle": "Diagnose",
     "diagnostics": "Diagnoseprotokolle behalten",
     "diagnosticsHint": "Schalten Sie dies nur ein, wenn Sie um Hilfe bei der Fehlersuche gebeten werden. Homey behält dann die letzten Protokollzeilen (Kameranamen, Adressen, Ereignisse), auch nach einem Absturz."
+  },
+  "status": {
+    "online": "__n__ von __total__ online",
+    "allOnline": "Alle Kameras online",
+    "camerasOffline": "__n__ offline",
+    "disksOk": "Festplatten OK",
+    "diskProblem": "Festplattenproblem",
+    "recordingOk": "Aufnahme OK",
+    "recordingProblem": "Aufnahmeproblem",
+    "recordingNow": "__n__ nehmen auf",
+    "cameras": "Kameras",
+    "latestEvents": "Letzte Ereignisse",
+    "noEvents": "Keine Ereignisse in den letzten 24 Stunden.",
+    "unreachable": "Nicht erreichbar",
+    "loginRefused": "Camera Station kann sich nicht bei dieser Kamera anmelden",
+    "manualOn": "Manuelle Aufnahme an",
+    "lastActivity": "Letzte Aufnahme __when__",
+    "noActivity": "Keine Aufnahmen in den letzten 24 Stunden",
+    "justNow": "gerade eben",
+    "minAgo": "vor __n__ Min.",
+    "hoursAgo": "vor __n__ Std.",
+    "startRecording": "Manuelle Aufnahme starten",
+    "stopRecording": "Manuelle Aufnahme stoppen",
+    "noServer": "Noch keine Camera Station eingerichtet. Fügen Sie ein Gerät hinzu oder fügen Sie den Server in den App-Einstellungen hinzu.",
+    "events": {
+      "RecordingStarted": "__camera__: Aufnahme gestartet",
+      "RecordingFailure": "__camera__: Aufnahme fehlgeschlagen",
+      "RecordingFailCameraAccess": "__camera__: für Aufnahme nicht erreichbar",
+      "DiskError": "Festplattenfehler __disk__",
+      "DiskWarning": "Festplattenwarnung __disk__",
+      "CameraStatusDown": "__camera__ ist offline gegangen",
+      "CameraStatusUp": "__camera__ ist wieder online"
+    }
   }
 }

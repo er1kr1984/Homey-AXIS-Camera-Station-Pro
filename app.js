@@ -9,6 +9,7 @@ const ServerRegistry = require('./lib/servers');
 const events = require('./lib/events');
 const { classify } = require('./lib/errors');
 const { Mp4LiveSource } = require('./lib/mp4-live');
+const StatusBoard = require('./lib/status-board');
 
 const STATUS_POLL_MS = 60 * 1000;
 const MAX_SNAPSHOT_IMAGES = 30;
@@ -229,6 +230,23 @@ class CameraStationLiveApp extends Homey.App {
     }
     try {
       return await mp4.read(after === undefined ? null : after);
+    } catch (err) {
+      throw new Error(this.friendly(err));
+    }
+  }
+
+  // ---- Status widget ----
+
+  async widgetStatus() {
+    if (!this.statusBoard) this.statusBoard = new StatusBoard({ app: this });
+    return this.statusBoard.get();
+  }
+
+  async widgetRecord({ sourceId, on }) {
+    if (!this.statusBoard) this.statusBoard = new StatusBoard({ app: this });
+    try {
+      this.diag(`[${this._cameraName(sourceId) || sourceId}] manual recording ${on ? 'started' : 'stopped'} from the status widget`);
+      return await this.statusBoard.setRecording(sourceId, !!on);
     } catch (err) {
       throw new Error(this.friendly(err));
     }
