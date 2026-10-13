@@ -1,0 +1,31 @@
+[
+  {
+    "id": "stream_profile",
+    "type": "dropdown",
+    "label": {
+      "en": "Video quality"
+    },
+    "hint": {
+      "en": "Which of the camera's quality levels in Camera Station to stream. Choose Low if the picture stutters on mobile data."
+    },
+    "value": "high",
+    "values": [
+      { "id": "high", "label": { "en": "High" } },
+      { "id": "medium", "label": { "en": "Medium" } },
+      { "id": "low", "label": { "en": "Low" } }
+    ]
+  },
+  {
+    "id": "snapshot_interval",
+    "type": "number",
+    "label": {
+      "en": "Snapshot refresh (minutes)"
+    },
+    "hint": {
+      "en": "How often the still picture on the device tile is updated. Example: 5. Use 0 to only update when you open the camera."
+    },
+    "value": 5,
+    "min": 0,
+    "max": 1440
+  }
+]

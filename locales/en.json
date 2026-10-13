@@ -1,0 +1,20 @@
+{
+  "pair": {
+    "title": "Connect to Camera Station",
+    "subtitle": "Log in to your AXIS Camera Station Pro server. These are the same details you use for the Camera Station web client.",
+    "host": "Server address",
+    "hostHint": "The IP address or name of the computer running Camera Station Pro. Example: 192.168.1.250",
+    "username": "Username",
+    "usernameHint": "A Camera Station user that may view live video. Example: axis",
+    "password": "Password",
+    "connect": "Connect",
+    "missingFields": "Fill in the server address, username and password."
+  },
+  "device": {
+    "liveTitle": "Live"
+  },
+  "errors": {
+    "notConfigured": "Not connected to Camera Station yet. Open the camera in Homey, tap the cog (⚙) in the top right, then tap Repair and log in.",
+    "liveFailed": "Could not start live video from Camera Station. Check that the server is on, then try again."
+  }
+}

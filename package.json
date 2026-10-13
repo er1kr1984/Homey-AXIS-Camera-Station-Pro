@@ -1,0 +1,14 @@
+{
+  "name": "com.erikrichardson.acswebrtc",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "app.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "werift": "^0.22.9",
+    "ws": "^8.22.0"
+  }
+}

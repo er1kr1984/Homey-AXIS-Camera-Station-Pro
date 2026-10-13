@@ -1,0 +1,50 @@
+<header class="homey-header">
+  <h1 class="homey-title" data-i18n="pair.title"></h1>
+  <p class="homey-subtitle" data-i18n="pair.subtitle"></p>
+</header>
+
+<form class="homey-form" id="login-form" onsubmit="return false;">
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="host" data-i18n="pair.host"></label>
+    <input class="homey-form-input" id="host" type="text" placeholder="192.168.1.250" autocomplete="off" />
+    <p class="homey-form-hint" data-i18n="pair.hostHint"></p>
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="username" data-i18n="pair.username"></label>
+    <input class="homey-form-input" id="username" type="text" autocomplete="off" />
+    <p class="homey-form-hint" data-i18n="pair.usernameHint"></p>
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="password" data-i18n="pair.password"></label>
+    <input class="homey-form-input" id="password" type="password" />
+  </div>
+  <p class="homey-form-hint" id="error" style="color: var(--homey-color-danger, #d00);"></p>
+  <button class="homey-button-primary-full" id="connect" data-i18n="pair.connect"></button>
+</form>
+
+<script type="application/javascript">
+  const $ = (id) => document.getElementById(id);
+
+  Homey.emit('get_login').then((saved) => {
+    if (saved.host) $('host').value = saved.host;
+    if (saved.username) $('username').value = saved.username;
+  });
+
+  $('connect').addEventListener('click', async () => {
+    $('error').textContent = '';
+    $('connect').classList.add('is-loading');
+    try {
+      await Homey.emit('login', {
+        host: $('host').value,
+        username: $('username').value,
+        password: $('password').value,
+      });
+      if (Homey.isRepair) Homey.done();
+      else Homey.nextView();
+    } catch (err) {
+      $('error').textContent = err.message || String(err);
+    } finally {
+      $('connect').classList.remove('is-loading');
+    }
+  });
+</script>

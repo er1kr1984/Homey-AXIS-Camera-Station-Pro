@@ -1,0 +1,133 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.erikrichardson.acswebrtc",
+  "version": "0.1.0",
+  "compatibility": ">=12.7.0",
+  "runtime": "nodejs",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "brandColor": "#1f3a5f",
+  "name": {
+    "en": "Camera Station Live"
+  },
+  "description": {
+    "en": "Live video from AXIS Camera Station Pro over WebRTC, straight from your recording server."
+  },
+  "category": [
+    "security"
+  ],
+  "tags": {
+    "en": [
+      "axis",
+      "camera station",
+      "acs",
+      "webrtc",
+      "camera",
+      "live video"
+    ]
+  },
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "permissions": [],
+  "author": {
+    "name": "Erik Richardson",
+    "email": "er1kr1984@gmail.com"
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Camera"
+      },
+      "class": "camera",
+      "capabilities": [],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/camera/assets/images/small.png",
+        "large": "/drivers/camera/assets/images/large.png",
+        "xlarge": "/drivers/camera/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "prev": "login",
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login"
+        }
+      ],
+      "id": "camera",
+      "settings": [
+        {
+          "id": "stream_profile",
+          "type": "dropdown",
+          "label": {
+            "en": "Video quality"
+          },
+          "hint": {
+            "en": "Which of the camera's quality levels in Camera Station to stream. Choose Low if the picture stutters on mobile data."
+          },
+          "value": "high",
+          "values": [
+            {
+              "id": "high",
+              "label": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "medium",
+              "label": {
+                "en": "Medium"
+              }
+            },
+            {
+              "id": "low",
+              "label": {
+                "en": "Low"
+              }
+            }
+          ]
+        },
+        {
+          "id": "snapshot_interval",
+          "type": "number",
+          "label": {
+            "en": "Snapshot refresh (minutes)"
+          },
+          "hint": {
+            "en": "How often the still picture on the device tile is updated. Example: 5. Use 0 to only update when you open the camera."
+          },
+          "value": 5,
+          "min": 0,
+          "max": 1440
+        }
+      ]
+    }
+  ]
+}
