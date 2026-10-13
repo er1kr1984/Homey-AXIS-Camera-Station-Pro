@@ -9,6 +9,16 @@ Station's own WebRTC service: no camera RTSP, no transcoding.
 - **View**: a Camera Station split view as one picture laid out like the view's grid,
   refreshed every minute by default.
 
+## Dashboard widget
+**Camera Station live**: pick a view (all its cameras live, laid out like in Camera Station) or a
+single camera. Low quality by default; streams stop while the dashboard is hidden; tap a tile to
+enlarge it. Each tile is its own WebRTC stream through the app's relay.
+
+## Cameras with B-frames
+Some cameras send H.264 B-frames, which phones' WebRTC players can't play. The app detects this
+and drops those frames (lower frame rate, but the picture plays). For full frame rate, turn
+B-frames off in the camera's or Camera Station's stream settings if available.
+
 ## Flow cards
 - When: *Camera Station sent an event* (per camera, with snapshot), *Camera Station sent an event*
   (app-wide, any source), motion alarm, camera offline alarm.
