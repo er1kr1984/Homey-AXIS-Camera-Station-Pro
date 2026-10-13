@@ -12,5 +12,14 @@
     "viewMissing": "This view no longer exists in Camera Station. Remove this device, or add the view again.",
     "cameraOffline": "Camera Station cannot reach this camera right now.",
     "noPtz": "This camera has no PTZ presets, or Camera Station cannot reach it."
+  },
+  "widget": {
+    "view": "Camera Station view",
+    "camera": "Camera",
+    "pickSource": "Open the widget settings and pick a view or camera.",
+    "missing": "This view or camera is no longer in Homey. Pick another one in the widget settings.",
+    "tapHint": "Tap a camera to enlarge it",
+    "connecting": "Connecting…",
+    "failed": "No video. Tap to retry."
   }
 }

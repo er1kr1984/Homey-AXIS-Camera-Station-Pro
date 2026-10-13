@@ -35,10 +35,82 @@ class CameraStationLiveApp extends Homey.App {
     });
     this.snapshotImages = [];
     this._registerFlowCards();
+    this._registerWidget();
     this.statusTimer = this.homey.setInterval(() => this.pollStatus(), STATUS_POLL_MS);
     this.homey.setTimeout(() => this.pollStatus(), 10000);
     this.diag('Camera Station Live started');
     if (tuningFailures.length) this.diagError('Running without some speed-ups:', tuningFailures.join('; '));
+  }
+
+  _registerWidget() {
+    const widget = this.homey.dashboards.getWidget('live');
+    widget.registerSettingAutocompleteListener('source', async (query) => {
+      const q = (query || '').toLowerCase();
+      const items = [];
+      for (const d of this.homey.drivers.getDriver('view').getDevices()) {
+        items.push({ name: d.getName(), description: this.homey.__('widget.view'), kind: 'view', id: d.getData().id });
+      }
+      for (const d of this.homey.drivers.getDriver('camera').getDevices()) {
+        items.push({ name: d.getName(), description: this.homey.__('widget.camera'), kind: 'camera', id: d.getData().id });
+      }
+      return items.filter((i) => i.name.toLowerCase().includes(q));
+    });
+  }
+
+  // Grid for the live widget: the view's layout (only the used part), or one tile for a camera.
+  async widgetLayout(source) {
+    if (!source || !source.id) throw new Error(this.homey.__('widget.pickSource'));
+    if (source.kind === 'camera') {
+      const device = this.homey.drivers.getDriver('camera').getDevices().find((d) => d.getData().id === source.id);
+      if (!device) throw new Error(this.homey.__('widget.missing'));
+      return { rows: 1, columns: 1, tiles: [{ row: 0, column: 0, rowSpan: 1, columnSpan: 1, sourceId: source.id, name: device.getName() }] };
+    }
+    const device = this.homey.drivers.getDriver('view').getDevices().find((d) => d.getData().id === source.id);
+    const layout = device && device.getStoreValue('layout');
+    if (!layout) throw new Error(this.homey.__('widget.missing'));
+    let rows = 1;
+    let columns = 1;
+    for (const t of layout.tiles) {
+      rows = Math.max(rows, t.row + t.rowSpan);
+      columns = Math.max(columns, t.column + t.columnSpan);
+    }
+    return {
+      rows,
+      columns,
+      tiles: layout.tiles.map((t) => ({
+        row: t.row, column: t.column, rowSpan: t.rowSpan, columnSpan: t.columnSpan, sourceId: t.camera.sourceId, name: t.camera.name,
+      })),
+    };
+  }
+
+  // One tile's WebRTC offer from the widget -> answer, through the shared relay.
+  async widgetOffer({ source, sourceId, sdp, quality }) {
+    const camera = this._findCamera(source, sourceId);
+    if (!camera) throw new Error(this.homey.__('widget.missing'));
+    const mode = ['low', 'medium', 'auto'].includes(quality) ? quality : 'low';
+    this.diag(`[${camera.name}] widget viewer offer (${mode})`);
+    const { answerSdp } = await this.getRelay().openViewer({
+      camera,
+      mode,
+      startProfile: 'low',
+      viewerOfferSdp: sdp,
+    });
+    return { answerSdp };
+  }
+
+  // Camera details for a source id, from a camera device or a view's layout.
+  _findCamera(source, sourceId) {
+    const cam = this.homey.drivers.getDriver('camera').getDevices().find((d) => d.getData().id === sourceId);
+    if (cam) {
+      return {
+        name: cam.getName(), sourceId, orgId: cam.getStore().orgId, targetId: cam.getStore().targetId,
+      };
+    }
+    for (const view of this.homey.drivers.getDriver('view').getDevices()) {
+      const tile = ((view.getStoreValue('layout') || {}).tiles || []).find((t) => t.camera.sourceId === sourceId);
+      if (tile) return tile.camera;
+    }
+    return null;
   }
 
   _registerFlowCards() {

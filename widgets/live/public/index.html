@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body { margin: 0; height: 100%; background: transparent; }
+    #grid {
+      position: absolute; inset: 0; display: grid; gap: 2px;
+      background: #111; border-radius: var(--homey-border-radius-default, 10px); overflow: hidden;
+    }
+    .tile { position: relative; background: #000; overflow: hidden; min-width: 0; min-height: 0; }
+    .tile video { width: 100%; height: 100%; object-fit: contain; display: block; background: #000; }
+    .tile .label {
+      position: absolute; left: 6px; bottom: 5px; max-width: calc(100% - 12px);
+      font: 500 11px/1.3 var(--homey-font-family, sans-serif); color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tile .status {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+      font: 12px/1.3 var(--homey-font-family, sans-serif); color: #bbb; padding: 8px; pointer-events: none;
+    }
+    .tile.live .status { display: none; }
+    /* Tapped tile fills the widget */
+    #grid.zoomed .tile { display: none; }
+    #grid.zoomed .tile.zoom { display: block; grid-row: 1 / -1 !important; grid-column: 1 / -1 !important; }
+    #message {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center;
+      padding: 16px; font: 14px/1.4 var(--homey-font-family, sans-serif); color: var(--homey-text-color, #888);
+    }
+  </style>
+</head>
+<body>
+  <div id="grid"></div>
+  <div id="message" hidden></div>
+  <script type="text/javascript">
+    function onHomeyReady(Homey) {
+      const settings = Homey.getSettings() || {};
+      const source = settings.source;
+      const quality = settings.quality || 'low';
+      const grid = document.getElementById('grid');
+      const message = document.getElementById('message');
+      const tiles = [];
+      const STAGGER_MS = 500; // spread connection set-up so Homey isn't hit all at once
+      const ICE_WAIT_MS = 2500;
+      const RETRY_MS = 4000;
+
+      function showMessage(text) {
+        message.textContent = text;
+        message.hidden = false;
+        grid.hidden = true;
+      }
+
+      function waitForIce(pc) {
+        if (pc.iceGatheringState === 'complete') return Promise.resolve();
+        return new Promise((resolve) => {
+          const timer = setTimeout(resolve, ICE_WAIT_MS);
+          pc.addEventListener('icegatheringstatechange', () => {
+            if (pc.iceGatheringState === 'complete') { clearTimeout(timer); resolve(); }
+          });
+        });
+      }
+
+      async function connect(tile) {
+        disconnect(tile);
+        if (document.hidden) return;
+        tile.el.classList.remove('live');
+        tile.status.textContent = Homey.__('widget.connecting');
+        const pc = new RTCPeerConnection();
+        tile.pc = pc;
+        pc.addTransceiver('video', { direction: 'recvonly' });
+        pc.ontrack = (e) => {
+          tile.video.srcObject = e.streams[0] || new MediaStream([e.track]);
+          tile.video.play().catch(() => {});
+        };
+        tile.video.onplaying = () => tile.el.classList.add('live');
+        pc.onconnectionstatechange = () => {
+          if (tile.pc !== pc) return;
+          if (pc.connectionState === 'failed' || pc.connectionState === 'disconnected') scheduleRetry(tile);
+        };
+        try {
+          await pc.setLocalDescription(await pc.createOffer());
+          await waitForIce(pc);
+          if (tile.pc !== pc) return;
+          const { answerSdp } = await Homey.api('POST', '/offer', {
+            source, sourceId: tile.sourceId, sdp: pc.localDescription.sdp, quality,
+          });
+          if (tile.pc !== pc) return;
+          await pc.setRemoteDescription({ type: 'answer', sdp: answerSdp });
+        } catch (err) {
+          tile.status.textContent = Homey.__('widget.failed');
+          scheduleRetry(tile);
+        }
+      }
+
+      function disconnect(tile) {
+        clearTimeout(tile.retry);
+        if (tile.pc) { try { tile.pc.close(); } catch (e) { /* ignore */ } }
+        tile.pc = null;
+        tile.video.srcObject = null;
+        tile.el.classList.remove('live');
+      }
+
+      function scheduleRetry(tile) {
+        clearTimeout(tile.retry);
+        tile.el.classList.remove('live');
+        tile.status.textContent = Homey.__('widget.failed');
+        tile.retry = setTimeout(() => connect(tile), RETRY_MS);
+      }
+
+      function connectAll() {
+        tiles.forEach((tile, i) => setTimeout(() => connect(tile), i * STAGGER_MS));
+      }
+
+      function disconnectAll() {
+        tiles.forEach(disconnect);
+      }
+
+      // Only stream while the dashboard is visible: hidden widgets cost Homey nothing.
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) disconnectAll();
+        else connectAll();
+      });
+      window.addEventListener('pagehide', disconnectAll);
+
+      if (!source) {
+        showMessage(Homey.__('widget.pickSource'));
+        Homey.ready();
+        return;
+      }
+
+      Homey.api('POST', '/layout', { source }).then((layout) => {
+        grid.style.gridTemplateColumns = `repeat(${layout.columns}, 1fr)`;
+        grid.style.gridTemplateRows = `repeat(${layout.rows}, 1fr)`;
+        // The same camera can appear in several tiles; stream it once per tile anyway
+        // (Homey shares the Camera Station stream between them).
+        for (const t of layout.tiles) {
+          const el = document.createElement('div');
+          el.className = 'tile';
+          el.style.gridRow = `${t.row + 1} / span ${t.rowSpan}`;
+          el.style.gridColumn = `${t.column + 1} / span ${t.columnSpan}`;
+          const video = document.createElement('video');
+          video.muted = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          const label = document.createElement('span');
+          label.className = 'label';
+          label.textContent = t.name;
+          const status = document.createElement('span');
+          status.className = 'status';
+          el.append(video, label, status);
+          grid.append(el);
+          const tile = { el, video, status, sourceId: t.sourceId };
+          tiles.push(tile);
+          el.addEventListener('click', () => {
+            try { Homey.hapticFeedback(); } catch (e) { /* not available */ }
+            if (tile.pc === null) { connect(tile); return; }
+            if (layout.tiles.length < 2) return;
+            const zoomed = el.classList.toggle('zoom');
+            tiles.forEach((o) => { if (o !== tile) o.el.classList.remove('zoom'); });
+            grid.classList.toggle('zoomed', zoomed);
+          });
+        }
+        Homey.ready();
+        connectAll();
+      }).catch((err) => {
+        showMessage(err && err.message ? err.message : String(err));
+        Homey.ready();
+      });
+    }
+  </script>
+</body>
+</html>

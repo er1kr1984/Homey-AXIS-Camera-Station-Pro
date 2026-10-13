@@ -1,0 +1,56 @@
+{
+  "name": {
+    "en": "Camera Station live"
+  },
+  "height": "56.25%",
+  "settings": [
+    {
+      "id": "source",
+      "type": "autocomplete",
+      "title": {
+        "en": "View or camera"
+      },
+      "hint": {
+        "en": "Pick a Camera Station view (all its cameras live, laid out like in Camera Station) or a single camera."
+      }
+    },
+    {
+      "id": "quality",
+      "type": "dropdown",
+      "title": {
+        "en": "Video quality"
+      },
+      "value": "low",
+      "values": [
+        {
+          "id": "low",
+          "title": {
+            "en": "Low (recommended)"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "auto",
+          "title": {
+            "en": "Automatic"
+          }
+        }
+      ]
+    }
+  ],
+  "api": {
+    "getLayout": {
+      "method": "POST",
+      "path": "/layout"
+    },
+    "offer": {
+      "method": "POST",
+      "path": "/offer"
+    }
+  }
+}
