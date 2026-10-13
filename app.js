@@ -4,7 +4,7 @@ const Homey = require('homey');
 const AcsClient = require('./lib/acs-client');
 const { applyWeriftTuning } = require('./lib/werift-tuning');
 
-applyWeriftTuning();
+const tuningFailures = applyWeriftTuning();
 const LiveRelay = require('./lib/live-relay');
 
 class CameraStationLiveApp extends Homey.App {
@@ -30,6 +30,7 @@ class CameraStationLiveApp extends Homey.App {
       if (key.startsWith('acs_')) this.resetConnection();
     });
     this.diag('Camera Station Live started');
+    if (tuningFailures.length) this.diagError('Running without some speed-ups:', tuningFailures.join('; '));
   }
 
   // Logs and keeps recent lines so they can be read through the app's API (GET /logs).
