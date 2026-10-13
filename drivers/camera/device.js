@@ -21,7 +21,7 @@ class CameraDevice extends Homey.Device {
         orgId: this.getStore().orgId,
         targetId: this.getStore().targetId,
       },
-      getMode: () => this.getSetting('stream_profile'),
+      getMode: () => this.getSetting('stream_profile') || 'low',
     });
     await this.live.attach('live', this.homey.__('device.liveTitle'));
 
