@@ -62,3 +62,7 @@ Protocol notes: `~/acspro-webrtc/FINDINGS-homey-webrtc.md`.
     TUNE=1 RATE=200 node bench/relay-bench.js  # relay CPU with a fixed synthetic load
     ACS_USER=... ACS_PASS=... node test/relay-multi.js "<camera>" medium 3 5
     ACS_USER=... ACS_PASS=... node test/switch.js "<camera>" medium low
+
+## Disclaimer
+This app is not made by, or affiliated with, Axis Communications. AXIS and AXIS Camera Station are
+trademarks of Axis AB, used here only to describe compatibility.

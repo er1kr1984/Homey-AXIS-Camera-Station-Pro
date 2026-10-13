@@ -44,6 +44,12 @@
     "name": "Erik Richardson",
     "email": "er1kr1984@gmail.com"
   },
+  "support": "https://github.com/er1kr1984/Homey-AXIS-Camera-Station-Pro/issues",
+  "bugs": {
+    "url": "https://github.com/er1kr1984/Homey-AXIS-Camera-Station-Pro/issues"
+  },
+  "source": "https://github.com/er1kr1984/Homey-AXIS-Camera-Station-Pro",
+  "homepage": "https://github.com/er1kr1984/Homey-AXIS-Camera-Station-Pro",
   "api": {
     "getSettingsState": {
       "method": "GET",

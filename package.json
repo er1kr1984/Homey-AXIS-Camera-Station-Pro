@@ -18,5 +18,12 @@
   },
   "overrides": {
     "mediabunny": "file:./stubs/mediabunny-0.0.0-stub.tgz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/er1kr1984/Homey-AXIS-Camera-Station-Pro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/er1kr1984/Homey-AXIS-Camera-Station-Pro/issues"
   }
 }
