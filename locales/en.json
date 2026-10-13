@@ -11,7 +11,8 @@
     "liveFailed": "Could not start live video from Camera Station. Check that the server is on, then try again.",
     "viewMissing": "This view no longer exists in Camera Station. Remove this device, or add the view again.",
     "cameraOffline": "Camera Station cannot reach this camera right now.",
-    "noPtz": "This camera has no PTZ presets, or Camera Station cannot reach it."
+    "noPtz": "This camera has no PTZ presets, or Camera Station cannot reach it.",
+    "serverUnreachable": "Cannot reach Camera Station. Check that the server is on and that the login still works (tap the cog, then Repair)."
   },
   "widget": {
     "view": "Camera Station view",
@@ -22,5 +23,14 @@
     "connecting": "Connecting…",
     "failed": "No video. Tap to retry.",
     "pictureBadge": "PICTURE"
+  },
+  "server": {
+    "RecordingFailure": "Recording failed",
+    "RecordingFailCameraAccess": "Camera not reachable for recording",
+    "DiskError": "Disk error",
+    "DiskWarning": "Disk warning",
+    "CameraStatusDown": "Camera offline",
+    "CameraStatusUp": "Camera online",
+    "none": "No problems"
   }
 }

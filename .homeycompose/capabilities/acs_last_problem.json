@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Last problem"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/warning.svg"
+}

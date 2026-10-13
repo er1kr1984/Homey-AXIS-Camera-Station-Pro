@@ -1,0 +1,13 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Cameras offline"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "decimals": 0,
+  "min": 0,
+  "insights": true,
+  "icon": "/assets/camera-offline.svg"
+}

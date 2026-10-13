@@ -1,0 +1,180 @@
+{
+  "triggers": [
+    {
+      "id": "server_problem",
+      "title": {
+        "en": "Camera Station reported a problem"
+      },
+      "hint": {
+        "en": "Disk errors and warnings, and recordings that failed. Repeats of the same problem are held back (see the device settings)."
+      },
+      "tokens": [
+        {
+          "name": "problem",
+          "type": "string",
+          "title": {
+            "en": "Problem"
+          },
+          "example": {
+            "en": "Recording failed"
+          }
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "title": {
+            "en": "Description"
+          },
+          "example": {
+            "en": "Recording failed: AXIS P3267-LVE"
+          }
+        },
+        {
+          "name": "camera",
+          "type": "string",
+          "title": {
+            "en": "Camera"
+          },
+          "example": {
+            "en": "AXIS P3267-LVE"
+          }
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "title": {
+            "en": "Time"
+          },
+          "example": {
+            "en": "2026-10-13 12:00"
+          }
+        }
+      ]
+    },
+    {
+      "id": "recording_failed",
+      "title": {
+        "en": "Recording failed on a camera"
+      },
+      "tokens": [
+        {
+          "name": "camera",
+          "type": "string",
+          "title": {
+            "en": "Camera"
+          },
+          "example": {
+            "en": "AXIS P3267-LVE"
+          }
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "title": {
+            "en": "Time"
+          },
+          "example": {
+            "en": "2026-10-13 12:00"
+          }
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "title": {
+            "en": "Reason"
+          },
+          "example": {
+            "en": "Camera not reachable"
+          }
+        }
+      ]
+    },
+    {
+      "id": "disk_problem",
+      "title": {
+        "en": "Camera Station has a disk problem"
+      },
+      "tokens": [
+        {
+          "name": "problem",
+          "type": "string",
+          "title": {
+            "en": "Problem"
+          },
+          "example": {
+            "en": "Disk full"
+          }
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "title": {
+            "en": "Disk or folder"
+          },
+          "example": {
+            "en": "D:\\\\"
+          }
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "title": {
+            "en": "Time"
+          },
+          "example": {
+            "en": "2026-10-13 12:00"
+          }
+        }
+      ]
+    },
+    {
+      "id": "camera_status_changed",
+      "title": {
+        "en": "A camera went offline or came back"
+      },
+      "hint": {
+        "en": "For every camera in Camera Station, also those not added to Homey."
+      },
+      "tokens": [
+        {
+          "name": "camera",
+          "type": "string",
+          "title": {
+            "en": "Camera"
+          },
+          "example": {
+            "en": "AXIS P3267-LVE"
+          }
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "title": {
+            "en": "Time"
+          },
+          "example": {
+            "en": "2026-10-13 12:00"
+          }
+        },
+        {
+          "name": "online",
+          "type": "boolean",
+          "title": {
+            "en": "Online"
+          }
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "has_problem",
+      "title": {
+        "en": "Camera Station !{{has|has no}} active problems"
+      },
+      "hint": {
+        "en": "A disk or recording problem alarm is on."
+      }
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "name": {
+    "en": "Camera Station server"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "alarm_generic.disk",
+    "alarm_generic.recording",
+    "acs_cameras_offline",
+    "acs_last_problem"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic.disk": {
+      "title": {
+        "en": "Disk problem"
+      },
+      "insightsTitleTrue": {
+        "en": "Disk problem"
+      },
+      "insightsTitleFalse": {
+        "en": "Disk problem cleared"
+      }
+    },
+    "alarm_generic.recording": {
+      "title": {
+        "en": "Recording problem"
+      },
+      "insightsTitleTrue": {
+        "en": "Recording problem"
+      },
+      "insightsTitleFalse": {
+        "en": "Recording problem cleared"
+      }
+    }
+  },
+  "platforms": [
+    "local"
+  ],
+  "connectivity": [
+    "lan"
+  ],
+  "images": {
+    "small": "/drivers/server/assets/images/small.png",
+    "large": "/drivers/server/assets/images/large.png",
+    "xlarge": "/drivers/server/assets/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "title": {
+          "en": "Log in to Camera Station"
+        },
+        "usernameLabel": {
+          "en": "Camera Station username"
+        },
+        "usernamePlaceholder": {
+          "en": "axis"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      },
+      "navigation": {
+        "next": "list_devices"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "prev": "login_credentials",
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "title": {
+          "en": "Log in to Camera Station"
+        },
+        "usernameLabel": {
+          "en": "Camera Station username"
+        },
+        "usernamePlaceholder": {
+          "en": "axis"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
+      }
+    }
+  ]
+}

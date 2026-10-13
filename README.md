@@ -9,6 +9,10 @@ Station's own WebRTC service: no camera RTSP, no transcoding.
 - **View**: a Camera Station split view as one picture laid out like the view's grid,
   refreshed every minute by default.
 
+- **Camera Station server**: health from Camera Station's event log and camera list: disk problem
+  alarm, recording problem alarm, number of cameras offline, last problem; server name, version
+  and hardware in the settings.
+
 ## Dashboard widget
 **Camera Station live**: pick a view (all its cameras live, laid out like in Camera Station) or a
 single camera. Low quality by default; streams stop while the dashboard is hidden; tap a tile to

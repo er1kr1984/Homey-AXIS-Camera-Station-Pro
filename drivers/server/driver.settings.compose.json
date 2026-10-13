@@ -1,0 +1,52 @@
+[
+  {
+    "id": "alarm_minutes",
+    "type": "number",
+    "label": {
+      "en": "Keep problem alarms on for (minutes)"
+    },
+    "value": 30,
+    "min": 5,
+    "max": 1440,
+    "hint": {
+      "en": "A disk or recording problem alarm stays on this long after Camera Station last reported the problem. Example: 30."
+    }
+  },
+  {
+    "id": "repeat_minutes",
+    "type": "number",
+    "label": {
+      "en": "Repeat the same problem after (minutes)"
+    },
+    "value": 60,
+    "min": 5,
+    "max": 1440,
+    "hint": {
+      "en": "Camera Station repeats some problems every few minutes (for example a camera that cannot be reached). The problem flow cards run again for the same camera only after this many minutes. Example: 60."
+    }
+  },
+  {
+    "id": "server_name",
+    "type": "label",
+    "label": {
+      "en": "Server"
+    },
+    "value": ""
+  },
+  {
+    "id": "server_version",
+    "type": "label",
+    "label": {
+      "en": "Camera Station version"
+    },
+    "value": ""
+  },
+  {
+    "id": "server_hardware",
+    "type": "label",
+    "label": {
+      "en": "Hardware"
+    },
+    "value": ""
+  }
+]
